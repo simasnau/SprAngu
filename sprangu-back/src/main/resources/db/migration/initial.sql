@@ -1,0 +1,1 @@
+-- empty initial script, otherwise app doesnt start
