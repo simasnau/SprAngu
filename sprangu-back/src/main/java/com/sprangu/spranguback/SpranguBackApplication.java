@@ -1,4 +1,4 @@
-package com.example.spranguback;
+package com.sprangu.spranguback;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
