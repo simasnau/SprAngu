@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <h2 role="button" [routerLink]="'/'">Įrankių dalinimosi sistema</h2>
+    </div>
+    <div class="col-6" *ngIf="!authenticationService.isLogged()">
+      <button class="float-end" [routerLink]="'/register'">Prisijungimas</button>
+    </div>
+    <ng-container *ngIf="authenticationService.isLogged()">
+      <div class="col-5 text-end">
+        {{authenticationService.user.name}}
+      </div>
+      <span role="button" class="col-1 text-center" (click)="authenticationService.logout()">
+        logout
+      </span>
+    </ng-container>
+  </div>
+</div>

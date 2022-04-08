@@ -8,6 +8,7 @@ export class UrlConstants {
 
   // endpoints methods
   public static registerUser = this.userEndpoint + '/register';
+  public static loginUser = this.userEndpoint + '/login';
 
 
   // headers for api calls
