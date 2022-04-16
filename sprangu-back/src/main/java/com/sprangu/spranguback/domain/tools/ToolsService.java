@@ -1,6 +1,7 @@
 package com.sprangu.spranguback.domain.tools;
 
 import com.sprangu.spranguback.domain.tools.model.Tool;
+import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +28,6 @@ public class ToolsService {
     public Tool getById(@NonNull Long id) {
         return toolRepository.getById(id);
     }
+
+    public List<Tool> searchTools(@NonNull ToolsFilter toolsFilter) {return toolRepository.searchTools(toolsFilter);}
 }

@@ -1,6 +1,7 @@
 package com.sprangu.spranguback.domain.tools.repository;
 
 
+import com.sprangu.spranguback.domain.tools.ToolsFilter;
 import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
 import com.sprangu.spranguback.domain.tools.model.Tool;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,5 @@ import java.util.List;
 public interface ToolRepositoryCustom extends JpaRepository<Tool, Long> {
 
     List<ToolBasicDto> getBasicToolView();
-
+    List<Tool> searchTools(ToolsFilter toolsFilter);
 }
