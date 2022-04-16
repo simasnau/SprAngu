@@ -42,11 +42,11 @@ public class ToolRepositoryImpl extends SimpleJpaRepository<Tool, Long> implemen
 
         Root<Tool> root = query.from(Tool.class);
         Predicate[] predicates = new Predicate[4];
-        predicates[0] = cb.between(root.get("name"),
+        predicates[0] = cb.between(root.get("dailyPrice"),
                 toolsFilter.getMinDailyPrice(), toolsFilter.getMaxDailyPrice());
-        predicates[1] = cb.between(root.get("dailyPrice"),
-                toolsFilter.getMinDailyPrice(), toolsFilter.getMaxDailyPrice());
-        predicates[2] = cb.like(root.get("hourlyPrice"), "%"+toolsFilter.getName()+"%");
+        predicates[1] = cb.between(root.get("hourlyPrice"),
+                toolsFilter.getMinHourlyPrice(), toolsFilter.getMaxHourlyPrice());
+        predicates[2] = cb.like(root.get("name"), "%"+toolsFilter.getName()+"%");
         predicates[3] = cb.equal(root.get("toolType"), toolsFilter.getToolType());
         query.select(root).where(predicates);
 
