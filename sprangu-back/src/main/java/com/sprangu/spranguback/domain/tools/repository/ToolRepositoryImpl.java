@@ -4,7 +4,7 @@ import com.sprangu.spranguback.domain.tools.ToolsFilter;
 import com.sprangu.spranguback.domain.tools.model.Tool;
 import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
 import com.sprangu.spranguback.domain.tools.model.Tool_;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,14 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ToolRepositoryImpl extends SimpleJpaRepository<Tool, Long> implements ToolRepositoryCustom {
+@RequiredArgsConstructor
+public class ToolRepositoryImpl implements ToolRepositoryCustom {
 
     private final EntityManager em;
-
-    public ToolRepositoryImpl(EntityManager em) {
-        super(Tool.class, em);
-        this.em = em;
-    }
 
     @Override
     public List<ToolBasicDto> getBasicToolView() {

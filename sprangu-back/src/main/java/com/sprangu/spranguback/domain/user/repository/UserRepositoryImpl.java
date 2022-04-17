@@ -4,21 +4,17 @@ package com.sprangu.spranguback.domain.user.repository;
 import com.sprangu.spranguback.domain.user.model.dto.UserInfo;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser_;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
 @Repository
-public class UserRepositoryImpl extends SimpleJpaRepository<RegisteredUser, Long> implements UserRepositoryCustom {
+@RequiredArgsConstructor
+public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private final EntityManager em;
-
-    public UserRepositoryImpl(EntityManager em) {
-        super(RegisteredUser.class, em);
-        this.em = em;
-    }
 
     @Override
     public UserInfo loginUser(String name, String password) {
