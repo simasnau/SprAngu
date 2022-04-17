@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -41,14 +42,34 @@ public class ToolRepositoryImpl extends SimpleJpaRepository<Tool, Long> implemen
         CriteriaQuery<Tool> query = cb.createQuery(Tool.class);
 
         Root<Tool> root = query.from(Tool.class);
-        Predicate[] predicates = new Predicate[4];
-        predicates[0] = cb.between(root.get("dailyPrice"),
-                toolsFilter.getMinDailyPrice(), toolsFilter.getMaxDailyPrice());
-        predicates[1] = cb.between(root.get("hourlyPrice"),
-                toolsFilter.getMinHourlyPrice(), toolsFilter.getMaxHourlyPrice());
-        predicates[2] = cb.like(root.get("name"), "%"+toolsFilter.getName()+"%");
-        predicates[3] = cb.equal(root.get("toolType"), toolsFilter.getToolType());
-        query.select(root).where(predicates);
+        List<Predicate> predicatesList = new ArrayList<>();
+        if (toolsFilter.getName() != null && !toolsFilter.getName().isBlank())
+        {
+            predicatesList.add(cb.between(root.get(Tool_.hourlyPrice),
+                    toolsFilter.getMinDailyPrice(), toolsFilter.getMaxDailyPrice()));
+        }
+        if (toolsFilter.getMaxDailyPrice() != 0)
+        {
+            predicatesList.add(cb.lt(root.get(Tool_.dailyPrice), toolsFilter.getMaxHourlyPrice()));
+        }
+        if (toolsFilter.getMinDailyPrice() != 0)
+        {
+            predicatesList.add(cb.gt(root.get(Tool_.dailyPrice), toolsFilter.getMinHourlyPrice()));
+        }
+        if (toolsFilter.getMaxHourlyPrice() != 0)
+        {
+            predicatesList.add(cb.lt(root.get(Tool_.hourlyPrice), toolsFilter.getMaxHourlyPrice()));
+        }
+        if (toolsFilter.getMinHourlyPrice() != 0)
+        {
+            predicatesList.add(cb.gt(root.get(Tool_.hourlyPrice), toolsFilter.getMinHourlyPrice()));
+        }
+        if (toolsFilter.getToolType() != null)
+        {
+            predicatesList.add(cb.equal(root.get(Tool_.toolType), toolsFilter.getToolType()));
+        }
+        Predicate[] predicatesArray = predicatesList.toArray(new Predicate[0]);
+        query.select(root).where(predicatesArray);
 
         return em.createQuery(query).getResultList();
     }
