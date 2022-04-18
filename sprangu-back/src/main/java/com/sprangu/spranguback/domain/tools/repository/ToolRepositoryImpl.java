@@ -41,16 +41,15 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
         List<Predicate> predicatesList = new ArrayList<>();
         if (toolsFilter.getName() != null && !toolsFilter.getName().isBlank())
         {
-            predicatesList.add(cb.between(root.get(Tool_.hourlyPrice),
-                    toolsFilter.getMinDailyPrice(), toolsFilter.getMaxDailyPrice()));
+            cb.like(root.get(Tool_.name), "%"+toolsFilter.getName()+"%");
         }
         if (toolsFilter.getMaxDailyPrice() != 0)
         {
-            predicatesList.add(cb.lt(root.get(Tool_.dailyPrice), toolsFilter.getMaxHourlyPrice()));
+            predicatesList.add(cb.lt(root.get(Tool_.dailyPrice), toolsFilter.getMaxDailyPrice()));
         }
         if (toolsFilter.getMinDailyPrice() != 0)
         {
-            predicatesList.add(cb.gt(root.get(Tool_.dailyPrice), toolsFilter.getMinHourlyPrice()));
+            predicatesList.add(cb.gt(root.get(Tool_.dailyPrice), toolsFilter.getMinDailyPrice()));
         }
         if (toolsFilter.getMaxHourlyPrice() != 0)
         {
