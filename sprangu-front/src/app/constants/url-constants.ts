@@ -10,6 +10,8 @@ export class UrlConstants {
   public static registerUser = this.userEndpoint + '/register';
   public static loginUser = this.userEndpoint + '/login';
 
+  public static tools = this.backEndUrl + '/api/tools';
+
 
   // headers for api calls
   private static headers = new HttpHeaders({

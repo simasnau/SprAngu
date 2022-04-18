@@ -9,12 +9,14 @@ import {LoginComponent} from './pages/login/login.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './components/header/header.component';
+import { ToolsForRentalComponent } from './components/tools-for-rental/tools-for-rental.component';
 
 @NgModule({
   declarations: [
     AppComponent, MainPageComponent,
     LoginComponent,
     HeaderComponent,
+    ToolsForRentalComponent,
   ],
   imports: [
     BrowserModule,
