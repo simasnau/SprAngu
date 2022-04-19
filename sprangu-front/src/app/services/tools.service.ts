@@ -11,6 +11,14 @@ import {UrlConstants} from "../constants/url-constants";
 export class ToolsService {
 
   private apiUrl: string = UrlConstants.tools;
+  private DUMMY_DATA = [
+    {id: 1, image: "asdfasdf", name: "Wrench", cost: {daily: 30, hourly: 5}, user: "HILTI", shortDescription: "Tobulas plaktukas", description: ""} as ToolForRental,
+    {id: 2, image: "asdfasdf", name: "Hammer", cost: {daily: 30, hourly: 5}, user: "jonas", shortDescription: "Tobulas plaktukas", description: ""} as ToolForRental,
+    {id: 3, image: "asdfasdf", name: "Generator", cost: {daily: 30, hourly: 5}, user: "jonas", shortDescription: "Tobulas plaktukas", description: ""} as ToolForRental,
+    {id: 4, image: "asdfasdf", name: "Wrench", cost: {daily: 30, hourly: 5}, user: "HILTI", shortDescription: "Tobulas plaktukas", description: ""} as ToolForRental,
+    {id: 5, image: "asdfasdf", name: "Hammer", cost: {daily: 30, hourly: 5}, user: "jonas", shortDescription: "Tobulas plaktukas", description: ""} as ToolForRental,
+    {id: 6, image: "asdfasdf", name: "Generator", cost: {daily: 30, hourly: 5}, user: "HILTI", shortDescription: "Tobulas plaktukas", description: ""} as ToolForRental,
+  ];
 
   constructor() { 
   }
@@ -21,16 +29,11 @@ export class ToolsService {
     const apiTools : any = [];
 
     // return apiTools.map(this.toolMapper);
+    return this.DUMMY_DATA;
+  }
 
-    // DUMMY DATA
-    return [
-      {id: 1, image: "asdfasdf", name: "Wrench", cost: {daily: 30, hourly: 5}, user: "HILTI"} as ToolForRental,
-      {id: 2, image: "asdfasdf", name: "Hammer", cost: {daily: 30, hourly: 5}, user: "jonas"} as ToolForRental,
-      {id: 3, image: "asdfasdf", name: "Generator", cost: {daily: 30, hourly: 5}, user: "jonas"} as ToolForRental,
-      {id: 1, image: "asdfasdf", name: "Wrench", cost: {daily: 30, hourly: 5}, user: "HILTI"} as ToolForRental,
-      {id: 2, image: "asdfasdf", name: "Hammer", cost: {daily: 30, hourly: 5}, user: "jonas"} as ToolForRental,
-      {id: 3, image: "asdfasdf", name: "Generator", cost: {daily: 30, hourly: 5}, user: "HILTI"} as ToolForRental,
-    ]
+  async get(id: number) : Promise<ToolForRental> {
+    return this.DUMMY_DATA.find(tool => tool.id = id) as ToolForRental;
   }
 
   toolMapper(item : any) {

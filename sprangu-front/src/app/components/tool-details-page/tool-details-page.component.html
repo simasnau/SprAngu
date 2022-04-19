@@ -1,0 +1,49 @@
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="'/'">Pagrindinis</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="'/tools'">Įrankiai</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ tool.name }}</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <img class="card-img-top"
+            src="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc="
+            alt="Tool image">
+    </div>
+    <div class="col-6 bg-light p-3 ">
+        <h1>{{ tool.name }}</h1>
+        <div class="row">
+
+        </div>
+        <p>{{ tool.shortDescription }}</p>
+
+        <div class="row">
+            <div class="col-2 display-6"><i class="bi bi-person-circle"></i></div>
+            <div class="col-4 fs-4 p-1">@{{ tool.user }}</div>
+        </div>
+
+        <ul class="list-group list-group-flush fs-5 mt-4">
+            <li class="list-group-item">
+                Nuoma <strong>1 val.</strong>
+                <span class="float-end"><strong>{{ tool.cost.hourly }}</strong>€</span>
+            </li>
+            <li class="list-group-item">
+                Nuoma <strong>1 d.</strong>
+                <span class="float-end"><strong>{{ tool.cost.daily }}</strong>€</span>
+            </li>
+        </ul>
+
+        <div class="d-grid gap-2 col-6 mx-auto mt-4">
+            <a class="btn btn-primary" type="button">Nuomotis</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <h2>Aprašymas / Specifikacijos</h2>
+    <p>{{ tool.description }}</p>
+</div>

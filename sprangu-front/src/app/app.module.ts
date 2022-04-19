@@ -10,6 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './components/header/header.component';
 import { ToolsForRentalComponent } from './components/tools-for-rental/tools-for-rental.component';
+import { ToolDetailsPageComponent } from './components/tool-details-page/tool-details-page.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ToolsForRentalComponent } from './components/tools-for-rental/tools-for
     LoginComponent,
     HeaderComponent,
     ToolsForRentalComponent,
+    ToolDetailsPageComponent,
   ],
   imports: [
     BrowserModule,

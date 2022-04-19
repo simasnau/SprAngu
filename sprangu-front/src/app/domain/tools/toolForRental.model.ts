@@ -6,6 +6,9 @@ export class ToolForRental {
         daily: number;
         hourly: number;
     };
+    shortDescription: string;
+    description: string;
     user: any;
+
   }
   
