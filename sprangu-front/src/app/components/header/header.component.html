@@ -1,13 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="'/'">
+    <a class="navbar-brand text-white" [routerLink]="'/'">
       <img class="m-1"
-        src="https://www.freepnglogos.com/uploads/circle-png/painted-circle-transparent-background-28.png" alt=""
+        src="https://openclipart.org/image/800px/256338" alt=""
         width="30" height="30">
       Įrankių nuoma
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     
@@ -17,10 +17,10 @@
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li> -->
         <li class="nav-item" *ngIf="!authenticationService.isLogged()">
-          <a class="nav-link" [routerLink]="'/register'">Prisijungimas</a>
+          <a class="nav-link text-white" [routerLink]="'/register'">Prisijungimas</a>
         </li>
         <li class="nav-item dropdown" *ngIf="authenticationService.isLogged()">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{authenticationService.user.name}}
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -31,5 +31,6 @@
         </li>
       </ul>
     </div>
+
   </div>
 </nav>
