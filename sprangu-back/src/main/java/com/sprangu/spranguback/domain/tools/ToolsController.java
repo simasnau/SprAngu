@@ -1,7 +1,7 @@
 package com.sprangu.spranguback.domain.tools;
 
 import com.sprangu.spranguback.domain.tools.model.Tool;
-import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
+import com.sprangu.spranguback.domain.tools.model.ToolCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +30,8 @@ public class ToolsController {
     }
 
     @PostMapping()
-    public Tool addTool(@RequestBody Tool tool) {
-        return toolsService.addTool(tool);
+    public Tool addTool(@RequestBody ToolCreateDto tool) {
+        return toolsService.create(tool);
     }
 
     @PostMapping("/search")
