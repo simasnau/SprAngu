@@ -1,0 +1,15 @@
+<div class="row row-cols-3 p-4 g-3">
+    <div class="col" *ngFor="let item of tools">
+        <div class="card">
+            <img class="card-img-top"
+                src="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc="
+                alt="Tool image">
+            <div class="card-body">
+                <a [routerLink]="['/tool', item.id]" class="card-title h4 d-block pb-2 border-bottom stretched-link">{{ item.name }}</a>
+                <span class="text-muted">@{{ item.user }}</span>
+                <p class="card-text text-center">{{ item.cost.daily }} € / dienai</p>
+                <p class="card-text text-center">{{ item.cost.hourly }} € / valandai</p>
+            </div>
+        </div>
+    </div>
+</div>
