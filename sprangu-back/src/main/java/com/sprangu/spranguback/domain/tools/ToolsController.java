@@ -1,8 +1,8 @@
 package com.sprangu.spranguback.domain.tools;
 
 import com.sprangu.spranguback.domain.tools.model.ToolCreateDto;
-import com.sprangu.spranguback.domain.tools.model.ToolShortView;
-import com.sprangu.spranguback.domain.tools.model.ToolView;
+import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
+import com.sprangu.spranguback.domain.tools.model.ToolDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +23,12 @@ public class ToolsController {
     private final ToolsService toolsService;
 
     @GetMapping("/{id}")
-    public ToolView getById(@PathVariable Long id) {
+    public ToolDto getById(@PathVariable Long id) {
         return toolsService.getById(id);
     }
 
     @GetMapping("/all")
-    public List<ToolView> getAllTools() {
+    public List<ToolDto> getAllTools() {
         return toolsService.getAllTools();
     }
 
@@ -38,23 +38,23 @@ public class ToolsController {
     }
 
     @PostMapping("/search")
-    public List<ToolView> searchTools(@RequestBody ToolsFilter toolsFilter) {
+    public List<ToolDto> searchTools(@RequestBody ToolsFilter toolsFilter) {
         return toolsService.searchTools(toolsFilter);
     }
 
     @GetMapping("/my-tools/{id}")
-    public List<ToolShortView> getAllUserToolsById(@PathVariable("id") Long userId) {
+    public List<ToolBasicDto> getAllUserToolsById(@PathVariable("id") Long userId) {
         return toolsService.getAllUserToolsById(userId);
     }
 
     @DeleteMapping("/my-tools/{id}/delete")
     public Boolean deleteToolFromMyTools(@PathVariable("id") Long toolId) {
-        return this.toolsService.deleteTool(toolId);
+        return toolsService.deleteTool(toolId);
     }
 
     @PatchMapping("/my-tools/{id}/edit-visibility")
     public Boolean changeToolVisibility(@PathVariable("id") Long toolId) {
-        return this.toolsService.changeToolVisibility(toolId);
+        return toolsService.changeToolVisibility(toolId);
     }
 
 }

@@ -2,7 +2,7 @@ package com.sprangu.spranguback.domain.tools.repository;
 
 import com.sprangu.spranguback.domain.tools.ToolsFilter;
 import com.sprangu.spranguback.domain.tools.model.Tool;
-import com.sprangu.spranguback.domain.tools.model.ToolShortView;
+import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
 import com.sprangu.spranguback.domain.tools.model.Tool_;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser_;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +23,18 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
     private final EntityManager em;
 
     @Override
-    public List<ToolShortView> getBasicToolView() {
+    public List<ToolBasicDto> getBasicToolView() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<ToolShortView> query = cb.createQuery(ToolShortView.class);
+        CriteriaQuery<ToolBasicDto> query = cb.createQuery(ToolBasicDto.class);
 
         Root<Tool> root = query.from(Tool.class);
-        query.multiselect(root.get(Tool_.name), root.get(Tool_.description), root.get(Tool_.hourlyPrice), root.get(Tool_.dailyPrice));
+        query.multiselect(
+                root.get(Tool_.id),
+                root.get(Tool_.name),
+                root.get(Tool_.description),
+                root.get(Tool_.hourlyPrice),
+                root.get(Tool_.dailyPrice),
+                root.get(Tool_.visible));
 
         return em.createQuery(query).getResultList();
     }
@@ -65,9 +71,9 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
     }
 
     @Override
-    public List<ToolShortView> getAllUserToolsById(Long userId) {
+    public List<ToolBasicDto> getAllUserToolsById(Long userId) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<ToolShortView> query = cb.createQuery(ToolShortView.class);
+        CriteriaQuery<ToolBasicDto> query = cb.createQuery(ToolBasicDto.class);
         Root<Tool> root = query.from(Tool.class);
         query.multiselect(
                 root.get(Tool_.id),

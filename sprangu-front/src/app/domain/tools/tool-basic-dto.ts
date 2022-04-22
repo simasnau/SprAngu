@@ -1,4 +1,4 @@
-export class ToolShortView {
+export class ToolBasicDto {
   id: number;
   name: string;
   description: string;

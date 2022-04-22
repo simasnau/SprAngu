@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @Builder
 @AllArgsConstructor(staticName = "of")
-public class ToolView {
+public class ToolDto {
     private Long id;
     private String name;
     private String description;
@@ -25,8 +25,8 @@ public class ToolView {
     private ToolTypeEnum toolType;
     private String imageContent;
 
-    public static ToolView of(Tool tool) {
-        return ToolView.builder()
+    public static ToolDto of(Tool tool) {
+        return ToolDto.builder()
                 .id(tool.getId())
                 .name(tool.getName())
                 .description(tool.getDescription())

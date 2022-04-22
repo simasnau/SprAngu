@@ -4,7 +4,7 @@ import {ToolForRental} from "../domain/tools/toolForRental.model";
 import {Observable} from "rxjs";
 import {UrlConstants} from "../constants/url-constants";
 import {AuthenticationService} from "./authentication.service";
-import {ToolShortView} from "../domain/tools/tool-short-view";
+import {ToolBasicDto} from "../domain/tools/tool-basic-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +40,9 @@ export class ToolsService {
     return this.DUMMY_DATA.find(tool => tool.id = id) as ToolForRental;
   }
 
-  getUserToolsShortView(): Observable<ToolShortView[]> {
+  getUserToolsShortView(): Observable<ToolBasicDto[]> {
     const url = UrlConstants.myTools + '/' + this.authenticationService.user.id;
-    return this.httpClient.get<ToolShortView[]>(url);
+    return this.httpClient.get<ToolBasicDto[]>(url);
   }
 
   toolMapper(item: any) {

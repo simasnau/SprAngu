@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ToolsService} from "../../services/tools.service";
-import {ToolShortView} from "../../domain/tools/tool-short-view";
+import {ToolBasicDto} from "../../domain/tools/tool-basic-dto";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../components/dialog/dialog.component";
 import {DialogConstants} from "../../constants/dialog-constants";
@@ -12,7 +12,7 @@ import {DialogConstants} from "../../constants/dialog-constants";
 })
 export class MyToolsComponent implements OnInit {
 
-  tools: ToolShortView[] = [];
+  tools: ToolBasicDto[] = [];
 
   constructor(
     private toolService: ToolsService,

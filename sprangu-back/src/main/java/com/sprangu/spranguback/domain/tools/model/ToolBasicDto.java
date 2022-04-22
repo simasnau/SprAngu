@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class ToolShortView {
+public class ToolBasicDto {
 
     private Long id;
     private String name;
