@@ -24,7 +24,6 @@ export class MyToolsComponent implements OnInit {
     this.getTools();
   }
 
-
   private getTools() {
     this.toolService.getUserToolsShortView().subscribe(result => this.tools = result);
   }
