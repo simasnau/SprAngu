@@ -9,9 +9,13 @@ import {LoginComponent} from './pages/login/login.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './components/header/header.component';
-import { ToolsForRentalComponent } from './components/tools-for-rental/tools-for-rental.component';
-import { ToolDetailsPageComponent } from './components/tool-details-page/tool-details-page.component';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import {ToolsForRentalComponent} from './components/tools-for-rental/tools-for-rental.component';
+import {ToolDetailsPageComponent} from './components/tool-details-page/tool-details-page.component';
+import {SearchBarComponent} from './components/search-bar/search-bar.component';
+import {MyToolsComponent} from './pages/my-tools/my-tools.component';
+import {DialogComponent} from './components/dialog/dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -21,6 +25,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     ToolsForRentalComponent,
     ToolDetailsPageComponent,
     SearchBarComponent,
+    MyToolsComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,10 +34,13 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserModule
+    BrowserModule,
+    MatDialogModule,
+    NoopAnimationsModule,
+    BrowserAnimationsModule
   ],
   exports: [
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,9 @@
+<h2 mat-dialog-title [class]="data.dialogRelevance">{{data.mainText}}</h2>
+<div mat-dialog-actions align="end" [class]="data.dialogRelevance">
+  <button [mat-dialog-close]="false" class="mx-2 btn">
+    {{data.cancelButtonText}}
+  </button>
+  <button [mat-dialog-close]="true" class="btn">
+    {{data.acceptButtonText}}
+  </button>
+</div>
