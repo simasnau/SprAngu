@@ -54,8 +54,8 @@ export class MyToolsComponent implements OnInit {
     });
   }
 
-  hideTool(id: number): void {
+  async hideTool(id: number): Promise<void> {
     // @ts-ignore
-    this.toolService.hideTool(id).subscribe(result => this.tools.find(tool => tool.id === id).visible = result);
+    this.tools.find(tool => tool.id === id).visible = await this.toolService.hideTool(id);
   }
 }

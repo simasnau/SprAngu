@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ToolForRental} from "../domain/tools/toolForRental.model";
-import {Observable} from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
 import {UrlConstants} from "../constants/url-constants";
 import {AuthenticationService} from "./authentication.service";
 import {ToolBasicDto} from "../domain/tools/tool-basic-dto";
@@ -57,8 +57,8 @@ export class ToolsService {
     return this.httpClient.delete<boolean>(url);
   }
 
-  hideTool(toolId: number): Observable<boolean> {
+  async hideTool(toolId: number): Promise<boolean> {
     const url = UrlConstants.myTools + '/' + toolId + '/edit-visibility';
-    return this.httpClient.patch<boolean>(url, {});
+    return firstValueFrom(this.httpClient.patch<boolean>(url, {}));
   }
 }
