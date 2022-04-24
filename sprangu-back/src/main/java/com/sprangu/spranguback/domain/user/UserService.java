@@ -6,8 +6,11 @@ import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;

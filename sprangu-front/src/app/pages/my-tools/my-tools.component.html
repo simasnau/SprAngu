@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row my-3">
+    <h1>Mano įrankiai</h1>
+  </div>
+  <div>
+    <div class="row p-2 border border-dark my-1" *ngFor="let tool of tools">
+      <div class="col-2">image</div>
+      <div class="col-4 row d-flex">
+        <div class="align-items-center d-flex fw-bold">{{tool.name}}</div>
+        <div class="align-items-center d-flex">{{tool.description}}</div>
+      </div>
+      <div class="col-4 row">
+        <div class="align-items-center d-flex">{{tool.hourlyPrice}}</div>
+        <div class="align-items-center d-flex">{{tool.dailyPrice}}</div>
+      </div>
+      <div class="col-2 row">
+        <button class="mt-1 btn btn-outline-primary fw-bold"
+                [routerLink]="'/my-tools/edit/' + tool.id">
+          Redaguoti
+        </button>
+        <button class="mt-1 btn btn-outline-primary fw-bold" (click)="openDeleteDialog(tool.id)">
+          Pašalinti skelbimą
+        </button>
+        <button class="my-1 btn btn-outline-primary fw-bold" (click)="hideTool(tool.id)">
+          {{tool.visible ? 'Paslėpti skelbimą' : 'Nebeslėpti skelbimo'}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

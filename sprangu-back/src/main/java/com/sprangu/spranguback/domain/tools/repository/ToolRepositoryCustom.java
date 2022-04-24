@@ -9,5 +9,8 @@ import java.util.List;
 public interface ToolRepositoryCustom {
 
     List<ToolBasicDto> getBasicToolView();
+
     List<Tool> searchTools(ToolsFilter toolsFilter);
+
+    List<ToolBasicDto> getAllUserToolsById(Long userId);
 }

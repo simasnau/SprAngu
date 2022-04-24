@@ -81,4 +81,7 @@ public class Tool {
         }
         this.allUsers.add(currentUser);
     }
+
+    @Column(name = "VISIBLE")
+    private boolean visible = true;
 }

@@ -40,6 +40,7 @@ public class DataInitializer implements CommandLineRunner {
                 .dailyPrice(1000)
                 .toolType(ToolTypeEnum.GRAZTAS)
                 .owner(jonas)
+                .visible(false)
                 .build();
 
         graztas.setCurrentUser(petras);
