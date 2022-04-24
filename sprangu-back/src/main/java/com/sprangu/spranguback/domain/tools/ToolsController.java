@@ -1,8 +1,11 @@
 package com.sprangu.spranguback.domain.tools;
 
-import com.sprangu.spranguback.domain.tools.model.ToolCreateDto;
-import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
-import com.sprangu.spranguback.domain.tools.model.ToolDto;
+import com.sprangu.spranguback.domain.tools.model.dto.RentEndDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
+import com.sprangu.spranguback.domain.tools.model.dto.RentStartDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolRentInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,7 @@ import java.util.List;
 public class ToolsController {
 
     private final ToolsService toolsService;
+    private final ToolRentInfoService toolRentInfoService;
 
     @GetMapping("/{id}")
     public ToolDto getById(@PathVariable Long id) {
@@ -55,6 +59,21 @@ public class ToolsController {
     @PatchMapping("/my-tools/{id}/edit-visibility")
     public Boolean changeToolVisibility(@PathVariable("id") Long toolId) {
         return toolsService.changeToolVisibility(toolId);
+    }
+
+    @PostMapping("/{id}/rent")
+    public Boolean rentTool(@PathVariable Long id, @RequestBody RentStartDto rentStartDto) {
+        return toolRentInfoService.rent(id, rentStartDto);
+    }
+
+    @GetMapping("/rent/stop/{rentId}")
+    public RentEndDto stopRent(@PathVariable Long rentId) {
+        return toolRentInfoService.stopRent(rentId);
+    }
+
+    @GetMapping("/rented-tools/{userId}")
+    public List<ToolRentInfoDto> getToolRentInfo(@PathVariable Long userId) {
+        return toolRentInfoService.getToolRentInfoForUser(userId);
     }
 
 }

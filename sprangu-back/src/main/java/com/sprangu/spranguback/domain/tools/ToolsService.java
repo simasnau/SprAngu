@@ -1,9 +1,9 @@
 package com.sprangu.spranguback.domain.tools;
 
-import com.sprangu.spranguback.domain.tools.model.Tool;
-import com.sprangu.spranguback.domain.tools.model.ToolCreateDto;
-import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
-import com.sprangu.spranguback.domain.tools.model.ToolDto;
+import com.sprangu.spranguback.domain.tools.model.entity.Tool;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
@@ -21,9 +21,10 @@ public class ToolsService {
 
     private final ToolRepository toolRepository;
     private final UserRepository userRepository;
+    private final ToolRentInfoService toolRentInfoService;
 
     public List<ToolDto> getAllTools() {
-        return toolRepository.findAll().stream().map(ToolDto::of).collect(Collectors.toList());
+        return toolRepository.findAll().stream().map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentUser(tool.getId()))).collect(Collectors.toList());
     }
 
     public Long create(@NonNull ToolCreateDto toolCreateDto) {
@@ -41,13 +42,13 @@ public class ToolsService {
     }
 
     public ToolDto getById(@NonNull Long id) {
-        return ToolDto.of(toolRepository.getById(id));
+        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentUser(id));
     }
 
     public List<ToolDto> searchTools(@NonNull ToolsFilter toolsFilter) {
         return toolRepository.searchTools(toolsFilter)
                 .stream()
-                .map(ToolDto::of)
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentUser(tool.getId())))
                 .collect(Collectors.toList());
     }
 

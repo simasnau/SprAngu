@@ -1,5 +1,7 @@
-package com.sprangu.spranguback.domain.tools.model;
+package com.sprangu.spranguback.domain.tools.model.dto;
 
+import com.sprangu.spranguback.domain.tools.model.ToolTypeEnum;
+import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,20 +20,19 @@ public class ToolDto {
     private String name;
     private String description;
     private RegisteredUser owner;
-    private List<RegisteredUser> allUsers = new ArrayList<>();
     private RegisteredUser currentUser;
     private Integer hourlyPrice;
     private Integer dailyPrice;
     private ToolTypeEnum toolType;
     private String imageContent;
 
-    public static ToolDto of(Tool tool) {
+    public static ToolDto of(Tool tool, RegisteredUser currentUser) {
         return ToolDto.builder()
                 .id(tool.getId())
                 .name(tool.getName())
                 .description(tool.getDescription())
                 .owner(tool.getOwner())
-                .currentUser(tool.getCurrentUser())
+                .currentUser(currentUser)
                 .hourlyPrice(tool.getHourlyPrice())
                 .dailyPrice(tool.getDailyPrice())
                 .toolType(tool.getToolType())

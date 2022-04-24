@@ -1,4 +1,4 @@
-package com.sprangu.spranguback.domain.tools.model;
+package com.sprangu.spranguback.domain.tools.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

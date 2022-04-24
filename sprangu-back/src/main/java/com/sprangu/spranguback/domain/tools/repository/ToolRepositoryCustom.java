@@ -1,8 +1,8 @@
 package com.sprangu.spranguback.domain.tools.repository;
 
 import com.sprangu.spranguback.domain.tools.ToolsFilter;
-import com.sprangu.spranguback.domain.tools.model.Tool;
-import com.sprangu.spranguback.domain.tools.model.ToolBasicDto;
+import com.sprangu.spranguback.domain.tools.model.entity.Tool;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
 
 import java.util.List;
 
