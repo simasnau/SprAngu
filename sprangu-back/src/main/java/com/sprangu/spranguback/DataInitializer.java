@@ -1,7 +1,9 @@
 package com.sprangu.spranguback;
 
-import com.sprangu.spranguback.domain.tools.model.Tool;
+import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.model.ToolTypeEnum;
+import com.sprangu.spranguback.domain.tools.model.entity.ToolRentInfo;
+import com.sprangu.spranguback.domain.tools.repository.ToolRentInfoRepository;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Component
@@ -17,6 +20,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private final ToolRepository toolRepository;
     private final UserRepository userRepository;
+    private final ToolRentInfoRepository toolRentInfoRepository;
 
     @Override
     public void run(String... args) {
@@ -43,8 +47,17 @@ public class DataInitializer implements CommandLineRunner {
                 .visible(false)
                 .build();
 
-        graztas.setCurrentUser(petras);
         toolRepository.save(graztas);
+
+        ToolRentInfo graztasRent = ToolRentInfo.builder()
+                .rentedTool(graztas)
+                .user(petras)
+                .hourlyPrice(graztas.getHourlyPrice())
+                .dailyPrice(graztas.getDailyPrice())
+                .startDate(LocalDateTime.now())
+                .originalEndDate(LocalDateTime.now().plusDays(10))
+                .build();
+        toolRentInfoRepository.save(graztasRent);
 
         Tool graztas2 = Tool.builder()
                 .name("Regular grąžtas")
@@ -55,8 +68,17 @@ public class DataInitializer implements CommandLineRunner {
                 .owner(jonas)
                 .build();
 
-        graztas2.setCurrentUser(ona);
         toolRepository.save(graztas2);
+
+        ToolRentInfo graztas2Rent = ToolRentInfo.builder()
+                .rentedTool(graztas2)
+                .user(ona)
+                .hourlyPrice(graztas2.getHourlyPrice())
+                .dailyPrice(graztas2.getDailyPrice())
+                .startDate(LocalDateTime.now())
+                .originalEndDate(LocalDateTime.now().plusDays(8))
+                .build();
+        toolRentInfoRepository.save(graztas2Rent);
 
         Tool pjuklas = Tool.builder()
                 .name("Ultimate pjūklas 4000")
@@ -67,7 +89,6 @@ public class DataInitializer implements CommandLineRunner {
                 .owner(petras)
                 .build();
 
-        pjuklas.setCurrentUser(ona);
         toolRepository.save(pjuklas);
     }
 }

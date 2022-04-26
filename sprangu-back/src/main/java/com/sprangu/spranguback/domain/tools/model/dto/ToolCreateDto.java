@@ -1,5 +1,6 @@
-package com.sprangu.spranguback.domain.tools.model;
+package com.sprangu.spranguback.domain.tools.model.dto;
 
+import com.sprangu.spranguback.domain.tools.model.ToolTypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
