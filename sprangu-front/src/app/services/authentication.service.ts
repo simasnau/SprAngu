@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {UserInfo} from "../domain/user/model/user-info";
+import {AppConstants} from "../constants/app-constants";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +10,28 @@ export class AuthenticationService {
 
   user = new UserInfo();
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
   }
 
   isLogged(): boolean {
     return this.user.id > 0;
   }
 
-  logout() {
+  logout(): void {
     this.user = new UserInfo();
+    localStorage.clear();
+    this.router.navigate(['/']);
+  }
+
+  init(): void {
+    const userId = localStorage.getItem(AppConstants.STORAGE_USER_ID);
+    const userName = localStorage.getItem(AppConstants.STORAGE_USER_NAME);
+    if (userId && userName) {
+      this.user = new UserInfo();
+      this.user.id = Number(userId);
+      this.user.name = userName;
+    }
   }
 }
