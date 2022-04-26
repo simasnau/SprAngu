@@ -21,7 +21,8 @@ export class AuthenticationService {
 
   logout(): void {
     this.user = new UserInfo();
-    localStorage.clear();
+    localStorage.removeItem(AppConstants.STORAGE_USER_NAME);
+    localStorage.removeItem(AppConstants.STORAGE_USER_ID);
     this.router.navigate(['/']);
   }
 

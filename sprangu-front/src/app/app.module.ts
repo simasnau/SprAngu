@@ -16,6 +16,7 @@ import {MyToolsComponent} from './pages/my-tools/my-tools.component';
 import {DialogComponent} from './components/dialog/dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {AuthenticationService} from "./services/authentication.service";
 
 @NgModule({
   declarations: [
@@ -46,4 +47,7 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-b
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private _authService: AuthenticationService) {
+    _authService.init();
+  }
 }
