@@ -16,6 +16,7 @@ import {MyToolsComponent} from './pages/my-tools/my-tools.component';
 import {DialogComponent} from './components/dialog/dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
+import { FilteringComponentComponent } from './components/filtering-component/filtering-component.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-b
     SearchBarComponent,
     MyToolsComponent,
     DialogComponent,
+    FilteringComponentComponent,
   ],
   imports: [
     BrowserModule,
