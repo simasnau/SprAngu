@@ -17,6 +17,7 @@ import {DialogComponent} from './components/dialog/dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import { FilteringComponentComponent } from './components/filtering-component/filtering-component.component';
+import {AuthenticationService} from "./services/authentication.service";
 
 @NgModule({
   declarations: [
@@ -48,4 +49,7 @@ import { FilteringComponentComponent } from './components/filtering-component/fi
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private _authService: AuthenticationService) {
+    _authService.init();
+  }
 }
