@@ -59,4 +59,7 @@ public class Tool {
 
     @Column(name = "VISIBLE")
     private boolean visible = true;
+
+    @Column(name = "REMOVED")
+    private Boolean removed;
 }

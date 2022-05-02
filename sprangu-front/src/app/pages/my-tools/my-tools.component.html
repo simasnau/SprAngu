@@ -18,7 +18,7 @@
                 [routerLink]="'/my-tools/edit/' + tool.id">
           Redaguoti
         </button>
-        <button class="mt-1 btn btn-outline-primary fw-bold" (click)="openDeleteDialog(tool.id)">
+        <button class="mt-1 btn btn-outline-primary fw-bold" (click)="removeTool(tool.id)">
           Pašalinti skelbimą
         </button>
         <button class="my-1 btn btn-outline-primary fw-bold" (click)="hideTool(tool.id)">
