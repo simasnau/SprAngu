@@ -10,14 +10,15 @@ import { ToolsService } from 'src/app/services/tools.service';
 })
 export class ToolDetailsPageComponent implements OnInit {
 
-  public tool : ToolForRental;
+  public tool : ToolForRental = new ToolForRental();
 
   constructor(private route: ActivatedRoute, private toolsService: ToolsService) { }
 
   async ngOnInit(): Promise<void> {
     let id = this.route.snapshot.params['id'];
-    console.log("Tool", id);
+    
     this.tool = await this.toolsService.get(id);
+    console.log(this.tool);
   }
 
 }

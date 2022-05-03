@@ -11,64 +11,6 @@ import {ToolBasicDto} from "../domain/tools/tool-basic-dto";
 })
 export class ToolsService {
 
-  UrlConstants = UrlConstants;
-  private DUMMY_DATA = [
-    {
-      id: 1,
-      image: "asdfasdf",
-      name: "Wrench",
-      cost: {daily: 30, hourly: 5},
-      user: "HILTI",
-      shortDescription: "Tobulas plaktukas",
-      description: ""
-    } as ToolForRental,
-    {
-      id: 2,
-      image: "asdfasdf",
-      name: "Hammer",
-      cost: {daily: 30, hourly: 5},
-      user: "jonas",
-      shortDescription: "Tobulas plaktukas",
-      description: ""
-    } as ToolForRental,
-    {
-      id: 3,
-      image: "asdfasdf",
-      name: "Generator",
-      cost: {daily: 30, hourly: 5},
-      user: "jonas",
-      shortDescription: "Tobulas plaktukas",
-      description: ""
-    } as ToolForRental,
-    {
-      id: 4,
-      image: "asdfasdf",
-      name: "Wrench",
-      cost: {daily: 30, hourly: 5},
-      user: "HILTI",
-      shortDescription: "Tobulas plaktukas",
-      description: ""
-    } as ToolForRental,
-    {
-      id: 5,
-      image: "asdfasdf",
-      name: "Hammer",
-      cost: {daily: 30, hourly: 5},
-      user: "jonas",
-      shortDescription: "Tobulas plaktukas",
-      description: ""
-    } as ToolForRental,
-    {
-      id: 6,
-      image: "asdfasdf",
-      name: "Generator",
-      cost: {daily: 30, hourly: 5},
-      user: "HILTI",
-      shortDescription: "Tobulas plaktukas",
-      description: ""
-    } as ToolForRental,
-  ];
-
   constructor(
     private httpClient: HttpClient,
     private authenticationService: AuthenticationService
@@ -76,16 +18,17 @@ export class ToolsService {
   }
 
   async getAll(): Promise<ToolForRental[]> {
-    // const res = await fetch(this.apiUrl + '/all');
-    // const apiTools = await res.json();
-    const apiTools: any = [];
+    const res = await fetch(UrlConstants.toolsEndpoint + '/all');
+    const apiTools = await res.json();
 
-    // return apiTools.map(this.toolMapper);
-    return this.DUMMY_DATA;
+    return apiTools.map(this.toolMapper);
   }
 
   async get(id: number): Promise<ToolForRental> {
-    return this.DUMMY_DATA.find(tool => tool.id = id) as ToolForRental;
+    const res = await fetch(UrlConstants.toolsEndpoint + '/' + id);
+    const apiTool = await res.json();
+
+    return this.toolMapper(apiTool);
   }
 
   getUserToolsShortView(): Observable<ToolBasicDto[]> {
@@ -93,11 +36,21 @@ export class ToolsService {
     return this.httpClient.get<ToolBasicDto[]>(url, {headers: UrlConstants.headers});
   }
 
-  toolMapper(item: any) {
-    const tool = new ToolForRental();
-    tool.id = item.id;
-    tool.name = item.name;
-    return tool;
+  toolMapper(item: any): ToolForRental {
+    return {
+      id: item.id,
+      name: item.name,
+      cost: {
+          daily: item.dailyPrice,
+          hourly: item.hourlyPrice,
+        },
+      type: item.toolType,
+      image: item.imageContent,
+      description: item.description,
+      shortDescription: item.description,
+      owner: item.owner,
+      currentUser: item.currentUser,
+    }
   }
 
   deleteToolFromMyTools(toolId: number): Observable<boolean> {
@@ -108,5 +61,19 @@ export class ToolsService {
   async hideTool(toolId: number): Promise<boolean> {
     const url = UrlConstants.myTools + '/' + toolId + '/edit-visibility';
     return firstValueFrom(this.httpClient.patch<boolean>(url, {}));
+  }
+
+  async rentTool(toolId: number, userId: number, endDate: Date) {
+    return fetch(UrlConstants.toolsEndpoint + '/' + toolId + '/rent', {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId: userId,
+        rentEndDate: endDate.toISOString(),
+      })
+    })
   }
 }
