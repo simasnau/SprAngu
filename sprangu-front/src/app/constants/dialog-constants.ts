@@ -19,6 +19,7 @@ export class DialogData {
 export class DialogConstants {
   public static REMOVE_TOOL_ADVERTISEMENT = new DialogData('Ar norite išimti skelbimą?', 'Taip, noriu.', 'Atšaukti', DialogRelevance.DANGER);
   public static REMOVE_TOOL_ERROR = new DialogData('Negalima išimti skelbimo', '', 'Uždaryti', DialogRelevance.DANGER);
+  public static TOOL_RENT_ERROR = new DialogData('Įrankio išsinuomoti nepavyko. Bandykite vėliau', '', 'Uždaryti', DialogRelevance.DANGER);
 }
 
 
