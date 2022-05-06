@@ -1,8 +1,8 @@
 package com.sprangu.spranguback.domain.tools.repository;
 
 import com.sprangu.spranguback.domain.tools.ToolsFilter;
-import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
+import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.model.entity.Tool_;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser_;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +64,12 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
         if (toolsFilter.getToolType() != null) {
             predicatesList.add(cb.equal(root.get(Tool_.toolType), toolsFilter.getToolType()));
         }
+        predicatesList.add(
+                cb.or(
+                        cb.isNull(root.get(Tool_.removed)),
+                        cb.isFalse(root.get(Tool_.removed))
+                )
+        );
         Predicate[] predicatesArray = predicatesList.toArray(new Predicate[0]);
         query.select(root).where(predicatesArray);
 
@@ -83,7 +89,11 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
                 root.get(Tool_.dailyPrice),
                 root.get(Tool_.visible));
 
-        query.where(cb.equal(root.get(Tool_.owner).get(RegisteredUser_.id), userId));
+        query.where(cb.equal(root.get(Tool_.owner).get(RegisteredUser_.id), userId),
+                cb.or(
+                        cb.isNull(root.get(Tool_.removed)),
+                        cb.isFalse(root.get(Tool_.removed))
+                ));
         return em.createQuery(query).getResultList();
     }
 }

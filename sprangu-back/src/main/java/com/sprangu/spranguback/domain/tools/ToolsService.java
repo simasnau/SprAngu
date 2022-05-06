@@ -1,9 +1,9 @@
 package com.sprangu.spranguback.domain.tools;
 
-import com.sprangu.spranguback.domain.tools.model.entity.Tool;
-import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
+import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
@@ -24,7 +24,11 @@ public class ToolsService {
     private final ToolRentInfoService toolRentInfoService;
 
     public List<ToolDto> getAllTools() {
-        return toolRepository.findAll().stream().map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentUser(tool.getId()))).collect(Collectors.toList());
+        return toolRepository.findAll()
+                .stream()
+                .filter(tool -> !tool.getRemoved())
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentUser(tool.getId())))
+                .collect(Collectors.toList());
     }
 
     public Long create(@NonNull ToolCreateDto toolCreateDto) {
@@ -57,13 +61,10 @@ public class ToolsService {
     }
 
     public Boolean deleteTool(Long toolId) {
-        // todo security and add check if none of users have borrowed tool if needed
-        try {
-            toolRepository.deleteById(toolId);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        var tool = toolRepository.getById(toolId);
+        tool.setRemoved(true);
+        toolRepository.save(tool);
+        return toolRentInfoService.getCurrentUser(toolId) == null;
     }
 
     public Boolean changeToolVisibility(Long toolId) {

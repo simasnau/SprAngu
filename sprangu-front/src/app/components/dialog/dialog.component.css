@@ -5,3 +5,11 @@
 .DANGER button {
   color: red;
 }
+
+.SUCCESS {
+  color: green;
+}
+
+.SUCCESS button {
+  color: green;
+}

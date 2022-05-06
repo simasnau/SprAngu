@@ -28,7 +28,7 @@ export class MyToolsComponent implements OnInit {
     this.toolService.getUserToolsShortView().subscribe(result => this.tools = result);
   }
 
-  openDeleteDialog(id: number): void {
+  removeTool(id: number): void {
     const dialogRef = this.matDialog.open(DialogComponent, {
       width: '25%',
       data: DialogConstants.REMOVE_TOOL_ADVERTISEMENT
@@ -40,7 +40,7 @@ export class MyToolsComponent implements OnInit {
           if (!result) {
             this.openErrorDialog();
           } else {
-            this.getTools();
+            this.openSuccessDialog();
           }
         });
       }
@@ -57,5 +57,12 @@ export class MyToolsComponent implements OnInit {
   async hideTool(id: number): Promise<void> {
     // @ts-ignore
     this.tools.find(tool => tool.id === id).visible = await this.toolService.hideTool(id);
+  }
+
+  private openSuccessDialog(): void {
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      width: '25%',
+      data: DialogConstants.REMOVE_TOOL_SUCCESS
+    });
   }
 }

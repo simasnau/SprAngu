@@ -1,5 +1,6 @@
 export class DialogRelevance {
   public static readonly DANGER = 'DANGER';
+  public static readonly SUCCESS = 'SUCCESS';
 }
 
 export class DialogData {
@@ -19,6 +20,7 @@ export class DialogData {
 export class DialogConstants {
   public static REMOVE_TOOL_ADVERTISEMENT = new DialogData('Ar norite išimti skelbimą?', 'Taip, noriu.', 'Atšaukti', DialogRelevance.DANGER);
   public static REMOVE_TOOL_ERROR = new DialogData('Negalima išimti skelbimo', '', 'Uždaryti', DialogRelevance.DANGER);
+  public static REMOVE_TOOL_SUCCESS = new DialogData('Skelbimas išimtas', '', 'Uždaryti', DialogRelevance.SUCCESS);
 }
 
 
