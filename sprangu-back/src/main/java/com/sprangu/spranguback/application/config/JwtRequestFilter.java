@@ -29,12 +29,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         var token = request.getHeader(CookieConstants.AUTHORIZATION);
         if (token != null && !token.isBlank()) {
             var username = jwtUtils.extractUsername(token);
-            UserDetailed UserDetailed = userService.loadUserByUsername(username);
+            UserDetailed userDetailed = userService.loadUserByUsername(username);
             if (!jwtUtils.isTokenExpired(token)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(UserDetailed, null, UserDetailed.getAuthorities());
+                        new UsernamePasswordAuthenticationToken(userDetailed, null, userDetailed.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                response.addHeader(CookieConstants.AUTHORIZATION, jwtUtils.generateToken(userDetailed));
             }
         }
         filterChain.doFilter(request, response);

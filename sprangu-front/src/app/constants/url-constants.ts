@@ -1,5 +1,4 @@
 import {HttpHeaders} from "@angular/common/http";
-import {H} from "@angular/cdk/keycodes";
 
 export class UrlConstants {
   private static backEndUrl = 'http://localhost:8080/api';
@@ -21,12 +20,9 @@ export class UrlConstants {
   // headers for api calls
   public static headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    // 'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Origin': 'http://localhost:4200',
-    'Access-Control-Allow-Credentials': 'true'
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Expose-Headers': 'Authorization'
   });
-  public static options = {
-    headers: this.headers
-  }
 }

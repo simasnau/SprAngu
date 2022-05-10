@@ -32,7 +32,7 @@ export class AuthenticationService {
 
   logout(): void {
     this.user = new UserInfo();
-    this.cookieService.delete(JwtConstants.JWT)
+    this.cookieService.delete(JwtConstants.JWT, '/')
     this.router.navigate(['/']);
   }
 
@@ -47,7 +47,7 @@ export class AuthenticationService {
   }
 
   createUser(userInfo: UserInfo): Observable<void> {
-    return this.http.post<void>(UrlConstants.registerUser, userInfo, UrlConstants.options);
+    return this.http.post<void>(UrlConstants.registerUser, userInfo);
   }
 
   login(model: UserInfo): Observable<string> {
@@ -56,19 +56,15 @@ export class AuthenticationService {
     params = params.append('password', model.password);
     return this.http.get(UrlConstants.loginUser, {
       params: params,
-      headers: UrlConstants.headers,
       responseType: 'text'
     });
   }
 
   resolveUser(): void {
     const userDetailed = this.getDecodedToken(this.cookieService.get(JwtConstants.JWT));
-    console.log('user detailed', userDetailed);
     this.user.id = userDetailed.id;
     this.user.name = userDetailed.sub;
     this.user.role = userDetailed.ROLE;
-    console.log('user after', this.user)
-    // console.log('user service', this.tokenExpired(this.cookieService.get(JwtConstants.JWT)))
   }
 
   getDecodedToken(token: string): UserDetailed {

@@ -25,11 +25,6 @@ public class JwtUtils {
         return createToken(claims, userDetailed);
     }
 
-    public String generateRefreshToken(UserDetailed userDetailed) {
-        Map<String, Object> claims = new HashMap<>();
-        return createRefreshToken(claims, userDetailed);
-    }
-
     private String createToken(Map<String, Object> claims, UserDetailed userDetailed) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -37,16 +32,6 @@ public class JwtUtils {
                 .setSubject(userDetailed.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 5000))
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
-    }
-
-    private String createRefreshToken(Map<String, Object> claims, UserDetailed userDetails) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }

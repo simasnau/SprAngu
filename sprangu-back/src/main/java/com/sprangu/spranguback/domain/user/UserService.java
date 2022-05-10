@@ -53,10 +53,6 @@ public class UserService implements UserDetailsService {
     }
 
     public String createJwtToken(UserDetailed UserDetailed) {
-//        authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(userInfo.getName(), userInfo.getPassword()));
-        //UserDetails userDetails=myUserDetailsService.loadUserByUsername(userDTORequest.getUsername());
-
         return jwtUtils.generateToken(UserDetailed);
     }
 
@@ -66,11 +62,5 @@ public class UserService implements UserDetailsService {
         var user = userRepository.getByName(username);
         var authorities = new SimpleGrantedAuthority(user.getRole());
         return new UserDetailed(user.getId(), user.getName(), "", Collections.singleton(authorities));
-    }
-
-    public String refreshTokens() {
-//        var userDetailed = context.getuser...
-//        return createTokens(new UserDetailed());
-        return null;
     }
 }

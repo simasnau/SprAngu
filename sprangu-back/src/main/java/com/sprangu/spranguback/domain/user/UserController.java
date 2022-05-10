@@ -28,10 +28,4 @@ public class UserController {
         return userService.loginUser(name, password);
     }
 
-    @GetMapping("/refresh")
-    public String refreshTokens() {
-        return userService.refreshTokens();
-    }
-
-
 }

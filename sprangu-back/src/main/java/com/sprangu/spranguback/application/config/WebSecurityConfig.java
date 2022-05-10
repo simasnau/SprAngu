@@ -1,5 +1,6 @@
 package com.sprangu.spranguback.application.config;
 
+import com.sprangu.spranguback.application.constants.CookieConstants;
 import com.sprangu.spranguback.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -90,6 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowedMethods(allowedMethods);
         corsConfiguration.setMaxAge(600000L);
+        corsConfiguration.setExposedHeaders(Collections.singletonList(CookieConstants.AUTHORIZATION));
         return corsConfiguration;
     }
 }

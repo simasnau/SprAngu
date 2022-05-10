@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.error = false;
     this.authenticationService.login(this.user).subscribe(token => {
-        console.log(token);
         this.cookieService.set(JwtConstants.JWT, token, {
           path: '/'
         });
