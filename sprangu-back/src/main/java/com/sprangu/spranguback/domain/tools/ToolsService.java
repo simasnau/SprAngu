@@ -1,10 +1,12 @@
 package com.sprangu.spranguback.domain.tools;
 
+import com.sprangu.spranguback.application.utils.SecurityUtils;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
+import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class ToolsService {
     }
 
     public Long create(@NonNull ToolCreateDto toolCreateDto) {
+        SecurityUtils.checkAccess(toolCreateDto.getOwnerId());
         Tool tool = Tool.builder()
                 .hourlyPrice(toolCreateDto.getHourlyPrice())
                 .dailyPrice(toolCreateDto.getDailyPrice())
@@ -56,12 +59,14 @@ public class ToolsService {
                 .collect(Collectors.toList());
     }
 
-    public List<ToolBasicDto> getAllUserToolsById(Long userId) {
-        return toolRepository.getAllUserToolsById(userId);
+    public List<ToolBasicDto> getAllUserToolsByUserId(Long userId) {
+        SecurityUtils.checkAccess(userId);
+        return toolRepository.getAllUserToolsByUserId(userId);
     }
 
     public Boolean deleteTool(Long toolId) {
         var tool = toolRepository.getById(toolId);
+        SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setRemoved(true);
         toolRepository.save(tool);
         return toolRentInfoService.getCurrentUser(toolId) == null;
@@ -69,6 +74,7 @@ public class ToolsService {
 
     public Boolean changeToolVisibility(Long toolId) {
         var tool = toolRepository.getById(toolId);
+        SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setVisible(!tool.isVisible());
         return toolRepository.save(tool).isVisible();
     }

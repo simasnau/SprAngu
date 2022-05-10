@@ -1,8 +1,18 @@
 package com.sprangu.spranguback.domain.user.model.entity;
 
-import lombok.*;
+import com.sprangu.spranguback.domain.user.model.UserRole;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "REGISTERED_USER")
@@ -23,5 +33,9 @@ public class RegisteredUser {
 
     @Column(name = "PASSWORD")
     private String password;
+
+    @Builder.Default
+    @Column(name = "ROLE")
+    private String role = UserRole.USER;
 
 }

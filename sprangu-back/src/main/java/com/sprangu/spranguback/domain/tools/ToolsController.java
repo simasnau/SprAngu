@@ -47,8 +47,8 @@ public class ToolsController {
     }
 
     @GetMapping("/my-tools/{id}")
-    public List<ToolBasicDto> getAllUserToolsById(@PathVariable("id") Long userId) {
-        return toolsService.getAllUserToolsById(userId);
+    public List<ToolBasicDto> getAllUserToolsByUserId(@PathVariable("id") Long userId) {
+        return toolsService.getAllUserToolsByUserId(userId);
     }
 
     @DeleteMapping("/my-tools/{id}/delete")

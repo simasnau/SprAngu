@@ -77,7 +77,7 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
     }
 
     @Override
-    public List<ToolBasicDto> getAllUserToolsById(Long userId) {
+    public List<ToolBasicDto> getAllUserToolsByUserId(Long userId) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<ToolBasicDto> query = cb.createQuery(ToolBasicDto.class);
         Root<Tool> root = query.from(Tool.class);
