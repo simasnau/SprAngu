@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.security.auth.login.CredentialException;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/user")
@@ -22,9 +24,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public UserInfo loginUser(@RequestParam String name, @RequestParam String password) {
+    public String loginUser(@RequestParam String name, @RequestParam String password) throws CredentialException {
         return userService.loginUser(name, password);
     }
-
 
 }

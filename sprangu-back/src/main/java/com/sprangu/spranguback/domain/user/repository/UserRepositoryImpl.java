@@ -31,16 +31,18 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @SneakyThrows
     @Override
-    public void existsWithName(String name) {
+    public RegisteredUser getByName(String name) {
         var cb = em.getCriteriaBuilder();
-        var cq = cb.createQuery(String.class);
+        var cq = cb.createQuery(RegisteredUser.class);
         var root = cq.from(RegisteredUser.class);
-        cq.multiselect(root.get(RegisteredUser_.name));
+        cq.multiselect(root.get(RegisteredUser_.id),
+                root.get(RegisteredUser_.name),
+                root.get(RegisteredUser_.password),
+                root.get(RegisteredUser_.role));
         cq.where(
                 cb.equal(root.get(RegisteredUser_.name), name)
         );
-        if (!em.createQuery(cq).getResultList().isEmpty()) {
-            throw new Exception("User exists with name " + name);
-        }
+        var result = em.createQuery(cq).getResultList();
+        return result.size() != 1 ? null : result.get(0);
     }
 }

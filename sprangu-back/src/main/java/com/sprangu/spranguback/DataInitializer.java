@@ -1,10 +1,11 @@
 package com.sprangu.spranguback;
 
-import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.model.ToolTypeEnum;
+import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.model.entity.ToolRentInfo;
 import com.sprangu.spranguback.domain.tools.repository.ToolRentInfoRepository;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
+import com.sprangu.spranguback.domain.user.model.UserRole;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +29,13 @@ public class DataInitializer implements CommandLineRunner {
             return;
         }
 
-        RegisteredUser jonas = RegisteredUser.builder().name("Jonas").password("Jonas").build();
+        RegisteredUser jonas = RegisteredUser.builder().name("Jonas").password("Jonas").role(UserRole.USER).build();
         userRepository.save(jonas);
 
-        RegisteredUser petras = RegisteredUser.builder().name("Petras").password("Petras").build();
+        RegisteredUser petras = RegisteredUser.builder().name("Petras").password("Petras").role(UserRole.USER).build();
         userRepository.save(petras);
 
-        RegisteredUser ona = RegisteredUser.builder().name("Ona").password("Ona").build();
+        RegisteredUser ona = RegisteredUser.builder().name("Ona").password("Ona").role(UserRole.USER).build();
         userRepository.save(ona);
 
         Tool graztas = Tool.builder()

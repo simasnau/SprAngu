@@ -7,7 +7,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {MainPageComponent} from './pages/main-page/main-page.component';
 import {LoginComponent} from './pages/login/login.component';
 import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './components/header/header.component';
 import {ToolsForRentalComponent} from './components/tools-for-rental/tools-for-rental.component';
 import {ToolDetailsPageComponent} from './components/tool-details-page/tool-details-page.component';
@@ -17,6 +17,7 @@ import {DialogComponent} from './components/dialog/dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {AuthenticationService} from "./services/authentication.service";
+import {CredentialsInterceptor} from "./utils/credentials-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,10 @@ import {AuthenticationService} from "./services/authentication.service";
   exports: [
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptor, multi: true
+  }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
