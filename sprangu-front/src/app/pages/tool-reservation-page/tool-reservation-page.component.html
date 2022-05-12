@@ -1,68 +1,70 @@
-<div class="row">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="'/'">NN</a></li>
-            <li class="breadcrumb-item"><a [routerLink]="'/'">Nuomotis</a></li>
-        </ol>
-    </nav>
-</div>
+<div class="container">
+  <div class="row">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="'/'">NN</a></li>
+              <li class="breadcrumb-item"><a [routerLink]="'/'">Nuomotis</a></li>
+          </ol>
+      </nav>
+  </div>
 
-<div class="row">
-    <div class="col-2 bg-light">
-      <img class="card-img-top pt-4 pb-4"
-           src="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc="
-           alt="Tool image">
-    </div>
-    <div class="col-6 bg-light">
-        <div class="row mb-2">
-            <div class="col-8">
-                <h2>{{ tool.name }}</h2>
-                <p>{{tool.description}}</p>
-            </div>
-            <div class="col-4">
-              <h6>{{tool.hourlyPrice}} € / Nuoma 1 val.</h6>
-              <h6>{{tool.dailyPrice}} € / Nuoma 1 d.</h6>
-            </div>
-        </div>
-    </div>
-    <div class="col-4">
-        <h4>Užsakymo informacija</h4>
-        <div>{{ tool.name }}</div>
-        <div>Nuomos laikotarpis: <strong>{{ overallDuration.days }}</strong> d. <strong>{{ overallDuration.hours }}</strong> val.</div>
-        <div>Nuomos kaina: <strong>{{ overallCost }}</strong></div>
-        <div class="d-grid">
-            <button (click)="rentTool()" class="btn btn-primary" type="button">Nuomotis</button>
-        </div>
-    </div>
-</div>
+  <div class="row">
+      <div class="col-2 bg-light">
+        <img class="card-img-top pt-4 pb-4"
+             src="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc="
+             alt="Tool image">
+      </div>
+      <div class="col-6 bg-light">
+          <div class="row mb-2">
+              <div class="col-8">
+                  <h2>{{ tool.name }}</h2>
+                  <p>{{tool.description}}</p>
+              </div>
+              <div class="col-4">
+                <h6>{{tool.hourlyPrice}} € / Nuoma 1 val.</h6>
+                <h6>{{tool.dailyPrice}} € / Nuoma 1 d.</h6>
+              </div>
+          </div>
+      </div>
+      <div class="col-4">
+          <h4>Užsakymo informacija</h4>
+          <div>{{ tool.name }}</div>
+          <div>Nuomos laikotarpis: <strong>{{ overallDuration.days }}</strong> d. <strong>{{ overallDuration.hours }}</strong> val.</div>
+          <div>Nuomos kaina: <strong>{{ overallCost }}</strong></div>
+          <div class="d-grid">
+              <button (click)="rentTool()" class="btn btn-primary" type="button">Nuomotis</button>
+          </div>
+      </div>
+  </div>
 
-<div class="row">
-  <div class="row g-2 col-8 bg-light">
-    <div>
-      <h3>Pasirinkite nuomos pabaigą:</h3>
-    </div>
+  <div class="row">
+    <div class="row g-2 col-8 bg-light">
+      <div>
+        <h3>Pasirinkite nuomos pabaigą:</h3>
+      </div>
 
-    <div class="col-md">
-      <div class="input-group pt-4 mt-3">
-        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date"
-               (ngModelChange)="dateChanged()" ngbDatepicker #d="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><em class="bi bi-calendar"></em>
-          </button>
+      <div class="col-md">
+        <div class="input-group pt-4 mt-3">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date"
+                 (ngModelChange)="dateChanged()" ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><em class="bi bi-calendar"></em>
+            </button>
+          </div>
         </div>
+      </div>
+
+      <div class="col-md">
+        <ngb-timepicker id='time' [(ngModel)]="time" (ngModelChange)="dateChanged()"></ngb-timepicker>
       </div>
     </div>
 
-    <div class="col-md">
-      <ngb-timepicker id='time' [(ngModel)]="time" (ngModelChange)="dateChanged()"></ngb-timepicker>
-    </div>
   </div>
 
-</div>
-
-<div class="row pt-2 pb-2">
-  <div>
-    <h3>Nuomos sąlygos</h3>
-    <p>Sąlygos...</p>
+  <div class="row pt-2 pb-2">
+    <div>
+      <h3>Nuomos sąlygos</h3>
+      <p>Sąlygos...</p>
+    </div>
   </div>
 </div>
