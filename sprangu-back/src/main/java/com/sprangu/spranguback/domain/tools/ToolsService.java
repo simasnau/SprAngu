@@ -28,7 +28,7 @@ public class ToolsService {
     public List<ToolDto> getAllTools() {
         return toolRepository.findAll()
                 .stream()
-                .filter(tool -> !tool.getRemoved())
+                .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()))
                 .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentUser(tool.getId())))
                 .collect(Collectors.toList());
     }

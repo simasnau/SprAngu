@@ -26,8 +26,7 @@ public class UserService implements UserDetailsService {
     private final JwtUtils jwtUtils;
 
     public UserDetailed getLoggedUser(){
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailed) auth.getPrincipal();
+        return (UserDetailed) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @SneakyThrows
