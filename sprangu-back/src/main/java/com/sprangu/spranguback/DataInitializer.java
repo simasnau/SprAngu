@@ -45,7 +45,7 @@ public class DataInitializer implements CommandLineRunner {
                 .dailyPrice(1000)
                 .toolType(ToolTypeEnum.GRAZTAS)
                 .owner(jonas)
-                .visible(false)
+                .visible(true)
                 .build();
 
         toolRepository.save(graztas);
@@ -67,6 +67,7 @@ public class DataInitializer implements CommandLineRunner {
                 .dailyPrice(20)
                 .toolType(ToolTypeEnum.GRAZTAS)
                 .owner(jonas)
+                .visible(true)
                 .build();
 
         toolRepository.save(graztas2);
@@ -88,6 +89,7 @@ public class DataInitializer implements CommandLineRunner {
                 .dailyPrice(200)
                 .toolType(ToolTypeEnum.PJUKLAS)
                 .owner(petras)
+                .visible(true)
                 .build();
 
         toolRepository.save(pjuklas);
