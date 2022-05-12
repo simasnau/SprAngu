@@ -7,8 +7,8 @@
             <div class="card-body">
                 <a [routerLink]="['/tool', item.id]" class="card-title h4 d-block pb-2 border-bottom stretched-link">{{ item.name }}</a>
                 <span class="text-muted">@{{ item.owner.name }}</span>
-                <p class="card-text text-center">{{ item.cost.daily }} € / dienai</p>
-                <p class="card-text text-center">{{ item.cost.hourly }} € / valandai</p>
+                <p class="card-text text-center">{{ item.dailyPrice }} € / dienai</p>
+                <p class="card-text text-center">{{ item.hourlyPrice }} € / valandai</p>
             </div>
         </div>
     </div>

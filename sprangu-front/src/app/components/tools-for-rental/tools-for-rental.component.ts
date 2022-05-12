@@ -13,11 +13,13 @@ export class ToolsForRentalComponent implements OnInit {
   public tools: ToolForRental[];
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private toolService: ToolsService) { }
 
   async ngOnInit(): Promise<void> {
-    this.tools = await this.toolService.getAll();
+    this.toolService.getAll().subscribe(result => {
+      this.tools = result
+    });
   }
 
 }

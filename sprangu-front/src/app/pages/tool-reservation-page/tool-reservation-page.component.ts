@@ -5,6 +5,8 @@ import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { DialogConstants } from 'src/app/constants/dialog-constants';
 import { ToolForRental } from 'src/app/domain/tools/toolForRental.model';
 import { ToolsService } from 'src/app/services/tools.service';
+import {AuthenticationService} from "../../services/authentication.service";
+import {RentStartDto} from "../../domain/tools/rent-start-dto";
 
 @Component({
   selector: 'app-tool-reservation-page',
@@ -18,17 +20,17 @@ export class ToolReservationPageComponent implements OnInit {
   time = {hour: 12, minute: 0};
   overallDuration = {days: 0, hours: 0};
   overallCost: number;
-  private MS_PER_DAY = 1000 * 60 * 60 * 24;
   private MS_PER_HOUR = 1000 * 60 * 60;
 
   constructor(
     private route: ActivatedRoute,
     private toolsService: ToolsService,
+    private authenticationService: AuthenticationService,
     public matDialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.params['id'];
-    this.tool = await this.toolsService.get(id);
+    this.toolsService.get(id).subscribe(result => this.tool=result);
   }
 
   dateChanged () {
@@ -38,27 +40,27 @@ export class ToolReservationPageComponent implements OnInit {
       this.overallCost = 0;
       return;
     }
-    
-    const dateUntil = new Date(this.date.year, this.date.month-1, this.date.day, this.time.hour, this.time.minute);
-    const diff = this.dateDiffInHours(new Date(), dateUntil);
-    
+
+    const dateUntil = this.getEndDate();
+    const diff = this.dateDiffInHours(new Date(), dateUntil) + 1;
+
     this.overallDuration.days = Math.floor(diff/24);
     this.overallDuration.hours = diff - this.overallDuration.days * 24;
 
-    this.overallCost = this.overallDuration.days * this.tool.cost.daily + this.overallDuration.hours * this.tool.cost.hourly;    
+    this.overallCost = this.calculateTotalPrice(dateUntil);
   }
 
-  dateIsValid(): Boolean {
+  dateIsValid(): boolean {
     try {
-      const dateUntil = new Date(this.date.year, this.date.month-1, this.date.day, this.time.hour, this.time.minute);
+      const dateUntil = this.getEndDate();
       const diff = this.dateDiffInHours(new Date(), dateUntil);
 
-      return diff > 0;
+      return diff >= 0;
     } catch (error) {
       return false;
     }
   }
- 
+
   dateDiffInHours(a: Date, b: Date) {
     const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes());
     const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate(), b.getHours(), b.getMinutes());
@@ -66,20 +68,36 @@ export class ToolReservationPageComponent implements OnInit {
     return Math.floor((utc2 - utc1) / this.MS_PER_HOUR);
   }
 
+  calculateTotalPrice(endDate: Date) {
+    const rentHours = this.dateDiffInHours(new Date(), endDate) + 1;
+    if (rentHours < 24) {
+      return rentHours * this.tool.hourlyPrice;
+    }
+
+    return Math.ceil(rentHours / 24) * this.tool.dailyPrice;
+}
+
   async rentTool() {
     if(!this.dateIsValid()) {
       return;
     }
 
-    const endDate = new Date(this.date.year, this.date.month-1, this.date.day, this.time.hour, this.time.minute);
-    const res = await this.toolsService.rentTool(this.tool.id, 1, endDate);
-    
-    if (!res.ok) {
-      const dialogRef = this.matDialog.open(DialogComponent, {
-        width: '25%',
-        data: DialogConstants.TOOL_RENT_ERROR
-      });
-    }
-    
+    const request = new RentStartDto();
+    request.userId = this.authenticationService.user.id;
+    request.rentEndDate = this.getEndDate();
+
+    this.toolsService.rentTool(this.tool.id, request).subscribe(result => {
+      if (!result) {
+        this.matDialog.open(DialogComponent, {
+          width: '25%',
+          data: DialogConstants.TOOL_RENT_ERROR
+        });
+      }
+    });
+
+  }
+
+  private getEndDate() {
+    return new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute);
   }
 }

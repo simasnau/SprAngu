@@ -6,7 +6,6 @@ import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
-import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class ToolsService {
     public List<ToolDto> getAllTools() {
         return toolRepository.findAll()
                 .stream()
-                .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()))
+                .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()) && tool.getVisible())
                 .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentUser(tool.getId())))
                 .collect(Collectors.toList());
     }
@@ -75,7 +74,7 @@ public class ToolsService {
     public Boolean changeToolVisibility(Long toolId) {
         var tool = toolRepository.getById(toolId);
         SecurityUtils.checkAccess(tool.getOwner().getId());
-        tool.setVisible(!tool.isVisible());
-        return toolRepository.save(tool).isVisible();
+        tool.setVisible(!tool.getVisible());
+        return toolRepository.save(tool).getVisible();
     }
 }

@@ -16,9 +16,7 @@ export class ToolDetailsPageComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     let id = this.route.snapshot.params['id'];
-    
-    this.tool = await this.toolsService.get(id);
-    console.log(this.tool);
+    this.toolsService.get(id).subscribe(result => this.tool = result);
   }
 
 }

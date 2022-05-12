@@ -58,7 +58,7 @@ public class Tool {
     private String imageContent;
 
     @Column(name = "VISIBLE")
-    private boolean visible = true;
+    private Boolean visible = true;
 
     @Column(name = "REMOVED")
     private Boolean removed;
