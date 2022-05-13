@@ -77,17 +77,12 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
     }
 
     @Override
-    public List<ToolBasicDto> getAllUserToolsByUserId(Long userId) {
+    public List<Tool> getAllUserToolsByUserId(Long userId) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<ToolBasicDto> query = cb.createQuery(ToolBasicDto.class);
+        CriteriaQuery<Tool> query = cb.createQuery(Tool.class);
         Root<Tool> root = query.from(Tool.class);
-        query.multiselect(
-                root.get(Tool_.id),
-                root.get(Tool_.name),
-                root.get(Tool_.description),
-                root.get(Tool_.hourlyPrice),
-                root.get(Tool_.dailyPrice),
-                root.get(Tool_.visible));
+
+        query.select(root);
 
         query.where(cb.equal(root.get(Tool_.owner).get(RegisteredUser_.id), userId),
                 cb.or(

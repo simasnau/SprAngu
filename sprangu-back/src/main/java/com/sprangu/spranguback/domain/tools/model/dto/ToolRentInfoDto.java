@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -20,7 +21,7 @@ public class ToolRentInfoDto {
     private String toolName;
     private String toolDescription;
     private ToolTypeEnum toolType;
-    private String imageContent;
+    private List<String> imageContent;
     private RegisteredUser owner;
     private String userName;
     private LocalDateTime rentStartDate;

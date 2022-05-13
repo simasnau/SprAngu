@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -16,6 +18,6 @@ public class ToolCreateDto {
     private Integer hourlyPrice;
     private Integer dailyPrice;
     private ToolTypeEnum toolType;
-    private String imageContent;
+    private List<String> imageContent;
 
 }

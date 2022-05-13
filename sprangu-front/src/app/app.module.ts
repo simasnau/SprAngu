@@ -18,8 +18,15 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {AuthenticationService} from "./services/authentication.service";
 import {CredentialsInterceptor} from "./utils/credentials-interceptor.service";
-import { ToolReservationPageComponent } from './pages/tool-reservation-page/tool-reservation-page.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {ToolReservationPageComponent} from './pages/tool-reservation-page/tool-reservation-page.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ToolEditComponent} from './pages/my-tools/tool-edit/tool-edit.component';
+import {MatInputModule} from "@angular/material/input";
+import {TooltipModule} from "ngx-bootstrap/tooltip";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatIconModule} from "@angular/material/icon";
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -33,6 +40,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MyToolsComponent,
     DialogComponent,
     ToolReservationPageComponent,
+    ToolEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +53,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     MatDialogModule,
     NoopAnimationsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatInputModule,
+    TooltipModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   exports: [
     AppRoutingModule

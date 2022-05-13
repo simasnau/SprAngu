@@ -6,6 +6,7 @@ import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
+import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class ToolsService {
     private final ToolRepository toolRepository;
     private final UserRepository userRepository;
     private final ToolRentInfoService toolRentInfoService;
+    private final UserService userService;
 
     public List<ToolDto> getAllTools() {
         return toolRepository.findAll()
@@ -41,7 +43,7 @@ public class ToolsService {
                 .description(toolCreateDto.getDescription())
                 .owner(userRepository.getById(toolCreateDto.getOwnerId()))
                 .toolType(toolCreateDto.getToolType())
-                .imageContent(toolCreateDto.getImageContent())
+                .images(toolCreateDto.getImageContent())
                 .build();
 
         return toolRepository.save(tool).getId();
@@ -58,9 +60,11 @@ public class ToolsService {
                 .collect(Collectors.toList());
     }
 
-    public List<ToolBasicDto> getAllUserToolsByUserId(Long userId) {
-        SecurityUtils.checkAccess(userId);
-        return toolRepository.getAllUserToolsByUserId(userId);
+    public List<ToolBasicDto> getAllUserToolsByUserId() {
+        return toolRepository.getAllUserToolsByUserId(userService.getLoggedUser().getId())
+                .stream()
+                .map(ToolBasicDto::of)
+                .collect(Collectors.toList());
     }
 
     public Boolean deleteTool(Long toolId) {
@@ -76,5 +80,17 @@ public class ToolsService {
         SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setVisible(!tool.getVisible());
         return toolRepository.save(tool).getVisible();
+    }
+
+    public void updateTool(ToolDto toolDto) {
+        var tool = toolRepository.getById(toolDto.getId());
+        SecurityUtils.checkAccess(tool.getOwner().getId());
+        tool.setName(toolDto.getName());
+        tool.setDescription(toolDto.getDescription());
+        tool.setHourlyPrice(toolDto.getHourlyPrice());
+        tool.setDailyPrice(toolDto.getDailyPrice());
+        tool.setImages(toolDto.getImageContent());
+        tool.setToolType(toolDto.getToolType());
+        toolRepository.save(tool);
     }
 }

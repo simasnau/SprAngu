@@ -39,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public final String[] UNAUTHORIZED_URLS = {
             "/api/user/**",
+            "/api/tools/all"
     };
 
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

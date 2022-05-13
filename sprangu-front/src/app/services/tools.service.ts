@@ -27,8 +27,7 @@ export class ToolsService {
   }
 
   getUserToolsShortView(): Observable<ToolBasicDto[]> {
-    const url = UrlConstants.myTools + '/' + this.authenticationService.user.id;
-    return this.httpClient.get<ToolBasicDto[]>(url, {headers: UrlConstants.headers});
+    return this.httpClient.get<ToolBasicDto[]>(UrlConstants.myTools, {headers: UrlConstants.headers});
   }
 
   deleteToolFromMyTools(toolId: number): Observable<boolean> {
@@ -43,5 +42,9 @@ export class ToolsService {
 
   rentTool(toolId: number, request: RentStartDto): Observable<boolean> {
     return this.httpClient.post<boolean>(UrlConstants.toolsEndpoint + '/' + toolId + '/rent', request);
+  }
+
+  updateToolDescription(model: ToolForRental): Observable<void> {
+    return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/update", model);
   }
 }
