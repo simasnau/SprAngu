@@ -63,7 +63,7 @@ public class ToolRentInfoRepositoryImpl implements ToolRentInfoRepositoryCustom 
                 toolJoin.get(Tool_.name),
                 toolJoin.get(Tool_.description),
                 toolJoin.get(Tool_.toolType),
-                toolJoin.get(Tool_.imageContent),
+                toolJoin.get(Tool_.images),
                 toolJoin.get(Tool_.owner),
                 userJoin.get(RegisteredUser_.name),
                 root.get(ToolRentInfo_.startDate),

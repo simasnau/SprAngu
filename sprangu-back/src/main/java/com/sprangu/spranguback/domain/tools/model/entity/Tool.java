@@ -8,17 +8,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -53,9 +59,10 @@ public class Tool {
     @Enumerated(EnumType.STRING)
     private ToolTypeEnum toolType;
 
-    @Lob
-    @Column(name = "IMAGE_CONTENT")
-    private String imageContent;
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "IMAGE_CONTENT", joinColumns = @JoinColumn(name = "TOOL_ID"))
+    @Column(name = "CONTENT", columnDefinition="CLOB")
+    private List<String> images = new ArrayList<>();
 
     @Column(name = "VISIBLE")
     private Boolean visible = true;

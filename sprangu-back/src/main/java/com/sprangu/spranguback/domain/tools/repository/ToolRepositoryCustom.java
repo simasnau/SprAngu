@@ -12,5 +12,5 @@ public interface ToolRepositoryCustom {
 
     List<Tool> searchTools(ToolsFilter toolsFilter);
 
-    List<ToolBasicDto> getAllUserToolsByUserId(Long userId);
+    List<Tool> getAllUserToolsByUserId(Long userId);
 }

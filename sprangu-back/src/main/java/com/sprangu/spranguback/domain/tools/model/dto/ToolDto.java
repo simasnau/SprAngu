@@ -1,20 +1,23 @@
 package com.sprangu.spranguback.domain.tools.model.dto;
 
+import com.sprangu.spranguback.application.utils.ImageUtils;
 import com.sprangu.spranguback.domain.tools.model.ToolTypeEnum;
 import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ToolDto {
     private Long id;
     private String name;
@@ -24,9 +27,10 @@ public class ToolDto {
     private Integer hourlyPrice;
     private Integer dailyPrice;
     private ToolTypeEnum toolType;
-    private String imageContent;
+    private List<String> imageContent;
 
     public static ToolDto of(Tool tool, RegisteredUser currentUser) {
+        Hibernate.initialize(tool.getImages());
         return ToolDto.builder()
                 .id(tool.getId())
                 .name(tool.getName())
@@ -36,7 +40,7 @@ public class ToolDto {
                 .hourlyPrice(tool.getHourlyPrice())
                 .dailyPrice(tool.getDailyPrice())
                 .toolType(tool.getToolType())
-                .imageContent(tool.getImageContent())
+                .imageContent(ImageUtils.resizeToThumbnails(tool.getImages()))
                 .build();
     }
 }
