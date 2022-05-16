@@ -44,7 +44,7 @@ export class ToolsService {
     return this.httpClient.post<boolean>(UrlConstants.toolsEndpoint + '/' + toolId + '/rent', request);
   }
 
-  updateToolDescription(model: ToolForRental): Observable<void> {
-    return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/update", model);
+  updateToolDescription(model: ToolForRental): Observable<ToolForRental> {
+    return this.httpClient.put<ToolForRental>(UrlConstants.toolsEndpoint + "/update", model);
   }
 }

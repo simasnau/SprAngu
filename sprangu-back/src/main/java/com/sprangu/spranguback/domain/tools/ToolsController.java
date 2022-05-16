@@ -7,6 +7,9 @@ import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolRentInfoDto;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.dialect.lock.OptimisticEntityLockException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.OptimisticLockException;
 import java.util.List;
 
 @RestController
@@ -78,8 +82,17 @@ public class ToolsController {
     }
 
     @PutMapping("/update")
-    public void updateToolDescription(@RequestBody ToolDto toolDto) {
-        toolsService.updateTool(toolDto);
+    public ResponseEntity<ToolDto> updateToolDescription(@RequestBody ToolDto toolDto) {
+        var updatedTool = toolDto;
+
+        try {
+            updatedTool = toolsService.updateTool(toolDto);
+        } catch (OptimisticLockException e) {
+            System.out.println("Optimistic Lock !!!");
+            return new ResponseEntity<>(toolDto, HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(updatedTool, HttpStatus.OK);
     }
 
 }

@@ -23,19 +23,32 @@ export class ToolEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.toolsService.get(Number(this.route.snapshot.paramMap.get('id'))).subscribe(result => {
-      console.log(result)
       this.model = result;
       console.log(this.model);
     });
   }
 
-  submit(form: any): void {
+  async submit(form: any): Promise<void> {
     if (form.invalid) {
       return;
     }
     console.log(this.model)
+
+    // this.model.hourlyPrice = 30;
     this.toolsService.updateToolDescription(this.model).subscribe(
-      () => window.location.reload()
+      (e) => {
+        console.log("Res: ", e);
+        // window.location.reload()
+      }
+    );
+
+    await new Promise(r => setTimeout(r, 5000));
+
+    this.model.hourlyPrice += 100;
+    this.toolsService.updateToolDescription(this.model).subscribe(
+      (e) => {
+        console.log("Res: ", e);
+      }
     );
   }
 

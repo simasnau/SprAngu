@@ -10,8 +10,12 @@ import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,8 +86,13 @@ public class ToolsService {
         return toolRepository.save(tool).getVisible();
     }
 
-    public void updateTool(ToolDto toolDto) {
-        var tool = toolRepository.getById(toolDto.getId());
+    @ResponseBody
+    @Transactional
+    public ToolDto updateTool(ToolDto toolDto) {
+        var tooId = toolDto.getId();
+        var tool = toolRepository.getById(tooId);
+//        tool.setVersion(tool.getVersion() + 1);
+
         SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setName(toolDto.getName());
         tool.setDescription(toolDto.getDescription());
@@ -91,6 +100,16 @@ public class ToolsService {
         tool.setDailyPrice(toolDto.getDailyPrice());
         tool.setImages(toolDto.getImageContent());
         tool.setToolType(toolDto.getToolType());
-        toolRepository.save(tool);
+
+        System.out.println("Original Version:" + tool.getVersion());
+        System.out.println("New Version:" + toolDto.getVersion());
+
+        tool.setVersion(toolDto.getVersion());
+
+        toolRepository.saveAndFlush(tool);
+//        toolRepository.save(tool);
+//        toolRepository.flush();
+
+        return ToolDto.of(toolRepository.getById(tooId), toolRentInfoService.getCurrentUser(tooId));
     }
 }
