@@ -22,10 +22,8 @@ export class ToolEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.toolsService.get(Number(this.route.snapshot.paramMap.get('id'))).subscribe(result => {
-      console.log(result)
+    this.toolsService.getForEdit(Number(this.route.snapshot.paramMap.get('id'))).subscribe(result => {
       this.model = result;
-      console.log(this.model);
     });
   }
 
@@ -33,7 +31,6 @@ export class ToolEditComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    console.log(this.model)
     this.toolsService.updateToolDescription(this.model).subscribe(
       () => window.location.reload()
     );

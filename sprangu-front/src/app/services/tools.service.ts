@@ -47,4 +47,12 @@ export class ToolsService {
   updateToolDescription(model: ToolForRental): Observable<void> {
     return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/update", model);
   }
+
+  getFullImages(id: number): Observable<String[]> {
+    return this.httpClient.get<String[]>(UrlConstants.toolsEndpoint + "/" + id + "/full-images");
+  }
+
+  getForEdit(id: number) {
+    return this.httpClient.get<ToolForRental>(UrlConstants.toolsEndpoint + '/' + id + "/edit");
+  }
 }

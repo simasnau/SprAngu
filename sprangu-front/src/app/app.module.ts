@@ -27,6 +27,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import {NgImageSliderModule} from "ng-image-slider";
 
 @NgModule({
   declarations: [
@@ -42,25 +43,26 @@ import {MatSelectModule} from "@angular/material/select";
     ToolReservationPageComponent,
     ToolEditComponent,
   ],
-  imports: [
-    BrowserModule,
-    RouterModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgbModule,
-    HttpClientModule,
-    BrowserModule,
-    MatDialogModule,
-    NoopAnimationsModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    TooltipModule,
-    MatTooltipModule,
-    MatIconModule,
-    MatOptionModule,
-    MatSelectModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgbModule,
+        HttpClientModule,
+        BrowserModule,
+        MatDialogModule,
+        NoopAnimationsModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        TooltipModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatOptionModule,
+        MatSelectModule,
+        NgImageSliderModule
+    ],
   exports: [
     AppRoutingModule
   ],

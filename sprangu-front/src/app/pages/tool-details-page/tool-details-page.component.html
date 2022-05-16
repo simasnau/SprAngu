@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="tool.id">
   <div class="row">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -11,9 +11,12 @@
 
   <div class="row">
     <div class="col-6">
-      <img class="card-img-top"
-           src="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc="
-           alt="Tool image">
+      <div *ngIf="tool.imageContent.length <= 0; else imagesTemplate"
+           class="img-wrapper text-center d-flex align-items-center">
+        <img class="card-img-top"
+             src="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc="
+             alt="Tool image">
+      </div>
     </div>
     <div class="col-6 bg-light p-3 ">
       <h1>{{ tool.name }}</h1>
@@ -45,3 +48,12 @@
     <p>{{ tool.description }}</p>
   </div>
 </div>
+
+<ng-template #imagesTemplate>
+  <ng-image-slider class="d-flex align-items-center"
+                   [images]="imagesList"
+                   #nav
+                   [manageImageRatio]="true"
+                   (imageClick)="expandImage($event)">
+  </ng-image-slider>
+</ng-template>

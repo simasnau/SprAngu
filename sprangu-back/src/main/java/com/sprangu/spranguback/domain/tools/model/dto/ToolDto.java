@@ -29,7 +29,7 @@ public class ToolDto {
     private ToolTypeEnum toolType;
     private List<String> imageContent;
 
-    public static ToolDto of(Tool tool, RegisteredUser currentUser) {
+    public static ToolDto of(Tool tool, RegisteredUser currentUser, boolean rawImages) {
         Hibernate.initialize(tool.getImages());
         return ToolDto.builder()
                 .id(tool.getId())
@@ -40,7 +40,7 @@ public class ToolDto {
                 .hourlyPrice(tool.getHourlyPrice())
                 .dailyPrice(tool.getDailyPrice())
                 .toolType(tool.getToolType())
-                .imageContent(ImageUtils.resizeToThumbnails(tool.getImages()))
+                .imageContent(rawImages ? tool.getImages() : ImageUtils.resizeToThumbnails(tool.getImages()))
                 .build();
     }
 }
