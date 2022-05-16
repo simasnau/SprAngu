@@ -7,7 +7,6 @@ import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolRentInfoDto;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -93,6 +92,16 @@ public class ToolsController {
         }
 
         return new ResponseEntity<>(updatedTool, HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}/timeout")
+    public Long updateTimeout(@PathVariable("id") Long id) {
+        return toolsService.updateToolTimeout(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public Long update(@PathVariable("id") Long id) {
+        return toolsService.updateTool(id);
     }
 
 }

@@ -10,12 +10,12 @@ import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.SneakyThrows;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.persistence.OptimisticLockException;
+import javax.persistence.LockModeType;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,6 +88,7 @@ public class ToolsService {
 
     @ResponseBody
     @Transactional
+    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
     public ToolDto updateTool(ToolDto toolDto) {
         var tooId = toolDto.getId();
         var tool = toolRepository.getById(tooId);
@@ -111,5 +112,29 @@ public class ToolsService {
 //        toolRepository.flush();
 
         return ToolDto.of(toolRepository.getById(tooId), toolRentInfoService.getCurrentUser(tooId));
+    }
+
+    /**
+     * update with timeout
+     */
+    @SneakyThrows
+    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
+    public Long updateToolTimeout(Long id) {
+        var tool = toolRepository.getById(id);
+        tool.setDescription("Naujas description su timeout");
+        Thread.sleep(10000);
+        toolRepository.flush();
+        return toolRepository.save(tool).getId();
+    }
+
+    /**
+     * update with no timeout
+     */
+    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
+    public Long updateTool(Long id) {
+        var tool = toolRepository.getById(id);
+        tool.setDescription("Naujas description be timeout");
+        toolRepository.flush();
+        return toolRepository.save(tool).getId();
     }
 }
