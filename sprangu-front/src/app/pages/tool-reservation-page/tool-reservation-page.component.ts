@@ -7,6 +7,7 @@ import { ToolForRental } from 'src/app/domain/tools/toolForRental.model';
 import { ToolsService } from 'src/app/services/tools.service';
 import {AuthenticationService} from "../../services/authentication.service";
 import {RentStartDto} from "../../domain/tools/rent-start-dto";
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-tool-reservation-page',
@@ -26,6 +27,7 @@ export class ToolReservationPageComponent implements OnInit {
     private route: ActivatedRoute,
     private toolsService: ToolsService,
     private authenticationService: AuthenticationService,
+    private location: Location,
     public matDialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
@@ -92,6 +94,12 @@ export class ToolReservationPageComponent implements OnInit {
           width: '25%',
           data: DialogConstants.TOOL_RENT_ERROR
         });
+      } else {
+        this.matDialog.open(DialogComponent, {
+          width: '25%',
+          data: DialogConstants.TOOL_RENT_SUCCES
+        }).afterClosed().subscribe(() => this.location.back());
+
       }
     });
 

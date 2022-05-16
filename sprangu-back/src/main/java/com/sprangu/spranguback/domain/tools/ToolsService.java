@@ -30,7 +30,7 @@ public class ToolsService {
         return toolRepository.findAll()
                 .stream()
                 .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()) && tool.getVisible())
-                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentUser(tool.getId())))
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId())))
                 .collect(Collectors.toList());
     }
 
@@ -50,13 +50,13 @@ public class ToolsService {
     }
 
     public ToolDto getById(@NonNull Long id) {
-        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentUser(id));
+        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentRentInfo(id));
     }
 
     public List<ToolDto> searchTools(@NonNull ToolsFilter toolsFilter) {
         return toolRepository.searchTools(toolsFilter)
                 .stream()
-                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentUser(tool.getId())))
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId())))
                 .collect(Collectors.toList());
     }
 
@@ -72,7 +72,7 @@ public class ToolsService {
         SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setRemoved(true);
         toolRepository.save(tool);
-        return toolRentInfoService.getCurrentUser(toolId) == null;
+        return toolRentInfoService.getCurrentRentInfo(toolId) == null;
     }
 
     public Boolean changeToolVisibility(Long toolId) {
