@@ -5791,3 +5791,4 @@ select tool0_.id as col_0_0_, tool0_.name as col_1_0_, tool0_.description as col
 2022-05-13 18:35:29.125  INFO 15424 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-13 18:35:29.128  INFO 15424 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-05-13 18:35:29.129  INFO 15424 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-05-17 00:03:27.297  INFO 11208 --- [http-nio-8080-exec-10] c.s.s.a.inteceptors.LoggingInterceptor   : [User: Jonas, role: USER][GET]/api/tools/all
