@@ -1,10 +1,10 @@
 package com.sprangu.spranguback.domain.tools;
 
 import com.sprangu.spranguback.domain.tools.model.dto.RentEndDto;
-import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
-import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
-import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.dto.RentStartDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
+import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolRentInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,9 +47,9 @@ public class ToolsController {
         return toolsService.searchTools(toolsFilter);
     }
 
-    @GetMapping("/my-tools/{id}")
-    public List<ToolBasicDto> getAllUserToolsById(@PathVariable("id") Long userId) {
-        return toolsService.getAllUserToolsById(userId);
+    @GetMapping("/my-tools")
+    public List<ToolBasicDto> getAllUserToolsByUserId() {
+        return toolsService.getAllUserToolsByUserId();
     }
 
     @DeleteMapping("/my-tools/{id}/delete")
@@ -74,6 +75,11 @@ public class ToolsController {
     @GetMapping("/rented-tools/{userId}")
     public List<ToolRentInfoDto> getToolRentInfo(@PathVariable Long userId) {
         return toolRentInfoService.getToolRentInfoForUser(userId);
+    }
+
+    @PutMapping("/update")
+    public void updateToolDescription(@RequestBody ToolDto toolDto) {
+        toolsService.updateTool(toolDto);
     }
 
 }

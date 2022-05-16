@@ -6,4 +6,5 @@ export class ToolBasicDto {
   hourlyPrice: string;
   dailyPrice: string;
   visible: boolean;
+  image: string
 }
