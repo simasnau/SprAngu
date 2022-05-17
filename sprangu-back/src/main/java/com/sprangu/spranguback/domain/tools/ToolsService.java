@@ -88,7 +88,6 @@ public class ToolsService {
 
     @ResponseBody
     @Transactional
-//    @SneakyThrows
     @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
     public ToolDto updateTool(ToolDto toolDto) {
         var tooId = toolDto.getId();
@@ -105,7 +104,7 @@ public class ToolsService {
         System.out.println("Original Version:" + tool.getVersion());
         System.out.println("New Version:" + toolDto.getVersion());
 
-//        tool.setVersion(toolDto.getVersion());
+        tool.setVersion(toolDto.getVersion());
 
 //        toolRepository.saveAndFlush(tool);
         toolRepository.flush();

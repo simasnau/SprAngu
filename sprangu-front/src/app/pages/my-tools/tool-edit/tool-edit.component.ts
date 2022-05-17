@@ -34,7 +34,6 @@ export class ToolEditComponent implements OnInit {
     }
     console.log(this.model)
 
-    // this.model.hourlyPrice = 30;
     this.toolsService.updateToolDescription(this.model).subscribe(
       (e) => {
         console.log("Res: ", e);
@@ -42,14 +41,14 @@ export class ToolEditComponent implements OnInit {
       }
     );
 
-    await new Promise(r => setTimeout(r, 5000));
+    // await new Promise(r => setTimeout(r, 5000));
 
-    this.model.hourlyPrice += 100;
-    this.toolsService.updateToolDescription(this.model).subscribe(
-      (e) => {
-        console.log("Res: ", e);
-      }
-    );
+    // this.model.hourlyPrice += 100;
+    // this.toolsService.updateToolDescription(this.model).subscribe(
+    //   (e) => {
+    //     console.log("Res: ", e);
+    //   }
+    // );
   }
 
   processFile(imageInput: HTMLInputElement): void {
