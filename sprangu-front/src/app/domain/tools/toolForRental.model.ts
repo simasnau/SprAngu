@@ -9,5 +9,5 @@ export class ToolForRental {
     hourlyPrice: number;
     dailyPrice:number;
     toolType: string;
-    images: String[] = [];
+    imageContent: String[] = [];
   }

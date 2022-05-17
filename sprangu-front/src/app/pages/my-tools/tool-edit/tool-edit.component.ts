@@ -43,20 +43,20 @@ export class ToolEditComponent implements OnInit {
     if (!imageInput.files) {
       return;
     }
-    if (!this.model.images) {
-      this.model.images = []
+    if (!this.model.imageContent) {
+      this.model.imageContent = []
     }
     for (let i = 0; i < imageInput.files.length; i++) {
       let reader = new FileReader();
       reader.readAsDataURL(imageInput.files[i]);
       reader.onload = (event) => {
         // @ts-ignore
-        this.model.images.push(<String>event.target.result);
+        this.model.imageContent.push(<String>event.target.result);
       }
     }
   }
 
   removeFile(i: number): void {
-    this.model.images.splice(i, 1);
+    this.model.imageContent.splice(i, 1);
   }
 }

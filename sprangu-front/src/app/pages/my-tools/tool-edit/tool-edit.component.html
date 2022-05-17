@@ -19,7 +19,7 @@
     <div class="form-group align-items-center">
       <label class="col-3">Nuotraukos:</label>
       <div class="">
-        <div class="col-4 img_wrap" *ngFor="let file of model.images; let i = index">
+        <div class="col-4 img_wrap" *ngFor="let file of model.imageContent; let i = index">
           <span class="close float-end" role="button" (click)="removeFile(i)">&times;</span>
           <img class="w-100 p-2" src="{{file}}" alt="">
         </div>
