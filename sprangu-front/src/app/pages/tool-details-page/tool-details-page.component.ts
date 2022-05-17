@@ -58,24 +58,28 @@ export class ToolDetailsPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.toolsService.returnTool(this.tool.currentRentId).subscribe(response => {
-          if (response === null) {
-            this.openDialog(DialogConstants.TOOL_RETURN_ERROR);
-          } else {
-            var text = 'Įrankis sėkmingai grąžintas. Kaina: ' + response.totalPrice + ".";
-            if (response.daysLate > 0) {
-              text += " Vėluojate grąžinti įrankį " + response.daysLate + " dienas. Jums buvo pritaikytas padidintas mokestis";
-            } else {
-              text += " Įrankį gražinote laiku";
-            }
-
-            const dialogData = new DialogData(text, '', 'Apmokėti', DialogRelevance.SUCCESS);
-            this.openDialog(dialogData);
-            this.getTool(this.tool.id);
-          }
-        });
+      if (!result) {
+        return;
       }
+
+      this.toolsService.returnTool(this.tool.currentRentId).subscribe(response => {
+        if (response === null) {
+          this.openDialog(DialogConstants.TOOL_RETURN_ERROR);
+          return;
+        }
+
+        var text = 'Įrankis sėkmingai grąžintas. Kaina: ' + response.totalPrice + ".";
+        if (response.daysLate > 0) {
+          text += " Vėluojate grąžinti įrankį " + response.daysLate + " dienas. Jums buvo pritaikytas padidintas mokestis";
+        } else {
+          text += " Įrankį gražinote laiku";
+        }
+
+        const dialogData = new DialogData(text, '', 'Apmokėti', DialogRelevance.SUCCESS);
+        this.openDialog(dialogData);
+        this.getTool(this.tool.id);
+
+      });
     });
   }
 

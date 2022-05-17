@@ -1,5 +1,6 @@
 package com.sprangu.spranguback.domain.tools;
 
+import com.sprangu.spranguback.application.utils.SecurityUtils;
 import com.sprangu.spranguback.domain.tools.model.dto.CurrentRentInfo;
 import com.sprangu.spranguback.domain.tools.model.dto.RentEndDto;
 import com.sprangu.spranguback.domain.tools.model.dto.RentStartDto;
@@ -9,7 +10,6 @@ import com.sprangu.spranguback.domain.tools.model.entity.ToolRentInfo;
 import com.sprangu.spranguback.domain.tools.repository.ToolRentInfoRepository;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
 import com.sprangu.spranguback.domain.user.UserService;
-import com.sprangu.spranguback.domain.user.model.security.UserDetailed;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -60,10 +60,7 @@ public class ToolRentInfoService {
     public RentEndDto stopRent(@NonNull Long rentInfoId) {
         ToolRentInfo toolRentInfo = toolRentInfoRepository.getById(rentInfoId);
 
-        UserDetailed loggedUser = userService.getLoggedUser();
-        if (!loggedUser.getId().equals(toolRentInfo.getUser().getId())) {
-            throw new IllegalArgumentException("You are not the user that rented this item");
-        }
+        SecurityUtils.checkAccess(toolRentInfo.getUser().getId());
 
         toolRentInfo.setRealEndDate(LocalDateTime.now());
         toolRentInfoRepository.save(toolRentInfo);
