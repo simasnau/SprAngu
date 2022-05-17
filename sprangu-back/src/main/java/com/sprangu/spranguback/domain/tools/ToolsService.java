@@ -88,11 +88,11 @@ public class ToolsService {
 
     @ResponseBody
     @Transactional
+//    @SneakyThrows
     @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
     public ToolDto updateTool(ToolDto toolDto) {
         var tooId = toolDto.getId();
         var tool = toolRepository.getById(tooId);
-//        tool.setVersion(tool.getVersion() + 1);
 
         SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setName(toolDto.getName());
@@ -105,13 +105,13 @@ public class ToolsService {
         System.out.println("Original Version:" + tool.getVersion());
         System.out.println("New Version:" + toolDto.getVersion());
 
-        tool.setVersion(toolDto.getVersion());
+//        tool.setVersion(toolDto.getVersion());
 
-        toolRepository.saveAndFlush(tool);
+//        toolRepository.saveAndFlush(tool);
+        toolRepository.flush();
 //        toolRepository.save(tool);
-//        toolRepository.flush();
 
-        return ToolDto.of(toolRepository.getById(tooId), toolRentInfoService.getCurrentUser(tooId));
+        return ToolDto.of(toolRepository.save(tool), toolRentInfoService.getCurrentUser(tooId));
     }
 
     /**
