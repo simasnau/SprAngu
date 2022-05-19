@@ -36,11 +36,7 @@
       </ul>
     </div>
 
-    <div *ngIf="authenticationService.isLogged(); else elseBlock">
-      <a class="btn btn-light btn-primary btn-space rounded" [routerLink]="'/create-tool/view'">Įkelti skelbimą</a>
-    </div>
-    <ng-template #elseBlock>
-      <a class="btn btn-light btn-primary btn-space rounded" [routerLink]="'/register'">Įkelti skelbimą</a>
-    </ng-template>
+    <button class="btn btn-light btn-primary btn-space rounded" [routerLink]=" !authenticationService.isLogged() ? ['/create-tool/view'] : ['/register']">Įkelti skelbimą</button>
+
   </div>
 </nav>

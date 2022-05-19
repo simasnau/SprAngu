@@ -17,3 +17,18 @@
     background-color: white;
     border: 1px solid;
   }
+
+  .form-group {
+  display: inline-flex;
+  width: 100%;
+}
+
+.form-group label {
+  text-align: left;
+  padding-right: 1em;
+  font-weight: bold;
+}
+
+.form-spacer {
+  padding: 1em;
+}
