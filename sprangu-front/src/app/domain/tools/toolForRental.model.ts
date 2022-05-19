@@ -6,6 +6,8 @@ export class ToolForRental {
     description: string;
     owner: UserInfo;
     currentUser: UserInfo;
+    currentRentId: number;
+    rentEndDate: Date
     hourlyPrice: number;
     dailyPrice:number;
     toolType: string;

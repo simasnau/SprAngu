@@ -22,6 +22,9 @@ export class DialogConstants {
   public static REMOVE_TOOL_ERROR = new DialogData('Negalima išimti skelbimo', '', 'Uždaryti', DialogRelevance.DANGER);
   public static REMOVE_TOOL_SUCCESS = new DialogData('Skelbimas išimtas', '', 'Uždaryti', DialogRelevance.SUCCESS);
   public static TOOL_RENT_ERROR = new DialogData('Įrankio išsinuomoti nepavyko. Bandykite vėliau', '', 'Uždaryti', DialogRelevance.DANGER);
+  public static TOOL_RENT_SUCCES = new DialogData('Sėkmingai išsinuomotas įrankis', '', 'Uždaryti', DialogRelevance.SUCCESS);
+  public static TOOL_RETURN_PROMPT = new DialogData('Ar tikrai norite grąžinti įrankį?', 'Taip', 'Atšaukti', DialogRelevance.DANGER);
+  public static TOOL_RETURN_ERROR = new DialogData('Nepavyko grąžinti įrankio bandykite dar kartą', '', 'Uždaryti', DialogRelevance.DANGER);
 }
 
 

@@ -6,6 +6,7 @@ import {UrlConstants} from "../constants/url-constants";
 import {AuthenticationService} from "./authentication.service";
 import {ToolBasicDto} from "../domain/tools/tool-basic-dto";
 import {RentStartDto} from "../domain/tools/rent-start-dto";
+import {RentEndDto} from "../domain/tools/rent-end-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,8 @@ export class ToolsService {
 
   createTool(model: ToolForRental): Observable<void> {
     return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/create", model);
+
+  returnTool(currentRentId: number): Observable<RentEndDto> {
+    return this.httpClient.get<RentEndDto>(UrlConstants.toolsEndpoint + '/rent/stop/' + currentRentId)
   }
 }
