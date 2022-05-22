@@ -70,7 +70,7 @@ export class ToolDetailsPageComponent implements OnInit {
 
         var text = 'Įrankis sėkmingai grąžintas. Kaina: ' + response.totalPrice + ".";
         if (response.daysLate > 0) {
-          text += " Vėluojate grąžinti įrankį " + response.daysLate + " dienas. Jums buvo pritaikytas padidintas mokestis";
+          text += " Vėluojate grąžinti įrankį " + response.daysLate + " dieną/s. Jums buvo pritaikytas padidintas mokestis";
         } else {
           text += " Įrankį gražinote laiku";
         }

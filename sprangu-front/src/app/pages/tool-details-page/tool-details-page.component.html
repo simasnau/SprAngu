@@ -38,7 +38,7 @@
         <button *ngIf="isCurrentLoaner" (click)="returnTool()" class="btn btn-primary" type="button">Grąžinti</button>
       </div>
 
-        <div *ngIf="!isCurrentLoaner" class="alert alert-danger mt-4" role="alert">
+        <div *ngIf="!isCurrentLoaner && tool.currentUser" class="alert alert-danger mt-4" role="alert">
           Šį įrankį šiuo metu yra išsinuomojęs/usi {{tool.currentUser.name}} iki {{rentEndDate | date:'y-MM-dd HH:mm'}}
       </div>
     </div>
