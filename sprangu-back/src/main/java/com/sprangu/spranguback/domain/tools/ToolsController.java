@@ -82,4 +82,8 @@ public class ToolsController {
         toolsService.updateTool(toolDto);
     }
 
+    @PutMapping("/create")
+    public void createTool(@RequestBody ToolCreateDto toolDto) {
+        toolsService.create(toolDto);
+    }
 }

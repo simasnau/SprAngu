@@ -36,5 +36,7 @@
       </ul>
     </div>
 
+    <button class="btn btn-light btn-primary btn-space rounded" [routerLink]=" !authenticationService.isLogged() ? ['/create-tool/view'] : ['/register']">Įkelti skelbimą</button>
+
   </div>
 </nav>
