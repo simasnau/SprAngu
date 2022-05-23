@@ -12,6 +12,8 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.util.List;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -24,20 +26,24 @@ public class ToolDto {
     private String description;
     private RegisteredUser owner;
     private RegisteredUser currentUser;
+    private Long currentRentId;
+    private Date rentEndDate;
     private Integer hourlyPrice;
     private Integer dailyPrice;
     private ToolTypeEnum toolType;
     private List<String> imageContent;
     private Integer version;
 
-    public static ToolDto of(Tool tool, RegisteredUser currentUser) {
+    public static ToolDto of(Tool tool, CurrentRentInfo currentRentInfo) {
         Hibernate.initialize(tool.getImages());
         return ToolDto.builder()
                 .id(tool.getId())
                 .name(tool.getName())
                 .description(tool.getDescription())
                 .owner(tool.getOwner())
-                .currentUser(currentUser)
+                .currentUser(currentRentInfo == null ? null : currentRentInfo.getCurrentUser())
+                .currentRentId(currentRentInfo == null ? null : currentRentInfo.getRentId())
+                .rentEndDate(currentRentInfo == null ? null : Timestamp.valueOf(currentRentInfo.getRentEndDate()))
                 .hourlyPrice(tool.getHourlyPrice())
                 .dailyPrice(tool.getDailyPrice())
                 .toolType(tool.getToolType())

@@ -3,13 +3,13 @@ package com.sprangu.spranguback.domain.tools.model.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
 public class RentStartDto {
 
-    private LocalDateTime rentEndDate;
+    private Date rentEndDate;
     private Long userId;
 
 }

@@ -35,7 +35,12 @@
       </ul>
 
       <div class="d-grid gap-2 col-6 mx-auto mt-4">
-        <a [routerLink]="['/tool', tool.id, 'reservation']" class="btn btn-primary" type="button">Nuomotis</a>
+        <button *ngIf="!isCurrentLoaner" [disabled]="disableRentButton()" [routerLink]="['/tool', tool.id, 'reservation']" class="btn btn-primary" type="button">{{getRentButtonMessage()}}</button>
+        <button *ngIf="isCurrentLoaner" (click)="returnTool()" class="btn btn-primary" type="button">Grąžinti</button>
+      </div>
+
+        <div *ngIf="!isCurrentLoaner" class="alert alert-danger mt-4" role="alert">
+          Šį įrankį šiuo metu yra išsinuomojęs/usi {{tool.currentUser.name}} iki {{rentEndDate | date:'y-MM-dd HH:mm'}}
       </div>
     </div>
   </div>
