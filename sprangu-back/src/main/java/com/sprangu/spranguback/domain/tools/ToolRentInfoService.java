@@ -103,7 +103,7 @@ public class ToolRentInfoService {
                 .build();
     }
 
-    public List<ToolRentInfoDto> getToolRentInfoForUser(@NonNull Long userId) {
-        return toolRentInfoRepository.getToolRentInfoForUser(userId);
+    public List<ToolRentInfoDto> getActiveToolRentInfoForUser(@NonNull Long userId) {
+        return toolRentInfoRepository.getToolRentInfoForUser(userId, true);
     }
 }

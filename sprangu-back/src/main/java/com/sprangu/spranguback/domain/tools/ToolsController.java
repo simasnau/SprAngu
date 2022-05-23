@@ -6,6 +6,7 @@ import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolRentInfoDto;
+import com.sprangu.spranguback.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import java.util.List;
 public class ToolsController {
 
     private final ToolsService toolsService;
+    private final UserService userService;
     private final ToolRentInfoService toolRentInfoService;
 
     @GetMapping("/{id}")
@@ -73,8 +75,13 @@ public class ToolsController {
     }
 
     @GetMapping("/rented-tools/{userId}")
-    public List<ToolRentInfoDto> getToolRentInfo(@PathVariable Long userId) {
-        return toolRentInfoService.getToolRentInfoForUser(userId);
+    public List<ToolRentInfoDto> getToolRentInfoForUser(@PathVariable Long userId) {
+        return toolRentInfoService.getActiveToolRentInfoForUser(userId);
+    }
+
+    @GetMapping("/my-rented-tools")
+    public List<ToolRentInfoDto> getMyRentedTools() {
+        return toolRentInfoService.getActiveToolRentInfoForUser(userService.getLoggedUser().getId());
     }
 
     @PutMapping("/update")
