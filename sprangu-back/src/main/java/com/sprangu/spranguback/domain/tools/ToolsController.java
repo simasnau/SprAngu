@@ -82,26 +82,13 @@ public class ToolsController {
 
     @PutMapping("/update")
     public ResponseEntity<ToolDto> updateToolDescription(@RequestBody ToolDto toolDto) {
-        var updatedTool = toolDto;
-
         try {
-            updatedTool = toolsService.updateTool(toolDto);
+            toolsService.updateTool(toolDto);
         } catch (OptimisticLockException e) {
-            System.out.println("Optimistic Lock !!!");
-            return new ResponseEntity<>(toolDto, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>(updatedTool, HttpStatus.OK);
-    }
-
-    @PutMapping("/update/{id}/timeout")
-    public Long updateTimeout(@PathVariable("id") Long id) {
-        return toolsService.updateToolTimeout(id);
-    }
-
-    @PutMapping("/update/{id}")
-    public Long update(@PathVariable("id") Long id) {
-        return toolsService.updateTool(id);
+        return new ResponseEntity<>(toolsService.getById(toolDto.getId()), HttpStatus.OK);
     }
 
     @PutMapping("/create")

@@ -10,8 +10,11 @@ import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,8 +89,12 @@ public class ToolsServiceImpl implements ToolsService {
         return toolRepository.save(tool).getVisible();
     }
 
+    @ResponseBody
+    @Transactional
     public void updateTool(ToolDto toolDto) {
-        var tool = toolRepository.getById(toolDto.getId());
+        var tooId = toolDto.getId();
+        var tool = toolRepository.getById(tooId);
+
         SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setName(toolDto.getName());
         tool.setDescription(toolDto.getDescription());
@@ -95,6 +102,12 @@ public class ToolsServiceImpl implements ToolsService {
         tool.setDailyPrice(toolDto.getDailyPrice());
         tool.setImages(toolDto.getImageContent());
         tool.setToolType(toolDto.getToolType());
+
+        if (tool.getVersion() != toolDto.getVersion()) {
+            throw new OptimisticLockException();
+        }
+
+        toolRepository.flush();
         toolRepository.save(tool);
     }
 
