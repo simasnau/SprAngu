@@ -49,6 +49,9 @@ export class ToolsService {
     return this.httpClient.put<ToolForRental>(UrlConstants.toolsEndpoint + "/update", model);
   }
 
+  createTool(model: ToolForRental): Observable<void> {
+    return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/create", model);
+
   returnTool(currentRentId: number): Observable<RentEndDto> {
     return this.httpClient.get<RentEndDto>(UrlConstants.toolsEndpoint + '/rent/stop/' + currentRentId)
   }

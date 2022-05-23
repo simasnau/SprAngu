@@ -32,7 +32,7 @@ public class ToolDto {
     private Integer dailyPrice;
     private ToolTypeEnum toolType;
     private List<String> imageContent;
-    private Integer version;
+    private boolean visible;
 
     public static ToolDto of(Tool tool, CurrentRentInfo currentRentInfo) {
         Hibernate.initialize(tool.getImages());
@@ -48,7 +48,7 @@ public class ToolDto {
                 .dailyPrice(tool.getDailyPrice())
                 .toolType(tool.getToolType())
                 .imageContent(ImageUtils.resizeToThumbnails(tool.getImages()))
-                .version(tool.getVersion())
+                .visible(Boolean.TRUE.equals(tool.getVisible()))
                 .build();
     }
 }

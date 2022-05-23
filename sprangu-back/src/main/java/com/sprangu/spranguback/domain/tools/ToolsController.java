@@ -104,4 +104,8 @@ public class ToolsController {
         return toolsService.updateTool(id);
     }
 
+    @PutMapping("/create")
+    public void createTool(@RequestBody ToolCreateDto toolDto) {
+        toolsService.create(toolDto);
+    }
 }

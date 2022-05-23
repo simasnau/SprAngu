@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row my-3">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a [routerLink]="'/'">Pagrindinis</a></li>
@@ -10,12 +10,11 @@
   </div>
 
   <div class="row">
-    <div class="col-6">
-      <img class="card-img-top"
-           src="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc="
-           alt="Tool image">
+    <div class="col-12 col-sm-6 d-flex align-items-center">
+      <img class="img-thumbnail" src="{{tool.imageContent && tool.imageContent[0] ? tool.imageContent[0] : 'assets/images/placeholder-image.png'}}"
+        alt="No image provided">
     </div>
-    <div class="col-6 bg-light p-3 ">
+    <div class="col-12 col-sm-6 bg-light p-3 ">
       <h1>{{ tool.name }}</h1>
 
       <div class="row">
@@ -26,11 +25,11 @@
       <ul class="list-group list-group-flush fs-5 mt-4">
         <li class="list-group-item">
           Nuoma <strong>1 val.</strong>
-          <span class="float-end"><strong>{{ tool.hourlyPrice }}</strong>€</span>
+          <span class="float-end"><strong>{{ tool.hourlyPrice }}</strong> €</span>
         </li>
         <li class="list-group-item">
           Nuoma <strong>1 d.</strong>
-          <span class="float-end"><strong>{{ tool.dailyPrice }}</strong>€</span>
+          <span class="float-end"><strong>{{ tool.dailyPrice }}</strong> €</span>
         </li>
       </ul>
 
@@ -39,13 +38,13 @@
         <button *ngIf="isCurrentLoaner" (click)="returnTool()" class="btn btn-primary" type="button">Grąžinti</button>
       </div>
 
-        <div *ngIf="!isCurrentLoaner" class="alert alert-danger mt-4" role="alert">
+        <div *ngIf="!isCurrentLoaner && tool.currentUser" class="alert alert-danger mt-4" role="alert">
           Šį įrankį šiuo metu yra išsinuomojęs/usi {{tool.currentUser.name}} iki {{rentEndDate | date:'y-MM-dd HH:mm'}}
       </div>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row my-3">
     <h2>Aprašymas / Specifikacijos</h2>
     <p>{{ tool.description }}</p>
   </div>
