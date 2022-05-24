@@ -1,22 +1,39 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ToolForRental} from "../domain/tools/toolForRental.model";
-import {firstValueFrom, Observable} from "rxjs";
+import {ToolsFilter} from "../domain/tools/toolsFilter.model";
+import {BehaviorSubject, firstValueFrom, Observable, Subject} from "rxjs";
 import {UrlConstants} from "../constants/url-constants";
 import {AuthenticationService} from "./authentication.service";
 import {ToolBasicDto} from "../domain/tools/tool-basic-dto";
 import {RentStartDto} from "../domain/tools/rent-start-dto";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToolsService {
 
+  UrlConstants = UrlConstants;
+
+  //eventschanged = new Subject<Event[]>()
+
   constructor(
     private httpClient: HttpClient,
     private authenticationService: AuthenticationService
   ) {
   }
+
+  //private events: Event[] = [];
+
+  // getEvents(){
+  //   return this.events.slice()
+  // }
+
+  // setEvents(events: Event[]){
+  //   this.events = events;
+  //   this.eventschanged.next(this.events.slice());
+  // }
 
   getAll(): Observable<ToolForRental[]> {
     return this.httpClient.get<ToolForRental[]>(UrlConstants.toolsEndpoint + '/all');
@@ -46,5 +63,15 @@ export class ToolsService {
 
   updateToolDescription(model: ToolForRental): Observable<void> {
     return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/update", model);
+  } 
+
+  @Output() searchEvent = new EventEmitter<Observable<ToolForRental[]>>();
+
+  searchTools(model: ToolsFilter): void{
+    this.searchEvent.emit(this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", ToolsFilter));
   }
+
+  // searchTools(model: ToolsFilter): Observable<ToolForRental[]>{
+  //     return this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", ToolsFilter);
+  // }
 }
