@@ -34,7 +34,7 @@ public class ToolsServiceImpl implements ToolsService {
         return toolRepository.findAll()
                 .stream()
                 .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()) && tool.getVisible())
-                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId())))
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId()), false))
                 .collect(Collectors.toList());
     }
 
@@ -54,13 +54,13 @@ public class ToolsServiceImpl implements ToolsService {
     }
 
     public ToolDto getById(@NonNull Long id) {
-        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentRentInfo(id));
+        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentRentInfo(id), false);
     }
 
     public List<ToolDto> searchTools(@NonNull ToolsFilter toolsFilter) {
         return toolRepository.searchTools(toolsFilter)
                 .stream()
-                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId())))
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId()), false))
                 .collect(Collectors.toList());
     }
 
