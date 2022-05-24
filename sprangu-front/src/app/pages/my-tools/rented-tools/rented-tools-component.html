@@ -1,0 +1,35 @@
+<div class="container py-3">
+  <h1>Mano išsinuomoti įrankiai</h1>
+
+  <div class="row my-3 py-3 border rounded" *ngFor="let rentInfo of rentedToolsInfo">
+
+    <div class="col-3 d-flex align-items-center border-end">
+      <img class="img-thumbnail"
+           src="{{rentInfo.imageContent && rentInfo.imageContent.length > 0 ? rentInfo.imageContent[0] : 'assets/images/placeholder-image.png'}}"
+           alt="No image provided">
+    </div>
+
+    <div class="col-4 d-flex align-items-center">
+      <div>
+        <p class="fw-bold">{{rentInfo.toolName}}</p>
+        <p>{{rentInfo.toolDescription}}</p>
+      </div>
+    </div>
+
+    <div class="col-2 d-flex align-items-center">
+      <div>
+        <p><span class="fw-bold">Sutarta nuomos kaina valandai {{rentInfo.hourlyPrice}}</span> € / val.</p>
+        <p><span class="fw-bold">Sutarta nuomos kaina dienai {{rentInfo.dailyPrice}}</span> € / val.</p>
+        <p><span class="fw-bold">Nuomos pradžia {{rentInfo.rentStartDate | date:'y-MM-dd HH:mm'}}</span></p>
+        <p><span class="fw-bold">Turite įrankį grąžinti iki {{rentInfo.originalEndDate | date:'y-MM-dd HH:mm'}}</span></p>
+      </div>
+    </div>
+
+    <div class="col-3 d-grid gap-3">
+      <button class="btn btn-sm btn-outline-primary fw-bold" [routerLink]="'/tool/' + rentInfo.toolId">
+        Atidaryti skelbimą
+      </button>
+    </div>
+
+  </div>
+</div>
