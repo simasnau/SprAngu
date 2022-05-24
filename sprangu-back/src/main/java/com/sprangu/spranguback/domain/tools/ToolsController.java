@@ -88,14 +88,12 @@ public class ToolsController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ToolDto> updateToolDescription(@RequestBody ToolDto toolDto) {
+    public ResponseEntity<Long> updateToolDescription(@RequestBody ToolDto toolDto) {
         try {
-            toolsService.updateTool(toolDto);
+            return new ResponseEntity<>(toolsService.updateTool(toolDto), HttpStatus.OK);
         } catch (OptimisticLockException e) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
-
-        return new ResponseEntity<>(toolsService.getById(toolDto.getId()), HttpStatus.OK);
     }
 
     @PutMapping("/create")

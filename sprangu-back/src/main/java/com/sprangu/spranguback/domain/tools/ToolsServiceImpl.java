@@ -91,7 +91,7 @@ public class ToolsServiceImpl implements ToolsService {
 
     @ResponseBody
     @Transactional
-    public void updateTool(ToolDto toolDto) {
+    public Long updateTool(ToolDto toolDto) {
         var tooId = toolDto.getId();
         var tool = toolRepository.getById(tooId);
 
@@ -108,7 +108,7 @@ public class ToolsServiceImpl implements ToolsService {
         }
 
         toolRepository.flush();
-        toolRepository.save(tool);
+        return toolRepository.save(tool).getId();
     }
 
     @Override

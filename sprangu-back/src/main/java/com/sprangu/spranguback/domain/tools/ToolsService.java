@@ -22,7 +22,7 @@ public interface ToolsService {
 
     Boolean changeToolVisibility(Long toolId);
 
-    void updateTool(ToolDto toolDto);
+    Long updateTool(ToolDto toolDto);
 
     String getStrategy();
 }

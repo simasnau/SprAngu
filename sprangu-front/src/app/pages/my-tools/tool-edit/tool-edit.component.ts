@@ -36,12 +36,11 @@ export class ToolEditComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    console.log(this.model)
 
     this.toolsService.updateToolDescription(this.model).subscribe({
       complete: () => window.location.reload(),
       error: (e) => {
-        if (e.status === 409) 
+        if (e.status === 409)
           this.openVersionMismatchDialog();
       }
     });
