@@ -62,4 +62,12 @@ export class ToolsService {
     return this.httpClient.get<ToolRentInfoDto[]>(UrlConstants.toolsEndpoint + '/my-rented-tools')
   }
 
+
+  getFullImages(id: number): Observable<String[]> {
+    return this.httpClient.get<String[]>(UrlConstants.toolsEndpoint + "/" + id + "/full-images");
+  }
+
+  getForEdit(id: number) {
+    return this.httpClient.get<ToolForRental>(UrlConstants.toolsEndpoint + '/' + id + "/edit");
+  }
 }

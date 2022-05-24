@@ -26,9 +26,8 @@ export class ToolEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.toolsService.get(Number(this.route.snapshot.paramMap.get('id'))).subscribe(result => {
+    this.toolsService.getForEdit(Number(this.route.snapshot.paramMap.get('id'))).subscribe(result => {
       this.model = result;
-      console.log(this.model);
     });
   }
 

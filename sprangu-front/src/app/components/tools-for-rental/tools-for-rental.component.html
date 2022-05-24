@@ -1,21 +1,25 @@
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 p-4 g-3">
+<div class="container">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 p-4 g-3">
 
-  <div class="col align-items-stretch d-flex" *ngFor="let item of tools">
-    <div class="card">
-      <div class="img-wrapper text-center">
-        <span class="d-inline-block h-100 align-middle"></span>
-        <img class="card-img-top"
-          src="{{item.imageContent && item.imageContent[0] ? item.imageContent[0] : 'assets/images/placeholder-image.png'}}"
-          alt="No image provided">
-      </div>
-      <div class="card-body">
-        <a [routerLink]="['/tool', item.id]" class="card-title h5 d-block pb-2 border-bottom stretched-link">{{
-          item.name }}</a>
-        <span class="text-muted">@{{ item.owner.name }}</span>
-        <p class="card-text text-center">{{ item.dailyPrice }} € / dienai</p>
-        <p class="card-text text-center">{{ item.hourlyPrice }} € / valandai</p>
+    <div class="col-3 align-items-stretch d-flex" *ngFor="let item of tools">
+      <div class="card w-100">
+        <div class="img-wrapper text-center">
+          <span class="d-inline-block h-100 align-middle"></span>
+          <img class="card-img-top"
+               src="{{item.imageContent && item.imageContent[0] ? item.imageContent[0] : 'assets/images/placeholder-image.png'}}"
+               alt="No image provided">
+        </div>
+        <div class="card-body">
+          <a [routerLink]="['/tool', item.id]"
+             class="card-title h5 d-block pb-2 border-bottom stretched-link">
+            {{ item.name }}
+          </a>
+          <span class="text-muted">@{{ item.owner.name }}</span>
+          <p class="card-text text-center">{{ item.dailyPrice }} € / dienai</p>
+          <p class="card-text text-center">{{ item.hourlyPrice }} € / valandai</p>
+        </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>

@@ -37,6 +37,11 @@ public class ToolsController {
         return toolsService.getById(id);
     }
 
+    @GetMapping("/{id}/edit")
+    public ToolDto getByIdForEdit(@PathVariable Long id) {
+        return toolsService.getByIdForEdit(id);
+    }
+
     @GetMapping("/all")
     public List<ToolDto> getAllTools() {
         return toolsService.getAllTools();
@@ -100,4 +105,10 @@ public class ToolsController {
     public void createTool(@RequestBody ToolCreateDto toolDto) {
         toolsService.create(toolDto);
     }
+
+    @GetMapping("{id}/full-images")
+    public List<String> getFullResolutionToolImages(@PathVariable("id") Long toolId) {
+        return toolsService.getFullResolutionToolImages(toolId);
+    }
+
 }

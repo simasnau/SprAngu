@@ -159,4 +159,14 @@ public class ToolsServiceWithDummyDataImpl implements ToolsService {
     public String getStrategy() {
         return "DUMMY_DATA";
     }
+
+    @Override
+    public List<String> getFullResolutionToolImages(Long toolId) {
+        return null;
+    }
+
+    @Override
+    public ToolDto getByIdForEdit(Long id) {
+        return null;
+    }
 }

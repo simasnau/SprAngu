@@ -35,7 +35,7 @@ public class ToolDto {
     private boolean visible;
     private Integer version;
 
-    public static ToolDto of(Tool tool, CurrentRentInfo currentRentInfo) {
+    public static ToolDto of(Tool tool, CurrentRentInfo currentRentInfo, boolean rawImages) {
         Hibernate.initialize(tool.getImages());
         return ToolDto.builder()
                 .id(tool.getId())
@@ -48,7 +48,7 @@ public class ToolDto {
                 .hourlyPrice(tool.getHourlyPrice())
                 .dailyPrice(tool.getDailyPrice())
                 .toolType(tool.getToolType())
-                .imageContent(ImageUtils.resizeToThumbnails(tool.getImages()))
+                .imageContent(rawImages ? tool.getImages() : ImageUtils.resizeToThumbnails(tool.getImages()))
                 .visible(Boolean.TRUE.equals(tool.getVisible()))
                 .version(tool.getVersion())
                 .build();

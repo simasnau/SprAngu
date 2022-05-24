@@ -1,4 +1,4 @@
-<div class="container py-4">
+<div class="container py-4" *ngIf="model.id">
   <h2>Redaguoti skelbimą</h2>
 
   <form #toolForm="ngForm" (ngSubmit)="submit(toolForm)" class="col-10 d-grid gap-3 py-3">
@@ -6,12 +6,12 @@
     <div class="form-group align-items-center">
       <label class="col-3" for="name">Įrankio pavadinimas:</label>
       <input type="text" class="form-control" id="name" name="name" [(ngModel)]="model.name"
-        [class.mat-step-icon-state-error]="!toolForm.form.valid" required />
+             [class.mat-step-icon-state-error]="!toolForm.form.valid" required/>
     </div>
 
     <div class="form-group align-items-center">
       <label class="col-3" for="description">Trumpas aprašymas:</label>
-      <input type="text" class="form-control" id="description" [(ngModel)]="model.description" name="description" />
+      <input type="text" class="form-control" id="description" [(ngModel)]="model.description" name="description"/>
     </div>
 
     <div class="form-spacer"></div>
@@ -30,7 +30,7 @@
       <label class="col-3" for="file">Įkelti nuotrauką:</label>
       <div class="input-group">
         <input #imageInput type="file" accept="image/*" multiple (change)="processFile(imageInput)" id="file"
-          class="form-control">
+               class="form-control">
       </div>
     </div>
 
@@ -47,7 +47,7 @@
       <label class="col-3" for="h-price">Kaina valandai:</label>
       <div class="input-group">
         <input type="number" class="form-control" id="h-price" [(ngModel)]="model.hourlyPrice" name="hourlyPrice"
-          required />
+               required/>
         <span class="input-group-text">€ / valandą</span>
       </div>
     </div>
@@ -56,14 +56,15 @@
       <label class="col-3" for="d-price">Kaina dienai:</label>
       <div class="input-group">
         <input type="number" class="form-control" id="d-price" [(ngModel)]="model.dailyPrice" name="dailyPrice"
-          required />
+               required/>
         <span class="input-group-text">€ / dieną</span>
       </div>
     </div>
 
     <div class="form-group align-items-center">
       <div class="d-grid gap-2 col-12 d-md-flex justify-content-md-end"
-        matTooltip="Negalima skelbti, nes neužpildyti visi privalomi laukai" [matTooltipDisabled]="toolForm.form.valid">
+           matTooltip="Negalima skelbti, nes neužpildyti visi privalomi laukai"
+           [matTooltipDisabled]="toolForm.form.valid">
 
         <button class="btn btn-secondary disabled" type="button">Išsaugoti ruošinį</button>
 

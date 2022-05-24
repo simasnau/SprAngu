@@ -25,4 +25,8 @@ public interface ToolsService {
     Long updateTool(ToolDto toolDto);
 
     String getStrategy();
+
+    List<String> getFullResolutionToolImages(Long toolId);
+
+    ToolDto getByIdForEdit(Long id);
 }
