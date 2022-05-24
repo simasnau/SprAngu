@@ -142,7 +142,7 @@ public class ToolsServiceWithDummyDataImpl implements ToolsService {
     }
 
     @Override
-    public void updateTool(ToolDto toolDto) {
+    public Long updateTool(ToolDto toolDto) {
         var tool = getById(toolDto.getId());
         SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setName(toolDto.getName());
@@ -152,6 +152,7 @@ public class ToolsServiceWithDummyDataImpl implements ToolsService {
         tool.setImageContent(toolDto.getImageContent());
         tool.setToolType(toolDto.getToolType());
         log.info("Updated tool: " + toolDto.getName());
+        return tool.getId();
     }
 
     @Override

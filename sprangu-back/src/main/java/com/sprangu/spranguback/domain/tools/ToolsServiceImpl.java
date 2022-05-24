@@ -10,9 +10,12 @@ import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +34,7 @@ public class ToolsServiceImpl implements ToolsService {
         return toolRepository.findAll()
                 .stream()
                 .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()) && tool.getVisible())
-                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId()), false))
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId())))
                 .collect(Collectors.toList());
     }
 
@@ -51,13 +54,13 @@ public class ToolsServiceImpl implements ToolsService {
     }
 
     public ToolDto getById(@NonNull Long id) {
-        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentRentInfo(id), false);
+        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentRentInfo(id));
     }
 
     public List<ToolDto> searchTools(@NonNull ToolsFilter toolsFilter) {
         return toolRepository.searchTools(toolsFilter)
                 .stream()
-                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId()), false))
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId())))
                 .collect(Collectors.toList());
     }
 
@@ -87,8 +90,12 @@ public class ToolsServiceImpl implements ToolsService {
         return toolRepository.save(tool).getVisible();
     }
 
-    public void updateTool(ToolDto toolDto) {
-        var tool = toolRepository.getById(toolDto.getId());
+    @ResponseBody
+    @Transactional
+    public Long updateTool(ToolDto toolDto) {
+        var tooId = toolDto.getId();
+        var tool = toolRepository.getById(tooId);
+
         SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setName(toolDto.getName());
         tool.setDescription(toolDto.getDescription());
@@ -96,7 +103,13 @@ public class ToolsServiceImpl implements ToolsService {
         tool.setDailyPrice(toolDto.getDailyPrice());
         tool.setImages(toolDto.getImageContent());
         tool.setToolType(toolDto.getToolType());
-        toolRepository.save(tool);
+
+        if (tool.getVersion() != toolDto.getVersion()) {
+            throw new OptimisticLockException();
+        }
+
+        toolRepository.flush();
+        return toolRepository.save(tool).getId();
     }
 
     @Override

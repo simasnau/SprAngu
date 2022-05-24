@@ -3,6 +3,9 @@ import {ToolsService} from "../../../services/tools.service";
 import {ActivatedRoute} from "@angular/router";
 import {ToolForRental} from "../../../domain/tools/toolForRental.model";
 import {ToolTypeConstants} from "../../../constants/tool-type-constants";
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConstants } from 'src/app/constants/dialog-constants';
 
 @Component({
   selector: 'app-tool-edit',
@@ -17,6 +20,7 @@ export class ToolEditComponent implements OnInit {
 
   constructor(
     private toolsService: ToolsService,
+    public matDialog: MatDialog,
     private route: ActivatedRoute
   ) {
   }
@@ -27,13 +31,29 @@ export class ToolEditComponent implements OnInit {
     });
   }
 
-  submit(form: any): void {
+  async submit(form: any): Promise<void> {
     if (form.invalid) {
       return;
     }
-    this.toolsService.updateToolDescription(this.model).subscribe(
-      () => window.location.reload()
-    );
+
+    this.toolsService.updateToolDescription(this.model).subscribe({
+      complete: () => window.location.reload(),
+      error: (e) => {
+        if (e.status === 409)
+          this.openVersionMismatchDialog();
+      }
+    });
+  }
+
+  private openVersionMismatchDialog(): void {
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      width: '25%',
+      data: DialogConstants.TOOL_UPDATE_OLE_ERROR
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      window.location.reload()
+    });
   }
 
   processFile(imageInput: HTMLInputElement): void {

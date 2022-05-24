@@ -33,6 +33,7 @@ public class ToolDto {
     private ToolTypeEnum toolType;
     private List<String> imageContent;
     private boolean visible;
+    private Integer version;
 
     public static ToolDto of(Tool tool, CurrentRentInfo currentRentInfo, boolean rawImages) {
         Hibernate.initialize(tool.getImages());
@@ -49,6 +50,7 @@ public class ToolDto {
                 .toolType(tool.getToolType())
                 .imageContent(rawImages ? tool.getImages() : ImageUtils.resizeToThumbnails(tool.getImages()))
                 .visible(Boolean.TRUE.equals(tool.getVisible()))
+                .version(tool.getVersion())
                 .build();
     }
 }

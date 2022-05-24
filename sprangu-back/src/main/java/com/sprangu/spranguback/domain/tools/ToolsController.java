@@ -8,6 +8,8 @@ import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolRentInfoDto;
 import com.sprangu.spranguback.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.OptimisticLockException;
 import java.util.List;
 
 @RestController
@@ -90,8 +93,12 @@ public class ToolsController {
     }
 
     @PutMapping("/update")
-    public void updateToolDescription(@RequestBody ToolDto toolDto) {
-        toolsService.updateTool(toolDto);
+    public ResponseEntity<Long> updateToolDescription(@RequestBody ToolDto toolDto) {
+        try {
+            return new ResponseEntity<>(toolsService.updateTool(toolDto), HttpStatus.OK);
+        } catch (OptimisticLockException e) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/create")
