@@ -1,5 +1,7 @@
 package com.sprangu.spranguback.domain.tools;
 
+import com.sprangu.spranguback.application.utils.SecurityUtils;
+import com.sprangu.spranguback.domain.tools.model.dto.CurrentRentInfo;
 import com.sprangu.spranguback.domain.tools.model.dto.RentEndDto;
 import com.sprangu.spranguback.domain.tools.model.dto.RentStartDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolRentInfoDto;
@@ -7,14 +9,16 @@ import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.model.entity.ToolRentInfo;
 import com.sprangu.spranguback.domain.tools.repository.ToolRentInfoRepository;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
-import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
+import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +28,12 @@ import java.util.Optional;
 @Transactional
 public class ToolRentInfoService {
 
-    private static final Double PENALTY_RATE = 0.2;
+    private static final Double PENALTY_RATE = 1.2;
 
     private final ToolRentInfoRepository toolRentInfoRepository;
     private final ToolRepository toolRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public Boolean rent(@NonNull Long toolId, @NonNull RentStartDto rentStartDto) {
         Optional<ToolRentInfo> newestRentInfo = toolRentInfoRepository.getNewestRentInfo(toolId);
@@ -43,7 +48,7 @@ public class ToolRentInfoService {
                 .rentedTool(toolToRent)
                 .user(userRepository.getById(rentStartDto.getUserId()))
                 .startDate(LocalDateTime.now())
-                .originalEndDate(rentStartDto.getRentEndDate())
+                .originalEndDate(rentStartDto.getRentEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
                 .hourlyPrice(toolToRent.getHourlyPrice())
                 .dailyPrice(toolToRent.getDailyPrice())
                 .build();
@@ -51,13 +56,17 @@ public class ToolRentInfoService {
         return true;
     }
 
+    @SneakyThrows
     public RentEndDto stopRent(@NonNull Long rentInfoId) {
         ToolRentInfo toolRentInfo = toolRentInfoRepository.getById(rentInfoId);
+
+        SecurityUtils.checkAccess(toolRentInfo.getUser().getId());
+
         toolRentInfo.setRealEndDate(LocalDateTime.now());
+        toolRentInfoRepository.save(toolRentInfo);
 
         return RentEndDto.builder()
                 .totalPrice(calculateTotalPrice(toolRentInfo))
-                .originalEndDate(toolRentInfo.getOriginalEndDate())
                 .daysLate(ChronoUnit.DAYS.between(toolRentInfo.getOriginalEndDate(), toolRentInfo.getRealEndDate()))
                 .build();
     }
@@ -77,11 +86,24 @@ public class ToolRentInfoService {
         return rentDays * toolRentInfo.getDailyPrice() * multiplier;
     }
 
-    public RegisteredUser getCurrentUser(@NonNull Long toolId) {
-        return toolRentInfoRepository.getNewestRentInfo(toolId).map(ToolRentInfo::getUser).orElse(null);
+    public CurrentRentInfo getCurrentRentInfo(@NonNull Long toolId) {
+        Optional<ToolRentInfo> newestRentInfo = toolRentInfoRepository.getNewestRentInfo(toolId);
+        return newestRentInfo.map(this::mapToCurrentRentInfo).orElse(null);
     }
 
-    public List<ToolRentInfoDto> getToolRentInfoForUser(@NonNull Long userId) {
-        return toolRentInfoRepository.getToolRentInfoForUser(userId);
+    private CurrentRentInfo mapToCurrentRentInfo(@NonNull ToolRentInfo toolRentInfo) {
+        if (toolRentInfo.getRealEndDate() != null) {
+            return null;
+        }
+
+        return CurrentRentInfo.builder()
+                .rentId(toolRentInfo.getId())
+                .currentUser(toolRentInfo.getUser())
+                .rentEndDate(toolRentInfo.getOriginalEndDate())
+                .build();
+    }
+
+    public List<ToolRentInfoDto> getActiveToolRentInfoForUser(@NonNull Long userId) {
+        return toolRentInfoRepository.getToolRentInfoForUser(userId, true);
     }
 }

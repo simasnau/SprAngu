@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppComponent} from './app.component';
 import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
@@ -27,6 +26,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import {CreateToolComponent} from './pages/create-tool/create-tool.component';
+import {RentedToolsComponent} from "./pages/my-tools/rented-tools/rented-tools.component";
 import {NgImageSliderModule} from "ng-image-slider";
 
 @NgModule({
@@ -39,30 +40,32 @@ import {NgImageSliderModule} from "ng-image-slider";
     ToolDetailsPageComponent,
     SearchBarComponent,
     MyToolsComponent,
+    RentedToolsComponent,
     DialogComponent,
     ToolReservationPageComponent,
     ToolEditComponent,
+    CreateToolComponent,
   ],
-    imports: [
-        BrowserModule,
-        RouterModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgbModule,
-        HttpClientModule,
-        BrowserModule,
-        MatDialogModule,
-        NoopAnimationsModule,
-        BrowserAnimationsModule,
-        MatInputModule,
-        TooltipModule,
-        MatTooltipModule,
-        MatIconModule,
-        MatOptionModule,
-        MatSelectModule,
-        NgImageSliderModule
-    ],
+  imports: [
+    BrowserModule,
+    RouterModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
+    HttpClientModule,
+    BrowserModule,
+    MatDialogModule,
+    NoopAnimationsModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    TooltipModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatOptionModule,
+    MatSelectModule,
+    NgImageSliderModule
+  ],
   exports: [
     AppRoutingModule
   ],

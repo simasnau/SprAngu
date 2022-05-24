@@ -11,5 +11,5 @@ public interface ToolRentInfoRepositoryCustom {
 
     Optional<ToolRentInfo> getNewestRentInfo(Long toolId);
 
-    List<ToolRentInfoDto> getToolRentInfoForUser(Long userId);
+    List<ToolRentInfoDto> getToolRentInfoForUser(Long userId, boolean onlyActive);
 }

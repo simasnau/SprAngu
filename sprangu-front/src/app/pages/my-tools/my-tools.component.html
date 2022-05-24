@@ -1,37 +1,39 @@
-<div class="container" *ngIf="tools">
-  <div class="row my-3">
-    <h1>Mano įrankiai</h1>
-  </div>
-  <div>
-    <div class="row p-2 border border-dark my-1" *ngFor="let tool of tools">
-      <div class="col-2">
-        <div class="img-wrapper text-center">
-          <span class="d-inline-block h-100 align-middle"></span>
-          <img class="card-img-top"
-               src="{{tool.image ? tool.image : 'https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc='}}"
-               alt="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc=">
-        </div>
+<div class="container py-3">
+  <h1>Mano įrankiai</h1>
+
+  <div class="row my-3 py-3 border rounded" *ngFor="let tool of tools">
+    <div class="col-3 d-flex align-items-center border-end">
+      <img class="img-thumbnail"
+           src="{{tool.image ? tool.image : 'assets/images/placeholder-image.png'}}"
+           alt="No image provided">
+    </div>
+
+    <div class="col-4 d-flex align-items-center">
+      <div>
+        <p class="fw-bold">{{tool.name}}</p>
+        <p>{{tool.description}}</p>
       </div>
-      <div class="col-4 row d-flex">
-        <div class="align-items-center d-flex fw-bold">{{tool.name}}</div>
-        <div class="align-items-center d-flex">{{tool.description}}</div>
+    </div>
+
+    <div class="col-2 d-flex align-items-center">
+      <div>
+        <p><span class="fw-bold">{{tool.hourlyPrice}}</span> € / val.</p>
+        <p><span class="fw-bold">{{tool.dailyPrice}}</span> € / val.</p>
       </div>
-      <div class="col-4 row">
-        <div class="align-items-center d-flex">{{tool.hourlyPrice}}</div>
-        <div class="align-items-center d-flex">{{tool.dailyPrice}}</div>
-      </div>
-      <div class="col-2 row">
-        <button class="mt-1 btn btn-outline-primary fw-bold"
-                [routerLink]="'/my-tools/edit/' + tool.id">
-          Redaguoti
-        </button>
-        <button class="mt-1 btn btn-outline-primary fw-bold" (click)="removeTool(tool.id)">
-          Pašalinti skelbimą
-        </button>
-        <button class="my-1 btn btn-outline-primary fw-bold" (click)="hideTool(tool.id)">
-          {{tool.visible ? 'Paslėpti skelbimą' : 'Nebeslėpti skelbimo'}}
-        </button>
-      </div>
+    </div>
+
+    <div class="col-3 d-grid gap-3">
+      <button class="btn btn-sm btn-outline-primary fw-bold" [routerLink]="'/my-tools/edit/' + tool.id">
+        Redaguoti
+      </button>
+
+      <button class="btn btn-sm btn-outline-primary fw-bold" (click)="removeTool(tool.id)">
+        Pašalinti skelbimą
+      </button>
+
+      <button class="btn btn-sm btn-outline-primary fw-bold" (click)="hideTool(tool.id)">
+        {{tool.visible ? 'Paslėpti skelbimą' : 'Nebeslėpti skelbimo'}}
+      </button>
     </div>
   </div>
 </div>

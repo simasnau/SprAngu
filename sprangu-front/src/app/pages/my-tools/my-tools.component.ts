@@ -41,6 +41,7 @@ export class MyToolsComponent implements OnInit {
             this.openErrorDialog();
           } else {
             this.openSuccessDialog();
+            this.getTools();
           }
         });
       }

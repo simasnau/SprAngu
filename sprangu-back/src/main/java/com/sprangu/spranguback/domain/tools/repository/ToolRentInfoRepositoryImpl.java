@@ -1,11 +1,9 @@
 package com.sprangu.spranguback.domain.tools.repository;
 
 import com.sprangu.spranguback.domain.tools.model.dto.ToolRentInfoDto;
-import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.model.entity.ToolRentInfo;
 import com.sprangu.spranguback.domain.tools.model.entity.ToolRentInfo_;
 import com.sprangu.spranguback.domain.tools.model.entity.Tool_;
-import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser_;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +14,12 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -50,31 +50,24 @@ public class ToolRentInfoRepositoryImpl implements ToolRentInfoRepositoryCustom 
     }
 
     @Override
-    public List<ToolRentInfoDto> getToolRentInfoForUser(@NonNull Long userId) {
+    public List<ToolRentInfoDto> getToolRentInfoForUser(@NonNull Long userId, boolean onlyActive) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<ToolRentInfoDto> query = cb.createQuery(ToolRentInfoDto.class);
+        CriteriaQuery<ToolRentInfo> query = cb.createQuery(ToolRentInfo.class);
         Root<ToolRentInfo> root = query.from(ToolRentInfo.class);
-        Join<ToolRentInfo, Tool> toolJoin = root.join(ToolRentInfo_.rentedTool);
-        Join<ToolRentInfo, RegisteredUser> userJoin = root.join(ToolRentInfo_.user);
+        query.select(root);
 
-        query.multiselect(
-                root.get(ToolRentInfo_.id),
-                root.get(ToolRentInfo_.rentedTool).get(Tool_.id),
-                toolJoin.get(Tool_.name),
-                toolJoin.get(Tool_.description),
-                toolJoin.get(Tool_.toolType),
-                toolJoin.get(Tool_.images),
-                toolJoin.get(Tool_.owner),
-                userJoin.get(RegisteredUser_.name),
-                root.get(ToolRentInfo_.startDate),
-                root.get(ToolRentInfo_.originalEndDate),
-                root.get(ToolRentInfo_.realEndDate),
-                root.get(ToolRentInfo_.hourlyPrice),
-                root.get(ToolRentInfo_.dailyPrice)
-        );
         query.orderBy(cb.desc(root.get(ToolRentInfo_.startDate)));
-        query.where(cb.equal(root.get(ToolRentInfo_.user).get(RegisteredUser_.id), userId));
 
-        return em.createQuery(query).getResultList();
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(cb.equal(root.get(ToolRentInfo_.user).get(RegisteredUser_.id), userId));
+
+        if (onlyActive) {
+            predicates.add(cb.isNull(root.get(ToolRentInfo_.realEndDate)));
+        }
+
+        query.where(predicates.toArray(new Predicate[0]));
+
+        return em.createQuery(query).getResultList().stream().map(ToolRentInfoDto::of).collect(Collectors.toList());
     }
 }

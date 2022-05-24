@@ -12,6 +12,8 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.util.List;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -24,10 +26,13 @@ public class ToolDto {
     private String description;
     private RegisteredUser owner;
     private RegisteredUser currentUser;
+    private Long currentRentId;
+    private Date rentEndDate;
     private Integer hourlyPrice;
     private Integer dailyPrice;
     private ToolTypeEnum toolType;
     private List<String> imageContent;
+    private boolean visible;
 
     public static ToolDto of(Tool tool, RegisteredUser currentUser, boolean rawImages) {
         Hibernate.initialize(tool.getImages());
@@ -36,11 +41,14 @@ public class ToolDto {
                 .name(tool.getName())
                 .description(tool.getDescription())
                 .owner(tool.getOwner())
-                .currentUser(currentUser)
+                .currentUser(currentRentInfo == null ? null : currentRentInfo.getCurrentUser())
+                .currentRentId(currentRentInfo == null ? null : currentRentInfo.getRentId())
+                .rentEndDate(currentRentInfo == null ? null : Timestamp.valueOf(currentRentInfo.getRentEndDate()))
                 .hourlyPrice(tool.getHourlyPrice())
                 .dailyPrice(tool.getDailyPrice())
                 .toolType(tool.getToolType())
                 .imageContent(rawImages ? tool.getImages() : ImageUtils.resizeToThumbnails(tool.getImages()))
+                .visible(Boolean.TRUE.equals(tool.getVisible()))
                 .build();
     }
 }
