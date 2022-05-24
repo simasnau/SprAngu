@@ -26,5 +26,7 @@ public interface ToolsService {
 
     String getStrategy();
 
-    List<String> getFullResoliutionToolImages(Long toolId);
+    List<String> getFullResolutionToolImages(Long toolId);
+
+    ToolDto getByIdForEdit(Long id);
 }

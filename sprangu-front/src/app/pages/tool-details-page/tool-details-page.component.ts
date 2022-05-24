@@ -18,16 +18,13 @@ export class ToolDetailsPageComponent implements OnInit {
   isOwner: boolean;
   isCurrentLoaner: boolean;
   rentEndDate: Date;
-  public tool: ToolForRental = new ToolForRental();
   imagesList: any[] = [];
 
-  constructor(private route: ActivatedRoute,
-              private toolsService: ToolsService,
-              private authService: AuthenticationService,
-              public matDialog: MatDialog) {
-  }
-
-  constructor(private route: ActivatedRoute, private toolsService: ToolsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private toolsService: ToolsService,
+    private authService: AuthenticationService,
+    public matDialog: MatDialog) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -42,6 +39,7 @@ export class ToolDetailsPageComponent implements OnInit {
       this.isOwner = loggedUserId === this.tool.owner.id;
       this.isCurrentLoaner = loggedUserId === this.tool.currentUser?.id
       this.rentEndDate = new Date(this.tool.rentEndDate)
+      this.resolveImages();
     });
   }
 
@@ -94,16 +92,13 @@ export class ToolDetailsPageComponent implements OnInit {
       width: '25%',
       data: dialogData
     });
-    this.toolsService.get(id).subscribe(result => {
-      this.tool = result;
-      this.resolveImages();
-    });
   }
 
   private resolveImages(): void {
     this.tool.imageContent.forEach(image => {
       this.imagesList.push({image: image, thumbImage: image});
     })
+    console.log(this.imagesList);
   }
 
   expandImage($event: number): void {

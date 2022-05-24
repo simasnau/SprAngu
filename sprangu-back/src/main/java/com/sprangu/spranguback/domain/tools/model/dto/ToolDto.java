@@ -34,7 +34,7 @@ public class ToolDto {
     private List<String> imageContent;
     private boolean visible;
 
-    public static ToolDto of(Tool tool, RegisteredUser currentUser, boolean rawImages) {
+    public static ToolDto of(Tool tool, CurrentRentInfo currentRentInfo, boolean rawImages) {
         Hibernate.initialize(tool.getImages());
         return ToolDto.builder()
                 .id(tool.getId())

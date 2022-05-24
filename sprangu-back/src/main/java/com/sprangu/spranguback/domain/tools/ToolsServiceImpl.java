@@ -10,6 +10,7 @@ import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,7 +31,7 @@ public class ToolsServiceImpl implements ToolsService {
         return toolRepository.findAll()
                 .stream()
                 .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()) && tool.getVisible())
-                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId())))
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId()), false))
                 .collect(Collectors.toList());
     }
 
@@ -50,13 +51,13 @@ public class ToolsServiceImpl implements ToolsService {
     }
 
     public ToolDto getById(@NonNull Long id) {
-        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentRentInfo(id));
+        return ToolDto.of(toolRepository.getById(id), toolRentInfoService.getCurrentRentInfo(id), false);
     }
 
     public List<ToolDto> searchTools(@NonNull ToolsFilter toolsFilter) {
         return toolRepository.searchTools(toolsFilter)
                 .stream()
-                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId())))
+                .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId()), false))
                 .collect(Collectors.toList());
     }
 
@@ -101,5 +102,17 @@ public class ToolsServiceImpl implements ToolsService {
     @Override
     public String getStrategy() {
         return "H2_DATABASE";
+    }
+
+    @Override
+    public List<String> getFullResolutionToolImages(Long toolId) {
+        var tool = this.toolRepository.getById(toolId);
+        Hibernate.initialize(tool.getImages());
+        return tool.getImages();
+    }
+
+    @Override
+    public ToolDto getByIdForEdit(Long id) {
+        return ToolDto.of(toolRepository.getById(id), null, true);
     }
 }
