@@ -65,13 +65,13 @@ export class ToolsService {
     return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/update", model);
   } 
 
-  @Output() searchEvent = new EventEmitter<Observable<ToolForRental[]>>();
+  // @Output() searchEvent = new EventEmitter<Observable<ToolForRental[]>>();
 
-  searchTools(model: ToolsFilter): void{
-    this.searchEvent.emit(this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", ToolsFilter));
-  }
-
-  // searchTools(model: ToolsFilter): Observable<ToolForRental[]>{
-  //     return this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", ToolsFilter);
+  // searchTools(model: ToolsFilter): void{
+  //   this.searchEvent.emit(this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", ToolsFilter));
   // }
+
+  searchTools(model: ToolsFilter): Observable<ToolForRental[]>{
+      return this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", model);
+  }
 }
