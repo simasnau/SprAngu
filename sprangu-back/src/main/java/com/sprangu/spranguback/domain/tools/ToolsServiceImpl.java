@@ -10,7 +10,6 @@ import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Lock;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -104,7 +104,7 @@ public class ToolsServiceImpl implements ToolsService {
         tool.setImages(toolDto.getImageContent());
         tool.setToolType(toolDto.getToolType());
 
-        if (tool.getVersion() != toolDto.getVersion()) {
+        if (!Objects.equals(tool.getVersion(), toolDto.getVersion())) {
             throw new OptimisticLockException();
         }
 
