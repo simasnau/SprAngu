@@ -1,40 +1,42 @@
-<div class="container">
+<div class="container" *ngIf="tool.id">
   <div class="row">
-      <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="'/'">NN</a></li>
-              <li class="breadcrumb-item"><a [routerLink]="'/'">Nuomotis</a></li>
-          </ol>
-      </nav>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="'/'">NN</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="'/'">Nuomotis</a></li>
+      </ol>
+    </nav>
   </div>
 
   <div class="row">
-      <div class="col-2 bg-light">
-        <img class="card-img-top pt-4 pb-4"
-             src="https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc="
-             alt="Tool image">
+    <div class="col-2 bg-light">
+      <img class="card-img-top pt-4 pb-4"
+           src="{{tool.imageContent[0] ? tool.imageContent[0] : 'https://media.istockphoto.com/vectors/service-tools-icon-isolated-on-white-background-vector-illustration-vector-id1178775481?k=20&m=1178775481&s=612x612&w=0&h=X6ycMeSaLYrnblUvocm0Ytr6hAp5VPzm4wGJDroPGuc='}}"
+           alt="Tool image">
+    </div>
+    <div class="col-6 bg-light">
+      <div class="row mb-2">
+        <div class="col-8">
+          <h2>{{ tool.name }}</h2>
+          <p>{{tool.description}}</p>
+        </div>
+        <div class="col-4">
+          <h6>{{tool.hourlyPrice}} € / Nuoma 1 val.</h6>
+          <h6>{{tool.dailyPrice}} € / Nuoma 1 d.</h6>
+        </div>
       </div>
-      <div class="col-6 bg-light">
-          <div class="row mb-2">
-              <div class="col-8">
-                  <h2>{{ tool.name }}</h2>
-                  <p>{{tool.description}}</p>
-              </div>
-              <div class="col-4">
-                <h6>{{tool.hourlyPrice}} € / Nuoma 1 val.</h6>
-                <h6>{{tool.dailyPrice}} € / Nuoma 1 d.</h6>
-              </div>
-          </div>
+    </div>
+    <div class="col-4">
+      <h4>Užsakymo informacija</h4>
+      <div>{{ tool.name }}</div>
+      <div>Nuomos laikotarpis: <strong>{{ overallDuration.days }}</strong> d.
+        <strong>{{ overallDuration.hours }}</strong> val.
       </div>
-      <div class="col-4">
-          <h4>Užsakymo informacija</h4>
-          <div>{{ tool.name }}</div>
-          <div>Nuomos laikotarpis: <strong>{{ overallDuration.days }}</strong> d. <strong>{{ overallDuration.hours }}</strong> val.</div>
-          <div>Nuomos kaina: <strong>{{ overallCost }}</strong></div>
-          <div class="d-grid">
-              <button (click)="rentTool()" class="btn btn-primary" type="button">Nuomotis</button>
-          </div>
+      <div>Nuomos kaina: <strong>{{ overallCost }}</strong></div>
+      <div class="d-grid">
+        <button (click)="rentTool()" class="btn btn-primary" type="button">Nuomotis</button>
       </div>
+    </div>
   </div>
 
   <div class="row">
@@ -48,7 +50,8 @@
           <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date"
                  (ngModelChange)="dateChanged()" ngbDatepicker #d="ngbDatepicker">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><em class="bi bi-calendar"></em>
+            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><em
+              class="bi bi-calendar"></em>
             </button>
           </div>
         </div>

@@ -8,6 +8,8 @@ import {AuthenticationService} from "./authentication.service";
 import {ToolBasicDto} from "../domain/tools/tool-basic-dto";
 import {RentStartDto} from "../domain/tools/rent-start-dto";
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {RentEndDto} from "../domain/tools/rent-end-dto";
+import {ToolRentInfoDto} from "../domain/tools/rent-info-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -48,11 +50,37 @@ export class ToolsService {
     return this.httpClient.post<boolean>(UrlConstants.toolsEndpoint + '/' + toolId + '/rent', request);
   }
 
+<<<<<<< HEAD
   updateToolDescription(model: ToolForRental): Observable<void> {
     return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/update", model);
   } 
 
   searchTools(model: ToolsFilter): Observable<ToolForRental[]>{
       return this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", model);
+=======
+  updateToolDescription(model: ToolForRental): Observable<ToolForRental> {
+    return this.httpClient.put<ToolForRental>(UrlConstants.toolsEndpoint + "/update", model);
+  }
+
+  createTool(model: ToolForRental): Observable<void> {
+    return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/create", model);
+  }
+
+  returnTool(currentRentId: number): Observable<RentEndDto> {
+    return this.httpClient.get<RentEndDto>(UrlConstants.toolsEndpoint + '/rent/stop/' + currentRentId)
+  }
+
+  getMyRentedTools(): Observable<ToolRentInfoDto[]> {
+    return this.httpClient.get<ToolRentInfoDto[]>(UrlConstants.toolsEndpoint + '/my-rented-tools')
+  }
+
+
+  getFullImages(id: number): Observable<String[]> {
+    return this.httpClient.get<String[]>(UrlConstants.toolsEndpoint + "/" + id + "/full-images");
+  }
+
+  getForEdit(id: number) {
+    return this.httpClient.get<ToolForRental>(UrlConstants.toolsEndpoint + '/' + id + "/edit");
+>>>>>>> master
   }
 }

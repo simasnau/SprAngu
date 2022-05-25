@@ -25,7 +25,11 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
 
-    public UserDetailed getLoggedUser(){
+    public UserDetailed getLoggedUser() {
+        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if ("anonymousUser".equals(principal)) {
+            return null;
+        }
         return (UserDetailed) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 

@@ -1,17 +1,28 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+  HttpStatusCode
+} from '@angular/common/http';
+import {catchError, Observable, tap} from 'rxjs';
 import {AuthenticationService} from "../services/authentication.service";
 import {JwtConstants} from "../constants/jwt-constants";
 import {CookieService} from "ngx-cookie-service";
 import {UrlConstants} from "../constants/url-constants";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class CredentialsInterceptor implements HttpInterceptor {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private router: Router
   ) {
   }
 
@@ -29,16 +40,25 @@ export class CredentialsInterceptor implements HttpInterceptor {
       }
     });
     return next.handle(httpRequest).pipe(tap((httpEvent: HttpEvent<any>) => {
-      if (httpEvent instanceof HttpResponse) {
-        let headers: HttpHeaders = httpEvent.headers;
-        const jwt = headers.get(JwtConstants.AUTHORIZATION);
-        if (jwt) {
-          this.cookieService.set(JwtConstants.JWT, jwt, {
-              path: '/'
-            }
-          )
+        if (httpEvent instanceof HttpResponse) {
+          let headers: HttpHeaders = httpEvent.headers;
+          const jwt = headers.get(JwtConstants.AUTHORIZATION);
+          if (jwt) {
+            this.cookieService.set(JwtConstants.JWT, jwt, {
+                path: '/'
+              }
+            )
+          }
         }
-      }
-    }));
+      }),
+      // @ts-ignore
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === HttpStatusCode.Forbidden && this.authenticationService.isJwtExpired()) {
+          this.cookieService.delete(JwtConstants.JWT);
+          this.router.navigate(['/']);
+          return;
+        }
+      })
+    );
   }
 }
