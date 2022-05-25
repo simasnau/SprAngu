@@ -6,5 +6,5 @@ export class ToolsFilter{
     maxHourlyPrice: number;
     minDailyPrice: number;
     maxDailyPrice: number;
-    toolType: ToolTypeConstants;
+    toolType: ToolTypeConstants|null;
 }
