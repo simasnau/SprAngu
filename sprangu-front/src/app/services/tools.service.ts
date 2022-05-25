@@ -50,14 +50,10 @@ export class ToolsService {
     return this.httpClient.post<boolean>(UrlConstants.toolsEndpoint + '/' + toolId + '/rent', request);
   }
 
-<<<<<<< HEAD
-  updateToolDescription(model: ToolForRental): Observable<void> {
-    return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/update", model);
-  } 
-
   searchTools(model: ToolsFilter): Observable<ToolForRental[]>{
       return this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", model);
-=======
+  }
+  
   updateToolDescription(model: ToolForRental): Observable<ToolForRental> {
     return this.httpClient.put<ToolForRental>(UrlConstants.toolsEndpoint + "/update", model);
   }
@@ -81,6 +77,5 @@ export class ToolsService {
 
   getForEdit(id: number) {
     return this.httpClient.get<ToolForRental>(UrlConstants.toolsEndpoint + '/' + id + "/edit");
->>>>>>> master
   }
 }
