@@ -10,12 +10,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HeaderComponent} from './components/header/header.component';
 import {ToolsForRentalComponent} from './components/tools-for-rental/tools-for-rental.component';
 import {ToolDetailsPageComponent} from './pages/tool-details-page/tool-details-page.component';
-import {SearchBarComponent} from './components/search-bar/search-bar.component';
 import {MyToolsComponent} from './pages/my-tools/my-tools.component';
 import {DialogComponent} from './components/dialog/dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
-import { FilteringComponentComponent } from './components/filtering-component/filtering-component.component';
 import {AuthenticationService} from "./services/authentication.service";
 import {CredentialsInterceptor} from "./utils/credentials-interceptor.service";
 import {ToolReservationPageComponent} from './pages/tool-reservation-page/tool-reservation-page.component';
@@ -39,11 +37,9 @@ import {NgImageSliderModule} from "ng-image-slider";
     HeaderComponent,
     ToolsForRentalComponent,
     ToolDetailsPageComponent,
-    SearchBarComponent,
     MyToolsComponent,
     RentedToolsComponent,
     DialogComponent,
-    FilteringComponentComponent,
     ToolReservationPageComponent,
     ToolEditComponent,
     CreateToolComponent,
