@@ -30,7 +30,7 @@ export class ToolsForRentalComponent implements OnInit {
 
   toolsList: ToolForRental[];
 
-  submit(form: any): void {
+  submit(): void {
     
     if (this.model.toolType==""){
       this.model.toolType=null
@@ -44,13 +44,13 @@ export class ToolsForRentalComponent implements OnInit {
     console.log(this.model)
   }
 
-  clear(form: any): void {
-    console.log(this.model)
-    this.toolService.getAll();
+  clear(){
+    console.log("resetting")
+    if (this.model.toolType==""){
+      this.model.toolType=null
+    }
+    this.toolService.getAll().subscribe(result => {
+      this.tools = result
+    });
   }
-
-  reloadPage() {
-    window.location.reload();
-   }
-
 }
