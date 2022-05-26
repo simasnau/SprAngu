@@ -32,8 +32,9 @@ export class ToolsForRentalComponent implements OnInit {
   isInvalid: boolean;
 
   submit(): void {
-    this.isInvalid = this.model.minHourlyPrice > this.model.maxHourlyPrice;
-    this.isInvalid = this.model.minDailyPrice > this.model.maxDailyPrice;
+    if (this.model.minHourlyPrice > this.model.maxHourlyPrice || this.model.minDailyPrice > this.model.maxDailyPrice){
+      this.isInvalid = true;
+    }
     if(this.isInvalid){
       return;
     }
