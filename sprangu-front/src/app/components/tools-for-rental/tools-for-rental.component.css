@@ -5,3 +5,7 @@
 .image-wrapper {
     height: 250px;
 }
+
+#invalid{
+    color: red
+}

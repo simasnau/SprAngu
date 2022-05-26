@@ -15,7 +15,7 @@ export class UrlConstants {
 
   //tools
   public static myTools = this.toolsEndpoint + '/my-tools'
-
+  public static searchTools = this.toolsEndpoint + '/search'
 
   // headers for api calls
   public static headers = new HttpHeaders({

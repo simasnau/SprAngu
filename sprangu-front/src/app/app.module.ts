@@ -10,7 +10,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HeaderComponent} from './components/header/header.component';
 import {ToolsForRentalComponent} from './components/tools-for-rental/tools-for-rental.component';
 import {ToolDetailsPageComponent} from './pages/tool-details-page/tool-details-page.component';
-import {SearchBarComponent} from './components/search-bar/search-bar.component';
 import {MyToolsComponent} from './pages/my-tools/my-tools.component';
 import {DialogComponent} from './components/dialog/dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
@@ -38,7 +37,6 @@ import {NgImageSliderModule} from "ng-image-slider";
     HeaderComponent,
     ToolsForRentalComponent,
     ToolDetailsPageComponent,
-    SearchBarComponent,
     MyToolsComponent,
     RentedToolsComponent,
     DialogComponent,

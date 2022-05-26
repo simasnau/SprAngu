@@ -1,3 +1,56 @@
+<div>
+    <form #filterForm="ngForm" (ngSubmit)="submit()" class="col-12 d-grid gap-3 py-3">
+      <div class="row m-auto info-container w-50">
+        <div class="col-12">
+          <div class="row justify-content-center">
+            <input class="col-10" type="text" id="pavadinimas" maxlength="60"
+                    [(ngModel)]="model.name" name="pavadinimas" placeholder="Ieškoti įrankio"/>
+          </div>
+  
+          <div class="row text-center px-5 gap-2 d-flex justify-content-center">
+            <label class="col-4 fw-bold">Kaina už valandą</label>
+            <label class="col-4 fw-bold">Kaina už dieną</label>
+          </div>
+          <div class="row text-center px-5 gap-2 d-flex justify-content-center">
+            <label class="col-2" for="minHourlyPrice">Nuo</label>
+            <label class="col-2" for="maxHourlyPrice">Iki</label>
+            <label class="col-2" for="minDailyPrice">Nuo</label>
+            <label class="col-2" for="maxDailyPrice">Iki</label>
+          </div>
+          <div class="row text-center px-5 gap-2 d-flex justify-content-center">
+            <input class="col-2" type="number" id="minHourlyPrice" value="0.00"placeholder="0.00"
+                    [(ngModel)]="model.minHourlyPrice" name="minHourlyPrice"/>
+            <input class="col-2" type="number" id="maxHourlyPrice" value="0.00" placeholder="0.00" 
+                    [(ngModel)]="model.maxHourlyPrice" name="maxHourlyPrice"/>
+            <input class="col-2" type="number" id="minDailyPrice" value="0.00" placeholder="0.00"
+                    [(ngModel)]="model.minDailyPrice" name="minDailyPrice"/>
+            <input class="col-2" type="number" id="maxDailyPrice" value="0.00" placeholder="0.00"
+                    [(ngModel)]="model.maxDailyPrice" name="maxDailyPrice"/>
+          </div>
+          <div class="row mt-2 info-container text-center px-5 d-flex justify-content-center" id="invalid" *ngIf="isInvalid">Neteisingas kainų diapozonas</div>
+  
+          <div class="row mt-2 info-container text-center px-5 d-flex justify-content-center">
+              <div class="col-9 my-3">
+                <mat-select name="type" [(ngModel)]="model.toolType" value="" placeholder="Visi tipai">
+                  <mat-option value="">Visi tipai</mat-option>
+                  <mat-option *ngFor="let type of ToolTypeConstants.types" [value]="type">{{type}}</mat-option>
+                </mat-select>
+              </div>
+          </div>
+          <div class="row text-center d-flex justify-content-center">
+            <div class="col-4">
+              <button id="filterButton" type="submit" class="w-100 btn btn-success text-center">Filtruoti</button>
+            </div>
+            <div class="col-4">
+              <button id="clearButton" type="reset" value="Reset" (click)="clear()"
+                    class="w-100 btn btn-success text-center">Išvalyti filtrus</button>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </form>
+  </div>
 <div class="container">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 p-4 g-3">
 

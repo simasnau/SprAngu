@@ -47,7 +47,7 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
         Root<Tool> root = query.from(Tool.class);
         List<Predicate> predicatesList = new ArrayList<>();
         if (toolsFilter.getName() != null && !toolsFilter.getName().isBlank()) {
-            cb.like(root.get(Tool_.name), "%" + toolsFilter.getName() + "%");
+            predicatesList.add(cb.like(cb.upper(root.get(Tool_.name)), "%" + toolsFilter.getName().toUpperCase() + "%"));
         }
         if (toolsFilter.getMaxDailyPrice() != 0) {
             predicatesList.add(cb.lt(root.get(Tool_.dailyPrice), toolsFilter.getMaxDailyPrice()));

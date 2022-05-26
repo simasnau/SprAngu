@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ToolForRental} from "../domain/tools/toolForRental.model";
-import {firstValueFrom, Observable} from "rxjs";
+import {ToolsFilter} from "../domain/tools/toolsFilter.model";
+import {BehaviorSubject, firstValueFrom, Observable, Subject} from "rxjs";
 import {UrlConstants} from "../constants/url-constants";
 import {AuthenticationService} from "./authentication.service";
 import {ToolBasicDto} from "../domain/tools/tool-basic-dto";
 import {RentStartDto} from "../domain/tools/rent-start-dto";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {RentEndDto} from "../domain/tools/rent-end-dto";
 import {ToolRentInfoDto} from "../domain/tools/rent-info-dto";
 
@@ -13,6 +15,8 @@ import {ToolRentInfoDto} from "../domain/tools/rent-info-dto";
   providedIn: 'root'
 })
 export class ToolsService {
+
+  UrlConstants = UrlConstants;
 
   constructor(
     private httpClient: HttpClient,
@@ -46,6 +50,10 @@ export class ToolsService {
     return this.httpClient.post<boolean>(UrlConstants.toolsEndpoint + '/' + toolId + '/rent', request);
   }
 
+  searchTools(model: ToolsFilter): Observable<ToolForRental[]>{
+      return this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", model);
+  }
+  
   updateToolDescription(model: ToolForRental): Observable<ToolForRental> {
     return this.httpClient.put<ToolForRental>(UrlConstants.toolsEndpoint + "/update", model);
   }
