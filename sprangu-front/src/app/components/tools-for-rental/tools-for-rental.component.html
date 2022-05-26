@@ -1,6 +1,6 @@
-<div style="margin-top: 25px;">
+<div id="mainFormDiv">
     <form #filterForm="ngForm" (ngSubmit)="submit()" class="col-12 d-grid gap-3 py-3">
-      <div class="row mt-5 info-container" style="width: 700px; margin: auto;">
+      <div class="row mt-5 info-container" id="secondaryFormDiv">
         <div class="col-12">
           <div class="row justify-content-center">
             <input class="col-10" type="text" id="pavadinimas" maxlength="60"
@@ -27,7 +27,7 @@
             <input class="col-2" type="number" id="maxDailyPrice" value="0.00" placeholder="0.00"
                     [(ngModel)]="model.maxDailyPrice" name="maxDailyPrice"/>
           </div>
-          <div class="row mt-2 info-container text-center px-5 d-flex justify-content-center" style="color: red" *ngIf="isInvalid">Neteisingas kainų diapozonas</div>
+          <div class="row mt-2 info-container text-center px-5 d-flex justify-content-center" id="invalid" *ngIf="isInvalid">Neteisingas kainų diapozonas</div>
   
           <div class="row mt-2 info-container text-center px-5 d-flex justify-content-center">
               <div class="col-9 my-3">

@@ -5,3 +5,16 @@
 .image-wrapper {
     height: 250px;
 }
+
+#mainFormDiv{
+    margin-top: 25px;
+}
+
+#secondaryFormDiv{
+    width: 700px;
+    margin: auto;
+}
+
+#invalid{
+    color: red
+}
