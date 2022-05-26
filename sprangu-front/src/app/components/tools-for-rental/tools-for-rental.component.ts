@@ -29,8 +29,14 @@ export class ToolsForRentalComponent implements OnInit {
   toolTypeKeys: any;
 
   toolsList: ToolForRental[];
+  isInvalid: boolean;
 
   submit(): void {
+    this.isInvalid = this.model.minHourlyPrice > this.model.maxHourlyPrice;
+    this.isInvalid = this.model.minDailyPrice > this.model.maxDailyPrice;
+    if(this.isInvalid){
+      return;
+    }
     
     if (this.model.toolType==""){
       this.model.toolType=null
@@ -52,5 +58,6 @@ export class ToolsForRentalComponent implements OnInit {
     this.toolService.getAll().subscribe(result => {
       this.tools = result
     });
+    this.isInvalid = false;
   }
 }
