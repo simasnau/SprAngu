@@ -36,7 +36,6 @@ export class ToolDetailsPageComponent implements OnInit {
     this.toolsService.get(id).subscribe(result => {
       this.tool = result
       const loggedUserId = this.authService.user.id;
-      console.log(this.authService.user.id);
       this.isOwner = loggedUserId === this.tool.owner.id;
       this.isCurrentLoaner = loggedUserId && this.tool.currentUser?.id ? loggedUserId === this.tool.currentUser?.id : false;
       this.rentEndDate = new Date(this.tool.rentEndDate)

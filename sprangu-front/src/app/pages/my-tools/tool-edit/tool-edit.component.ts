@@ -40,9 +40,7 @@ export class ToolEditComponent implements OnInit {
         window.location.reload()
       },
       error => {
-        console.log('error', error, error.status === 409);
         if (error.status === 409) {
-          console.log('inside check')
           this.openVersionMismatchDialog();
         }
       });

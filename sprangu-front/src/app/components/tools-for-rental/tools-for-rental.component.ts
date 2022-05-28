@@ -38,7 +38,6 @@ export class ToolsForRentalComponent implements OnInit {
       this.model.name = searchString;
     }
     if (this.model.minHourlyPrice > this.model.maxHourlyPrice || this.model.minDailyPrice > this.model.maxDailyPrice) {
-      console.log(this.model.minHourlyPrice > this.model.maxHourlyPrice || this.model.minDailyPrice > this.model.maxDailyPrice)
       this.isInvalid = true;
     }
     if (this.isInvalid) {
