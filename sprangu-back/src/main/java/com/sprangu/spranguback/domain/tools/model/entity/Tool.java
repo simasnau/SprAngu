@@ -50,8 +50,9 @@ public class Tool {
     @Column(name = "CONTENT", columnDefinition="CLOB")
     private List<String> images = new ArrayList<>();
 
-    @Column(name = "VISIBLE")
-    private Boolean visible = true;
+    @Column(name = "VISIBLE", columnDefinition = "boolean default 1")
+    @Builder.Default
+    private boolean visible = true;
 
     @Column(name = "REMOVED")
     private Boolean removed;

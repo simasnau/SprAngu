@@ -27,6 +27,9 @@ export class CredentialsInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if(this.authenticationService.isJwtExpired()){
+      this.cookieService.delete(JwtConstants.JWT, '/');
+    }
     let httpRequest = request.clone({
       headers: UrlConstants.headers,
       withCredentials: true,
@@ -51,14 +54,6 @@ export class CredentialsInterceptor implements HttpInterceptor {
           }
         }
       }),
-      // @ts-ignore
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === HttpStatusCode.Forbidden && this.authenticationService.isJwtExpired()) {
-          this.cookieService.delete(JwtConstants.JWT);
-          this.router.navigate(['/']);
-          return;
-        }
-      })
     );
   }
 }

@@ -4,7 +4,7 @@
   <div class="row my-3 py-3 border rounded" *ngFor="let tool of tools">
     <div class="col-3 d-flex align-items-center border-end">
       <img class="img-thumbnail"
-           src="{{tool.image ? tool.image : 'assets/images/placeholder-image.png'}}"
+           src="{{tool.imageContent[0] ? tool.imageContent[0] : 'assets/images/placeholder-image.png'}}"
            alt="No image provided">
     </div>
 

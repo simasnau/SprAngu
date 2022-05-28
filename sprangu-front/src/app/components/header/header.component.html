@@ -11,7 +11,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item" *ngIf="!authenticationService.isLogged()">
           <a class="nav-link text-white" [routerLink]="'/register'">Prisijungimas</a>
@@ -39,7 +39,9 @@
       </ul>
     </div>
 
-    <button class="btn btn-light btn-primary btn-space rounded" [routerLink]=" !authenticationService.isLogged() ? ['/create-tool/view'] : ['/register']">Įkelti skelbimą</button>
+    <button *ngIf="authenticationService.isLogged()" class="btn btn-light btn-primary btn-space rounded"
+            [routerLink]="'/create-tool/view'">Įkelti skelbimą
+    </button>
 
   </div>
 </nav>

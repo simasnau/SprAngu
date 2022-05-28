@@ -38,7 +38,7 @@ public class ToolsController {
     }
 
     @GetMapping("/{id}/edit")
-    public ToolDto getByIdForEdit(@PathVariable Long id) {
+    public ToolBasicDto getByIdForEdit(@PathVariable Long id) {
         return toolsService.getByIdForEdit(id);
     }
 
@@ -48,7 +48,7 @@ public class ToolsController {
     }
 
     @PostMapping()
-    public Long addTool(@RequestBody ToolCreateDto tool) {
+    public Long addTool(@RequestBody ToolBasicDto tool) {
         return toolsService.create(tool);
     }
 
@@ -93,17 +93,12 @@ public class ToolsController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Long> updateToolDescription(@RequestBody ToolDto toolDto) {
+    public ResponseEntity<Long> updateToolDescription(@RequestBody ToolBasicDto toolDto) {
         try {
             return new ResponseEntity<>(toolsService.updateTool(toolDto), HttpStatus.OK);
         } catch (OptimisticLockException e) {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(0L, HttpStatus.CONFLICT);
         }
-    }
-
-    @PutMapping("/create")
-    public void createTool(@RequestBody ToolCreateDto toolDto) {
-        toolsService.create(toolDto);
     }
 
     @GetMapping("{id}/full-images")

@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ToolTypeConstants } from 'src/app/constants/tool-type-constants';
 import { ToolForRental } from 'src/app/domain/tools/toolForRental.model';
 import { ToolsService } from 'src/app/services/tools.service';
+import {ToolBasicDto} from "../../domain/tools/tool-basic-dto";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-create-tool',
@@ -12,12 +14,12 @@ import { ToolsService } from 'src/app/services/tools.service';
 export class CreateToolComponent implements OnInit {
 
   ToolTypeConstants = ToolTypeConstants;
-  
-  model = new ToolForRental();
+
+  model = new ToolBasicDto();
 
   constructor(
     private toolsService: ToolsService,
-    private route: ActivatedRoute
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {}
@@ -26,7 +28,7 @@ export class CreateToolComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    console.log(this.model)
+    this.model.ownerId = this.authenticationService.user.id;
     this.toolsService.createTool(this.model).subscribe(
       () => window.location.reload()
     );
@@ -48,12 +50,12 @@ export class CreateToolComponent implements OnInit {
       }
     }
 
-    
+
   }
 
   removeFile(i: number): void {
     this.model.imageContent.splice(i, 1);
   }
-  
+
 
 }

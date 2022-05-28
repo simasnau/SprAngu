@@ -23,7 +23,7 @@ export class ToolDetailsPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private toolsService: ToolsService,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     public matDialog: MatDialog) {
   }
 
@@ -36,8 +36,9 @@ export class ToolDetailsPageComponent implements OnInit {
     this.toolsService.get(id).subscribe(result => {
       this.tool = result
       const loggedUserId = this.authService.user.id;
+      console.log(this.authService.user.id);
       this.isOwner = loggedUserId === this.tool.owner.id;
-      this.isCurrentLoaner = loggedUserId === this.tool.currentUser?.id
+      this.isCurrentLoaner = loggedUserId && this.tool.currentUser?.id ? loggedUserId === this.tool.currentUser?.id : false;
       this.rentEndDate = new Date(this.tool.rentEndDate)
       this.resolveImages();
     });
@@ -47,7 +48,9 @@ export class ToolDetailsPageComponent implements OnInit {
     if (this.isOwner) {
       return "Jūs esate šio įrankio savininkas";
     }
-
+    if (!this.authService.user.id) {
+      return "Prisijunkite";
+    }
     return "Nuomotis";
   }
 
@@ -98,7 +101,6 @@ export class ToolDetailsPageComponent implements OnInit {
     this.tool.imageContent.forEach(image => {
       this.imagesList.push({image: image, thumbImage: image});
     })
-    console.log(this.imagesList);
   }
 
   expandImage($event: number): void {

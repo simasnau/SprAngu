@@ -55,9 +55,9 @@ export class MyToolsComponent implements OnInit {
     });
   }
 
-  async hideTool(id: number): Promise<void> {
+  hideTool(id: number): void {
     // @ts-ignore
-    this.tools.find(tool => tool.id === id).visible = await this.toolService.hideTool(id);
+    this.toolService.hideTool(id).subscribe(visibility => this.tools.find(tool => tool.id === id).visible = visibility);
   }
 
   private openSuccessDialog(): void {

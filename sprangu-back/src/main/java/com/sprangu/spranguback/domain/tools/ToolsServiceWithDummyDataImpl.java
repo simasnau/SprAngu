@@ -3,9 +3,7 @@ package com.sprangu.spranguback.domain.tools;
 import com.sprangu.spranguback.application.utils.SecurityUtils;
 import com.sprangu.spranguback.domain.tools.model.ToolTypeEnum;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolBasicDto;
-import com.sprangu.spranguback.domain.tools.model.dto.ToolCreateDto;
 import com.sprangu.spranguback.domain.tools.model.dto.ToolDto;
-
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
 import com.sprangu.spranguback.domain.user.model.security.UserDetailed;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
@@ -69,7 +67,7 @@ public class ToolsServiceWithDummyDataImpl implements ToolsService {
 
 
     @Override
-    public Long create(ToolCreateDto toolCreateDto) {
+    public Long create(ToolBasicDto toolCreateDto) {
         SecurityUtils.checkAccess(toolCreateDto.getOwnerId());
         ToolDto tool = ToolDto.builder()
                 .hourlyPrice(toolCreateDto.getHourlyPrice())
@@ -121,7 +119,7 @@ public class ToolsServiceWithDummyDataImpl implements ToolsService {
                         .hourlyPrice(toolDto.getHourlyPrice())
                         .dailyPrice(toolDto.getDailyPrice())
                         .visible(toolDto.isVisible())
-                        .image(toolDto.getImageContent() == null || toolDto.getImageContent().isEmpty() ? null : toolDto.getImageContent().get(0))
+                        .imageContent(toolDto.getImageContent() == null || toolDto.getImageContent().isEmpty() ? null : toolDto.getImageContent())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -142,7 +140,7 @@ public class ToolsServiceWithDummyDataImpl implements ToolsService {
     }
 
     @Override
-    public Long updateTool(ToolDto toolDto) {
+    public Long updateTool(ToolBasicDto toolDto) {
         var tool = getById(toolDto.getId());
         SecurityUtils.checkAccess(tool.getOwner().getId());
         tool.setName(toolDto.getName());
@@ -166,7 +164,7 @@ public class ToolsServiceWithDummyDataImpl implements ToolsService {
     }
 
     @Override
-    public ToolDto getByIdForEdit(Long id) {
+    public ToolBasicDto getByIdForEdit(Long id) {
         return null;
     }
 }
