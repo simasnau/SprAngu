@@ -6,8 +6,12 @@
 
       <form #form="ngForm">
         <div class="form-group">
-          <input type="text" name="name" [(ngModel)]="user.name" class="form-control" placeholder="Prisijungimo vardas"
+          <input type="text" name="name" [(ngModel)]="user.name" class="form-control" placeholder="Prisijungimo vardas" pattern="[a-zA-Z0-9]*" #nameInput="ngModel"
             required>
+        </div>
+
+        <div *ngIf="nameInput.errors" class="alert alert-danger mt-4">
+          Įvestas netinkamas vardas.
         </div>
 
         <div class="form-group mt-2">
