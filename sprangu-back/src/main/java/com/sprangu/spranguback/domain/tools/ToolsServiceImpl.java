@@ -33,12 +33,12 @@ public class ToolsServiceImpl implements ToolsService {
     public List<ToolDto> getAllTools() {
         return toolRepository.findAll()
                 .stream()
-                .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()) && tool.getVisible())
+                .filter(tool -> !Boolean.TRUE.equals(tool.getRemoved()) && tool.isVisible())
                 .map(tool -> ToolDto.of(tool, toolRentInfoService.getCurrentRentInfo(tool.getId()), false))
                 .collect(Collectors.toList());
     }
 
-    public Long create(@NonNull ToolCreateDto toolCreateDto) {
+    public Long create(@NonNull ToolBasicDto toolCreateDto) {
         SecurityUtils.checkAccess(toolCreateDto.getOwnerId());
         Tool tool = Tool.builder()
                 .hourlyPrice(toolCreateDto.getHourlyPrice())
@@ -67,7 +67,7 @@ public class ToolsServiceImpl implements ToolsService {
     public List<ToolBasicDto> getAllUserToolsByUserId() {
         return toolRepository.getAllUserToolsByUserId(userService.getLoggedUser().getId())
                 .stream()
-                .map(ToolBasicDto::of)
+                .map(tool -> ToolBasicDto.of(tool, userService.getLoggedUser().getId(), false))
                 .collect(Collectors.toList());
     }
 
@@ -86,13 +86,14 @@ public class ToolsServiceImpl implements ToolsService {
     public Boolean changeToolVisibility(Long toolId) {
         var tool = toolRepository.getById(toolId);
         SecurityUtils.checkAccess(tool.getOwner().getId());
-        tool.setVisible(!tool.getVisible());
-        return toolRepository.save(tool).getVisible();
+        tool.setVisible(!tool.isVisible());
+        toolRepository.save(tool);
+        return tool.isVisible();
     }
 
     @ResponseBody
     @Transactional
-    public Long updateTool(ToolDto toolDto) {
+    public Long updateTool(ToolBasicDto toolDto) {
         var tooId = toolDto.getId();
         var tool = toolRepository.getById(tooId);
 
@@ -125,7 +126,7 @@ public class ToolsServiceImpl implements ToolsService {
     }
 
     @Override
-    public ToolDto getByIdForEdit(Long id) {
-        return ToolDto.of(toolRepository.getById(id), null, true);
+    public ToolBasicDto getByIdForEdit(Long id) {
+        return ToolBasicDto.of(toolRepository.getById(id), userService.getLoggedUser().getId(), true);
     }
 }

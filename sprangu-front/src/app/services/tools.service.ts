@@ -41,9 +41,9 @@ export class ToolsService {
     return this.httpClient.delete<boolean>(url);
   }
 
-  async hideTool(toolId: number): Promise<boolean> {
+  hideTool(toolId: number): Observable<boolean> {
     const url = UrlConstants.myTools + '/' + toolId + '/edit-visibility';
-    return firstValueFrom(this.httpClient.patch<boolean>(url, {}));
+    return this.httpClient.patch<boolean>(url, {});
   }
 
   rentTool(toolId: number, request: RentStartDto): Observable<boolean> {
@@ -53,13 +53,13 @@ export class ToolsService {
   searchTools(model: ToolsFilter): Observable<ToolForRental[]>{
       return this.httpClient.post<ToolForRental[]>(UrlConstants.toolsEndpoint+ "/search", model);
   }
-  
-  updateToolDescription(model: ToolForRental): Observable<ToolForRental> {
-    return this.httpClient.put<ToolForRental>(UrlConstants.toolsEndpoint + "/update", model);
+
+  updateToolDescription(model: ToolBasicDto): Observable<number> {
+    return this.httpClient.put<number>(UrlConstants.toolsEndpoint + "/update", model);
   }
 
-  createTool(model: ToolForRental): Observable<void> {
-    return this.httpClient.put<void>(UrlConstants.toolsEndpoint + "/create", model);
+  createTool(model: ToolBasicDto): Observable<number> {
+    return this.httpClient.post<number>(UrlConstants.toolsEndpoint, model);
   }
 
   returnTool(currentRentId: number): Observable<RentEndDto> {
@@ -76,6 +76,6 @@ export class ToolsService {
   }
 
   getForEdit(id: number) {
-    return this.httpClient.get<ToolForRental>(UrlConstants.toolsEndpoint + '/' + id + "/edit");
+    return this.httpClient.get<ToolBasicDto>(UrlConstants.toolsEndpoint + '/' + id + "/edit");
   }
 }

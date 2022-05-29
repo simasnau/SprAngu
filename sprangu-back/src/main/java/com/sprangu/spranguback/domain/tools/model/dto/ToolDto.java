@@ -49,7 +49,7 @@ public class ToolDto {
                 .dailyPrice(tool.getDailyPrice())
                 .toolType(tool.getToolType())
                 .imageContent(rawImages ? tool.getImages() : ImageUtils.resizeToThumbnails(tool.getImages()))
-                .visible(Boolean.TRUE.equals(tool.getVisible()))
+                .visible(tool.isVisible())
                 .version(tool.getVersion())
                 .build();
     }

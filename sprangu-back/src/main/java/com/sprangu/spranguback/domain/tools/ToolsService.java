@@ -10,7 +10,7 @@ public interface ToolsService {
 
     List<ToolDto> getAllTools();
 
-    Long create(ToolCreateDto toolCreateDto);
+    Long create(ToolBasicDto toolCreateDto);
 
     ToolDto getById(Long id);
 
@@ -22,11 +22,11 @@ public interface ToolsService {
 
     Boolean changeToolVisibility(Long toolId);
 
-    Long updateTool(ToolDto toolDto);
+    Long updateTool(ToolBasicDto toolDto);
 
     String getStrategy();
 
     List<String> getFullResolutionToolImages(Long toolId);
 
-    ToolDto getByIdForEdit(Long id);
+    ToolBasicDto getByIdForEdit(Long id);
 }

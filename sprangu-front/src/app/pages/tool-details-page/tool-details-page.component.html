@@ -39,7 +39,8 @@
 
       <div class="d-grid gap-2 col-6 mx-auto mt-4">
         <button *ngIf="!isCurrentLoaner" [disabled]="disableRentButton()"
-                [routerLink]="['/tool', tool.id, 'reservation']" class="btn btn-primary"
+                [routerLink]="!authService.user.id ? ['/register'] : ['/tool', tool.id, 'reservation']"
+                class="btn btn-primary"
                 type="button">{{getRentButtonMessage()}}</button>
         <button *ngIf="isCurrentLoaner" (click)="returnTool()" class="btn btn-primary" type="button">Grąžinti</button>
       </div>

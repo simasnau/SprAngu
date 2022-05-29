@@ -70,6 +70,7 @@ public class ToolRepositoryImpl implements ToolRepositoryCustom {
                         cb.isFalse(root.get(Tool_.removed))
                 )
         );
+        predicatesList.add(cb.isTrue(root.get(Tool_.visible)));
         Predicate[] predicatesArray = predicatesList.toArray(new Predicate[0]);
         query.select(root).where(predicatesArray);
 
