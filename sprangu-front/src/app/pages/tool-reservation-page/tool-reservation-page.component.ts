@@ -57,7 +57,7 @@ export class ToolReservationPageComponent implements OnInit {
       const dateUntil = this.getEndDate();
       const diff = this.dateDiffInHours(new Date(), dateUntil);
 
-      return diff >= 0;
+      return diff > 0;
     } catch (error) {
       return false;
     }
@@ -81,6 +81,10 @@ export class ToolReservationPageComponent implements OnInit {
 
   async rentTool() {
     if(!this.dateIsValid()) {
+      this.matDialog.open(DialogComponent, {
+        width: '25%',
+        data: DialogConstants.DATE_ERROR
+      })
       return;
     }
 

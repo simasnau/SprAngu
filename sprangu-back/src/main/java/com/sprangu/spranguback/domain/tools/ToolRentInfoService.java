@@ -9,7 +9,6 @@ import com.sprangu.spranguback.domain.tools.model.entity.Tool;
 import com.sprangu.spranguback.domain.tools.model.entity.ToolRentInfo;
 import com.sprangu.spranguback.domain.tools.repository.ToolRentInfoRepository;
 import com.sprangu.spranguback.domain.tools.repository.ToolRepository;
-import com.sprangu.spranguback.domain.user.UserService;
 import com.sprangu.spranguback.domain.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,6 @@ public class ToolRentInfoService {
     private final ToolRentInfoRepository toolRentInfoRepository;
     private final ToolRepository toolRepository;
     private final UserRepository userRepository;
-    private final UserService userService;
 
     public Boolean rent(@NonNull Long toolId, @NonNull RentStartDto rentStartDto) {
         Optional<ToolRentInfo> newestRentInfo = toolRentInfoRepository.getNewestRentInfo(toolId);
@@ -42,13 +40,20 @@ public class ToolRentInfoService {
             throw new IllegalArgumentException("This tool is already rented");
         }
 
+        LocalDateTime rentEndDate = rentStartDto.getRentEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        if (rentEndDate.isBefore(currentDateTime)) {
+            throw new IllegalArgumentException("Illegal rent end date selected");
+        }
+
         Tool toolToRent = toolRepository.getById(toolId);
 
         ToolRentInfo toolRent = ToolRentInfo.builder()
                 .rentedTool(toolToRent)
                 .user(userRepository.getById(rentStartDto.getUserId()))
-                .startDate(LocalDateTime.now())
-                .originalEndDate(rentStartDto.getRentEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+                .startDate(currentDateTime)
+                .originalEndDate(rentEndDate)
                 .hourlyPrice(toolToRent.getHourlyPrice())
                 .dailyPrice(toolToRent.getDailyPrice())
                 .build();
