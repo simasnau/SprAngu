@@ -26,6 +26,7 @@ export class DialogConstants {
   public static TOOL_RETURN_PROMPT = new DialogData('Ar tikrai norite grąžinti įrankį?', 'Taip', 'Atšaukti', DialogRelevance.DANGER);
   public static TOOL_RETURN_ERROR = new DialogData('Nepavyko grąžinti įrankio bandykite dar kartą', '', 'Uždaryti', DialogRelevance.DANGER);
   public static TOOL_UPDATE_OLE_ERROR = new DialogData('Įrankis buvo atnaujintas kito vartotojo. Bandykite iš naujo.', '', 'Uždaryti', DialogRelevance.DANGER);
+  public static DATE_ERROR = new DialogData('Įvesta netinkama data', '', 'Uždaryti', DialogRelevance.DANGER);
 }
 
 
