@@ -23,8 +23,6 @@ export class LoginComponent {
   }
 
   register(): void {
-    this.authenticationService.createUser(this.user).subscribe(() => this.user = new UserInfo());
-
     this.authenticationService.createUser(this.user).subscribe({
       next: () => this.user = new UserInfo(),
       error: err => {
