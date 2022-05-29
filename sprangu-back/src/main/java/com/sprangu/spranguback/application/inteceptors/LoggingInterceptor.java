@@ -24,9 +24,11 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
         try {
             UserDetailed loggedUser = userService.getLoggedUser();
-            username = loggedUser.getUsername();
-            SimpleGrantedAuthority simpleGrantedAuthority = (SimpleGrantedAuthority) loggedUser.getAuthorities().toArray()[0];
-            role = simpleGrantedAuthority.getAuthority();
+            if (loggedUser != null) {
+                username = loggedUser.getUsername();
+                SimpleGrantedAuthority simpleGrantedAuthority = (SimpleGrantedAuthority) loggedUser.getAuthorities().toArray()[0];
+                role = simpleGrantedAuthority.getAuthority();
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
