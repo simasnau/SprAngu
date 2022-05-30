@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     public void registerUser(UserInfo userInfo) {
         var existingUser = userRepository.getByName(userInfo.getName());
         if (existingUser != null) {
-            throw new Exception("User exists with name " + userInfo.getName());
+            throw new IllegalArgumentException("User exists with name " + userInfo.getName());
         }
         var user = RegisteredUser.builder()
                 .name(userInfo.getName())
@@ -48,15 +48,14 @@ public class UserService implements UserDetailsService {
 
     public String loginUser(String name, String password) throws CredentialException {
         var user = userRepository.loginUser(name, password);
-        if (user == null) {
-            throw new CredentialException("Wrong credentials");
-        }
-        var UserDetailed = loadUserByUsername(user.getName());
-        return createJwtToken(UserDetailed);
+        var userDetailed = loadUserByUsername(user
+                .orElseThrow(() -> new CredentialException("Wrong credentials"))
+                .getName());
+        return createJwtToken(userDetailed);
     }
 
-    public String createJwtToken(UserDetailed UserDetailed) {
-        return jwtUtils.generateToken(UserDetailed);
+    public String createJwtToken(UserDetailed userDetailed) {
+        return jwtUtils.generateToken(userDetailed);
     }
 
     @SneakyThrows

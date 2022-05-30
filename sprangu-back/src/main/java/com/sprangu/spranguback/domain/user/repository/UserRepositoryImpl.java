@@ -6,18 +6,21 @@ import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser;
 import com.sprangu.spranguback.domain.user.model.entity.RegisteredUser_;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private final EntityManager em;
 
     @Override
-    public UserInfo loginUser(String name, String password) {
+    public Optional<UserInfo> loginUser(String name, String password) {
         var cb = em.getCriteriaBuilder();
         var cq = cb.createQuery(UserInfo.class);
         var root = cq.from(RegisteredUser.class);
@@ -26,7 +29,12 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 cb.equal(root.get(RegisteredUser_.name), name),
                 cb.equal(root.get(RegisteredUser_.password), password)
         );
-        return em.createQuery(cq).getSingleResult();
+        try {
+            return Optional.of(em.createQuery(cq).getSingleResult());
+        } catch (Exception ex) {
+            log.info(ex.getMessage());
+            return Optional.empty();
+        }
     }
 
     @SneakyThrows
