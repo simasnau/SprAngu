@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ToolTypeConstants } from 'src/app/constants/tool-type-constants';
-import { ToolForRental } from 'src/app/domain/tools/toolForRental.model';
-import { ToolsService } from 'src/app/services/tools.service';
+import {Component, OnInit} from '@angular/core';
+import {ToolTypeConstants} from 'src/app/constants/tool-type-constants';
+import {ToolsService} from 'src/app/services/tools.service';
 import {ToolBasicDto} from "../../domain/tools/tool-basic-dto";
 import {AuthenticationService} from "../../services/authentication.service";
+import {DialogComponent} from "../../components/dialog/dialog.component";
+import {DialogConstants} from "../../constants/dialog-constants";
+import {MatDialog} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-tool',
@@ -19,10 +21,14 @@ export class CreateToolComponent implements OnInit {
 
   constructor(
     private toolsService: ToolsService,
-    private authenticationService: AuthenticationService
-  ) { }
+    public matDialog: MatDialog,
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   submit(form: any): void {
     if (form.invalid) {
@@ -30,7 +36,8 @@ export class CreateToolComponent implements OnInit {
     }
     this.model.ownerId = this.authenticationService.user.id;
     this.toolsService.createTool(this.model).subscribe(
-      () => window.location.reload()
+      () => this.openSuccess(),
+      error => this.openError()
     );
   }
 
@@ -58,4 +65,25 @@ export class CreateToolComponent implements OnInit {
   }
 
 
+  private openSuccess() {
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      width: '25%',
+      data: DialogConstants.TOOL_CREATE_SUCCESS
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['/my-tools/view']);
+    });
+  }
+
+  private openError() {
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      width: '25%',
+      data: DialogConstants.TOOL_CREATE_ERROR
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      window.location.reload()
+    });
+  }
 }
