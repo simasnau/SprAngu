@@ -10,7 +10,7 @@
             required>
         </div>
 
-        <div *ngIf="nameInput.errors" class="alert alert-danger mt-4">
+        <div *ngIf="nameInput.errors && user.name" class="alert alert-danger mt-4">
           Įvestas netinkamas vardas.
         </div>
 
