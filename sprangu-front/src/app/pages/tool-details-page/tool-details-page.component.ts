@@ -97,6 +97,7 @@ export class ToolDetailsPageComponent implements OnInit {
   }
 
   private resolveImages(): void {
+    this.imagesList = [];
     this.tool.imageContent.forEach(image => {
       this.imagesList.push({image: image, thumbImage: image});
     })

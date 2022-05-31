@@ -46,6 +46,7 @@ public class ToolBasicDto {
                             : tool.getImages())
                 .ownerId(ownerId)
                 .version(tool.getVersion())
+                .toolType(tool.getToolType())
                 .build();
     }
 }

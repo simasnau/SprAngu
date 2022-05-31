@@ -38,7 +38,7 @@
             <div class="col-9 my-3">
               <mat-select name="type" [(ngModel)]="model.toolType" value="" placeholder="Visi tipai">
                 <mat-option value="">Visi tipai</mat-option>
-                <mat-option *ngFor="let type of ToolTypeConstants.types" [value]="type">{{type}}</mat-option>
+                <mat-option *ngFor="let type of ToolTypeConstants.types" [value]="type.key">{{type.value}}</mat-option>
               </mat-select>
             </div>
           </div>

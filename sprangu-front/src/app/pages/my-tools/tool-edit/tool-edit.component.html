@@ -39,7 +39,7 @@
     <div class="form-group align-items-center">
       <label class="col-3" for="tool-type">Kategorija:</label>
       <select class="form-control" id="tool-type" name="type" [(ngModel)]="model.toolType">
-        <option *ngFor="let type of ToolTypeConstants.types" [value]="type">{{type}}</option>
+        <option *ngFor="let type of ToolTypeConstants.types" [value]="type.key">{{type.value}}</option>
       </select>
     </div>
 

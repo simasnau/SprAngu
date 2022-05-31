@@ -25,7 +25,7 @@ export class DialogConstants {
   public static TOOL_RENT_SUCCES = new DialogData('Sėkmingai išsinuomotas įrankis', '', 'Uždaryti', DialogRelevance.SUCCESS);
   public static TOOL_RETURN_PROMPT = new DialogData('Ar tikrai norite grąžinti įrankį?', 'Taip', 'Atšaukti', DialogRelevance.DANGER);
   public static TOOL_RETURN_ERROR = new DialogData('Nepavyko grąžinti įrankio bandykite dar kartą', '', 'Uždaryti', DialogRelevance.DANGER);
-  public static TOOL_UPDATE_OLE_ERROR = new DialogData('Įrankis buvo atnaujintas kito vartotojo. Bandykite iš naujo.', '', 'Uždaryti', DialogRelevance.DANGER);
+  public static TOOL_UPDATE_OLE_ERROR = new DialogData('Įrankis buvo atnaujintas kitame įrenginyje. Bandykite iš naujo.', '', 'Uždaryti', DialogRelevance.DANGER);
   public static DATE_ERROR = new DialogData('Įvesta netinkama data', '', 'Uždaryti', DialogRelevance.DANGER);
   public static TOOL_CREATE_ERROR = new DialogData('Nepavyko įkelti skelbimo, bandykite vėliau.', '', 'Uždaryti', DialogRelevance.DANGER);
   public static TOOL_CREATE_SUCCESS = new DialogData('Skelbimas sukurtas sėkmingai', '', 'Uždaryti', DialogRelevance.SUCCESS);
